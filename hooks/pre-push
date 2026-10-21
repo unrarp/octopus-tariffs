@@ -1,0 +1,3 @@
+#!/bin/sh
+# Runs every quality gate before a push from a dev machine (see AGENTS.md).
+exec npm run check

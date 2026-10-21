@@ -1,0 +1,23 @@
+{
+  "name": "octopus-tariffs",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "collect": "node src/collect.js",
+    "build": "node src/build.js",
+    "test": "node --test 'test/**/*.test.js'",
+    "check:syntax": "for f in $(find src scripts -name '*.js' 2>/dev/null); do node --check \"$f\" || exit 1; done",
+    "check:data": "node src/validate.js",
+    "check:lint": "biome check",
+    "check:browser": "npx playwright test test/browser.spec.js",
+    "check:core": "npm run test && npm run check:syntax && npm run check:data",
+    "check": "npm run check:core && npm run check:lint && npm run check:browser"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "@playwright/test": "^1.64.1"
+  }
+}
