@@ -1,0 +1,3 @@
+valid_from,valid_to,payment_method,value_exc_vat,value_inc_vat
+2025-10-21T23:00:00Z,2026-03-31T23:00:00Z,,5.5484,5.82582
+2026-03-31T23:00:00Z,,,5.2384,5.50032

@@ -1,0 +1,1024 @@
+{
+  "available_from": "2026-07-09T10:00:00+01:00",
+  "available_to": "2026-07-18T00:00:00+01:00",
+  "brand": "OCTOPUS_ENERGY",
+  "code": "OE-FIX-12M-LOWSC-26-07-09",
+  "description": "This fixed tariff locks in your unit rates and standing charges for 12 months.  This tariff has a £50 early exit fee per fuel.",
+  "display_name": "Octopus 12M Fixed Low SC",
+  "dual_register_electricity_tariffs": {
+    "_A": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-LOWSC-26-07-09-A",
+        "day_unit_rate_exc_vat": 32.4825,
+        "day_unit_rate_inc_vat": 32.4825,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "night_unit_rate_exc_vat": 14.595,
+        "night_unit_rate_inc_vat": 14.595,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": 31.4813,
+        "standing_charge_inc_vat": 31.4813
+      }
+    },
+    "_B": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-LOWSC-26-07-09-B",
+        "day_unit_rate_exc_vat": 30.9279,
+        "day_unit_rate_inc_vat": 30.9279,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "night_unit_rate_exc_vat": 14.6729,
+        "night_unit_rate_inc_vat": 14.6729,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": 30.4292,
+        "standing_charge_inc_vat": 30.4292
+      }
+    },
+    "_C": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-LOWSC-26-07-09-C",
+        "day_unit_rate_exc_vat": 32.1378,
+        "day_unit_rate_inc_vat": 32.1378,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "night_unit_rate_exc_vat": 14.5384,
+        "night_unit_rate_inc_vat": 14.5384,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": 22.1498,
+        "standing_charge_inc_vat": 22.1498
+      }
+    },
+    "_D": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-LOWSC-26-07-09-D",
+        "day_unit_rate_exc_vat": 33.6731,
+        "day_unit_rate_inc_vat": 33.6731,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "night_unit_rate_exc_vat": 15.5879,
+        "night_unit_rate_inc_vat": 15.5879,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": 46.5196,
+        "standing_charge_inc_vat": 46.5196
+      }
+    },
+    "_E": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-LOWSC-26-07-09-E",
+        "day_unit_rate_exc_vat": 31.2108,
+        "day_unit_rate_inc_vat": 31.2108,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "night_unit_rate_exc_vat": 14.7494,
+        "night_unit_rate_inc_vat": 14.7494,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": 36.3881,
+        "standing_charge_inc_vat": 36.3881
+      }
+    },
+    "_F": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-LOWSC-26-07-09-F",
+        "day_unit_rate_exc_vat": 31.2815,
+        "day_unit_rate_inc_vat": 31.2815,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "night_unit_rate_exc_vat": 14.4894,
+        "night_unit_rate_inc_vat": 14.4894,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": 40.3744,
+        "standing_charge_inc_vat": 40.3744
+      }
+    },
+    "_G": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-LOWSC-26-07-09-G",
+        "day_unit_rate_exc_vat": 31.9518,
+        "day_unit_rate_inc_vat": 31.9518,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "night_unit_rate_exc_vat": 14.6214,
+        "night_unit_rate_inc_vat": 14.6214,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": 24.569,
+        "standing_charge_inc_vat": 24.569
+      }
+    },
+    "_H": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-LOWSC-26-07-09-H",
+        "day_unit_rate_exc_vat": 32.4168,
+        "day_unit_rate_inc_vat": 32.4168,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "night_unit_rate_exc_vat": 14.4663,
+        "night_unit_rate_inc_vat": 14.4663,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": 27.2101,
+        "standing_charge_inc_vat": 27.2101
+      }
+    },
+    "_J": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-LOWSC-26-07-09-J",
+        "day_unit_rate_exc_vat": 32.6632,
+        "day_unit_rate_inc_vat": 32.6632,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "night_unit_rate_exc_vat": 14.7842,
+        "night_unit_rate_inc_vat": 14.7842,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": 32.0265,
+        "standing_charge_inc_vat": 32.0265
+      }
+    },
+    "_K": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-LOWSC-26-07-09-K",
+        "day_unit_rate_exc_vat": 32.4295,
+        "day_unit_rate_inc_vat": 32.4295,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "night_unit_rate_exc_vat": 14.9396,
+        "night_unit_rate_inc_vat": 14.9396,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": 34.0347,
+        "standing_charge_inc_vat": 34.0347
+      }
+    },
+    "_L": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-LOWSC-26-07-09-L",
+        "day_unit_rate_exc_vat": 32.6407,
+        "day_unit_rate_inc_vat": 32.6407,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "night_unit_rate_exc_vat": 14.6465,
+        "night_unit_rate_inc_vat": 14.6465,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": 35.4101,
+        "standing_charge_inc_vat": 35.4101
+      }
+    },
+    "_M": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-LOWSC-26-07-09-M",
+        "day_unit_rate_exc_vat": 30.9962,
+        "day_unit_rate_inc_vat": 30.9962,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "night_unit_rate_exc_vat": 15.1474,
+        "night_unit_rate_inc_vat": 15.1474,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": 40.5744,
+        "standing_charge_inc_vat": 40.5744
+      }
+    },
+    "_N": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-LOWSC-26-07-09-N",
+        "day_unit_rate_exc_vat": 32.141,
+        "day_unit_rate_inc_vat": 32.141,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "night_unit_rate_exc_vat": 15.8046,
+        "night_unit_rate_inc_vat": 15.8046,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": 41.5251,
+        "standing_charge_inc_vat": 41.5251
+      }
+    },
+    "_P": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-LOWSC-26-07-09-P",
+        "day_unit_rate_exc_vat": 32.766,
+        "day_unit_rate_inc_vat": 32.766,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "night_unit_rate_exc_vat": 15.3981,
+        "night_unit_rate_inc_vat": 15.3981,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": 35.3333,
+        "standing_charge_inc_vat": 35.3333
+      }
+    }
+  },
+  "fetchedAt": "2026-10-21T10:49:05.882Z",
+  "four_rate_ev_electricity_tariffs": {},
+  "full_name": "Octopus 12M Fixed Low Standing Charge July 2026 v2",
+  "is_business": false,
+  "is_green": false,
+  "is_prepay": false,
+  "is_restricted": false,
+  "is_tracker": false,
+  "is_variable": false,
+  "sample_consumption": {
+    "dual_fuel_dual_rate": {
+      "electricity_day": 1972,
+      "electricity_night": 1428,
+      "gas_standard": 9500
+    },
+    "dual_fuel_single_rate": {
+      "electricity_standard": 2500,
+      "gas_standard": 9500
+    },
+    "electricity_dual_rate": {
+      "electricity_day": 1972,
+      "electricity_night": 1428
+    },
+    "electricity_single_rate": {
+      "electricity_standard": 2500
+    }
+  },
+  "sample_quotes": {
+    "_A": {
+      "direct_debit_monthly": {
+        "dual_fuel_dual_rate": {
+          "annual_cost_exc_vat": 167695,
+          "annual_cost_inc_vat": 171260
+        },
+        "dual_fuel_single_rate": {
+          "annual_cost_exc_vat": 151873,
+          "annual_cost_inc_vat": 155438
+        },
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 96388,
+          "annual_cost_inc_vat": 96388
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 80566,
+          "annual_cost_inc_vat": 80566
+        }
+      }
+    },
+    "_B": {
+      "direct_debit_monthly": {
+        "dual_fuel_dual_rate": {
+          "annual_cost_exc_vat": 164503,
+          "annual_cost_inc_vat": 168075
+        },
+        "dual_fuel_single_rate": {
+          "annual_cost_exc_vat": 149081,
+          "annual_cost_inc_vat": 152654
+        },
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 93049,
+          "annual_cost_inc_vat": 93049
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 77627,
+          "annual_cost_inc_vat": 77627
+        }
+      }
+    },
+    "_C": {
+      "direct_debit_monthly": {
+        "dual_fuel_dual_rate": {
+          "annual_cost_exc_vat": 167637,
+          "annual_cost_inc_vat": 171407
+        },
+        "dual_fuel_single_rate": {
+          "annual_cost_exc_vat": 152135,
+          "annual_cost_inc_vat": 155906
+        },
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 92221,
+          "annual_cost_inc_vat": 92221
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 76720,
+          "annual_cost_inc_vat": 76720
+        }
+      }
+    },
+    "_D": {
+      "direct_debit_monthly": {
+        "dual_fuel_dual_rate": {
+          "annual_cost_exc_vat": 180119,
+          "annual_cost_inc_vat": 183843
+        },
+        "dual_fuel_single_rate": {
+          "annual_cost_exc_vat": 164428,
+          "annual_cost_inc_vat": 168152
+        },
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 105643,
+          "annual_cost_inc_vat": 105643
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 89951,
+          "annual_cost_inc_vat": 89951
+        }
+      }
+    },
+    "_E": {
+      "direct_debit_monthly": {
+        "dual_fuel_dual_rate": {
+          "annual_cost_exc_vat": 168209,
+          "annual_cost_inc_vat": 171824
+        },
+        "dual_fuel_single_rate": {
+          "annual_cost_exc_vat": 152581,
+          "annual_cost_inc_vat": 156197
+        },
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 95891,
+          "annual_cost_inc_vat": 95891
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 80264,
+          "annual_cost_inc_vat": 80264
+        }
+      }
+    },
+    "_F": {
+      "direct_debit_monthly": {
+        "dual_fuel_dual_rate": {
+          "annual_cost_exc_vat": 169622,
+          "annual_cost_inc_vat": 173248
+        },
+        "dual_fuel_single_rate": {
+          "annual_cost_exc_vat": 154471,
+          "annual_cost_inc_vat": 158096
+        },
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 97115,
+          "annual_cost_inc_vat": 97115
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 81963,
+          "annual_cost_inc_vat": 81963
+        }
+      }
+    },
+    "_G": {
+      "direct_debit_monthly": {
+        "dual_fuel_dual_rate": {
+          "annual_cost_exc_vat": 165100,
+          "annual_cost_inc_vat": 168712
+        },
+        "dual_fuel_single_rate": {
+          "annual_cost_exc_vat": 151275,
+          "annual_cost_inc_vat": 154887
+        },
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 92856,
+          "annual_cost_inc_vat": 92856
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 79031,
+          "annual_cost_inc_vat": 79031
+        }
+      }
+    },
+    "_H": {
+      "direct_debit_monthly": {
+        "dual_fuel_dual_rate": {
+          "annual_cost_exc_vat": 169413,
+          "annual_cost_inc_vat": 173158
+        },
+        "dual_fuel_single_rate": {
+          "annual_cost_exc_vat": 153821,
+          "annual_cost_inc_vat": 157566
+        },
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 94515,
+          "annual_cost_inc_vat": 94515
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 78924,
+          "annual_cost_inc_vat": 78924
+        }
+      }
+    },
+    "_J": {
+      "direct_debit_monthly": {
+        "dual_fuel_dual_rate": {
+          "annual_cost_exc_vat": 170869,
+          "annual_cost_inc_vat": 174552
+        },
+        "dual_fuel_single_rate": {
+          "annual_cost_exc_vat": 155062,
+          "annual_cost_inc_vat": 158745
+        },
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 97213,
+          "annual_cost_inc_vat": 97213
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 81407,
+          "annual_cost_inc_vat": 81407
+        }
+      }
+    },
+    "_K": {
+      "direct_debit_monthly": {
+        "dual_fuel_dual_rate": {
+          "annual_cost_exc_vat": 172029,
+          "annual_cost_inc_vat": 175745
+        },
+        "dual_fuel_single_rate": {
+          "annual_cost_exc_vat": 156543,
+          "annual_cost_inc_vat": 160259
+        },
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 97707,
+          "annual_cost_inc_vat": 97707
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 82221,
+          "annual_cost_inc_vat": 82221
+        }
+      }
+    },
+    "_L": {
+      "direct_debit_monthly": {
+        "dual_fuel_dual_rate": {
+          "annual_cost_exc_vat": 172988,
+          "annual_cost_inc_vat": 176727
+        },
+        "dual_fuel_single_rate": {
+          "annual_cost_exc_vat": 157338,
+          "annual_cost_inc_vat": 161077
+        },
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 98207,
+          "annual_cost_inc_vat": 98207
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 82558,
+          "annual_cost_inc_vat": 82558
+        }
+      }
+    },
+    "_M": {
+      "direct_debit_monthly": {
+        "dual_fuel_dual_rate": {
+          "annual_cost_exc_vat": 170764,
+          "annual_cost_inc_vat": 174424
+        },
+        "dual_fuel_single_rate": {
+          "annual_cost_exc_vat": 155009,
+          "annual_cost_inc_vat": 158669
+        },
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 97565,
+          "annual_cost_inc_vat": 97565
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 81809,
+          "annual_cost_inc_vat": 81809
+        }
+      }
+    },
+    "_N": {
+      "direct_debit_monthly": {
+        "dual_fuel_dual_rate": {
+          "annual_cost_exc_vat": 173272,
+          "annual_cost_inc_vat": 176880
+        },
+        "dual_fuel_single_rate": {
+          "annual_cost_exc_vat": 155705,
+          "annual_cost_inc_vat": 159313
+        },
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 101108,
+          "annual_cost_inc_vat": 101108
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 83541,
+          "annual_cost_inc_vat": 83541
+        }
+      }
+    },
+    "_P": {
+      "direct_debit_monthly": {
+        "dual_fuel_dual_rate": {
+          "annual_cost_exc_vat": 171651,
+          "annual_cost_inc_vat": 175259
+        },
+        "dual_fuel_single_rate": {
+          "annual_cost_exc_vat": 154609,
+          "annual_cost_inc_vat": 158217
+        },
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 99500,
+          "annual_cost_inc_vat": 99500
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 82457,
+          "annual_cost_inc_vat": 82457
+        }
+      }
+    }
+  },
+  "single_register_electricity_tariffs": {
+    "_A": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-LOWSC-26-07-09-A",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 27.659,
+        "standard_unit_rate_inc_vat": 27.659,
+        "standing_charge_exc_vat": 31.284,
+        "standing_charge_inc_vat": 31.284
+      }
+    },
+    "_B": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-LOWSC-26-07-09-B",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 26.5311,
+        "standard_unit_rate_inc_vat": 26.5311,
+        "standing_charge_exc_vat": 30.958,
+        "standing_charge_inc_vat": 30.958
+      }
+    },
+    "_C": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-LOWSC-26-07-09-C",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 27.3941,
+        "standard_unit_rate_inc_vat": 27.3941,
+        "standing_charge_exc_vat": 22.5607,
+        "standing_charge_inc_vat": 22.5607
+      }
+    },
+    "_D": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-LOWSC-26-07-09-D",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 29.0751,
+        "standard_unit_rate_inc_vat": 29.0751,
+        "standing_charge_exc_vat": 47.2977,
+        "standing_charge_inc_vat": 47.2977
+      }
+    },
+    "_E": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-LOWSC-26-07-09-E",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 26.7361,
+        "standard_unit_rate_inc_vat": 26.7361,
+        "standing_charge_exc_vat": 36.7772,
+        "standing_charge_inc_vat": 36.7772
+      }
+    },
+    "_F": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-LOWSC-26-07-09-F",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 26.7793,
+        "standard_unit_rate_inc_vat": 26.7793,
+        "standing_charge_exc_vat": 41.1361,
+        "standing_charge_inc_vat": 41.1361
+      }
+    },
+    "_G": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-LOWSC-26-07-09-G",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 27.9256,
+        "standard_unit_rate_inc_vat": 27.9256,
+        "standing_charge_exc_vat": 25.2511,
+        "standing_charge_inc_vat": 25.2511
+      }
+    },
+    "_H": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-LOWSC-26-07-09-H",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 27.5921,
+        "standard_unit_rate_inc_vat": 27.5921,
+        "standing_charge_exc_vat": 27.2429,
+        "standing_charge_inc_vat": 27.2429
+      }
+    },
+    "_J": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-LOWSC-26-07-09-J",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 27.9252,
+        "standard_unit_rate_inc_vat": 27.9252,
+        "standing_charge_exc_vat": 31.7635,
+        "standing_charge_inc_vat": 31.7635
+      }
+    },
+    "_K": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-LOWSC-26-07-09-K",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 27.7789,
+        "standard_unit_rate_inc_vat": 27.7789,
+        "standing_charge_exc_vat": 34.9964,
+        "standing_charge_inc_vat": 34.9964
+      }
+    },
+    "_L": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-LOWSC-26-07-09-L",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 27.9069,
+        "standard_unit_rate_inc_vat": 27.9069,
+        "standing_charge_exc_vat": 35.0429,
+        "standing_charge_inc_vat": 35.0429
+      }
+    },
+    "_M": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-LOWSC-26-07-09-M",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 26.7053,
+        "standard_unit_rate_inc_vat": 26.7053,
+        "standing_charge_exc_vat": 41.221,
+        "standing_charge_inc_vat": 41.221
+      }
+    },
+    "_N": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-LOWSC-26-07-09-N",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 27.4264,
+        "standard_unit_rate_inc_vat": 27.4264,
+        "standing_charge_exc_vat": 41.0265,
+        "standing_charge_inc_vat": 41.0265
+      }
+    },
+    "_P": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-LOWSC-26-07-09-P",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 5000,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 27.9147,
+        "standard_unit_rate_inc_vat": 27.9147,
+        "standing_charge_exc_vat": 34.7142,
+        "standing_charge_inc_vat": 34.7142
+      }
+    }
+  },
+  "single_register_gas_tariffs": {
+    "_A": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-12M-LOWSC-26-07-09-A",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 4761,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 7.3128,
+        "standard_unit_rate_inc_vat": 7.67844,
+        "standing_charge_exc_vat": 5.0278,
+        "standing_charge_inc_vat": 5.27919
+      }
+    },
+    "_B": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-12M-LOWSC-26-07-09-B",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 4761,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 7.3255,
+        "standard_unit_rate_inc_vat": 7.691775,
+        "standing_charge_exc_vat": 5.0991,
+        "standing_charge_inc_vat": 5.354055
+      }
+    },
+    "_C": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-12M-LOWSC-26-07-09-C",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 4761,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 7.7154,
+        "standard_unit_rate_inc_vat": 8.10117,
+        "standing_charge_exc_vat": 5.8059,
+        "standing_charge_inc_vat": 6.096195
+      }
+    },
+    "_D": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-12M-LOWSC-26-07-09-D",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 4761,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 7.6204,
+        "standard_unit_rate_inc_vat": 8.00142,
+        "standing_charge_exc_vat": 5.7073,
+        "standing_charge_inc_vat": 5.992665
+      }
+    },
+    "_E": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-12M-LOWSC-26-07-09-E",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 4761,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 7.4061,
+        "standard_unit_rate_inc_vat": 7.776405,
+        "standing_charge_exc_vat": 5.3675,
+        "standing_charge_inc_vat": 5.635875
+      }
+    },
+    "_F": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-12M-LOWSC-26-07-09-F",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 4761,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 7.4229,
+        "standard_unit_rate_inc_vat": 7.794045,
+        "standing_charge_exc_vat": 5.4525,
+        "standing_charge_inc_vat": 5.725125
+      }
+    },
+    "_G": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-12M-LOWSC-26-07-09-G",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 4761,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 7.3945,
+        "standard_unit_rate_inc_vat": 7.764225,
+        "standing_charge_exc_vat": 5.4689,
+        "standing_charge_inc_vat": 5.742345
+      }
+    },
+    "_H": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-12M-LOWSC-26-07-09-H",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 4761,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 7.6973,
+        "standard_unit_rate_inc_vat": 8.082165,
+        "standing_charge_exc_vat": 4.858,
+        "standing_charge_inc_vat": 5.1009
+      }
+    },
+    "_J": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-12M-LOWSC-26-07-09-J",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 4761,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 7.5627,
+        "standard_unit_rate_inc_vat": 7.940835,
+        "standing_charge_exc_vat": 4.9593,
+        "standing_charge_inc_vat": 5.207265
+      }
+    },
+    "_K": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-12M-LOWSC-26-07-09-K",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 4761,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 7.6083,
+        "standard_unit_rate_inc_vat": 7.988715,
+        "standing_charge_exc_vat": 5.5977,
+        "standing_charge_inc_vat": 5.877585
+      }
+    },
+    "_L": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-12M-LOWSC-26-07-09-L",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 4761,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 7.6795,
+        "standard_unit_rate_inc_vat": 8.063475,
+        "standing_charge_exc_vat": 5.0004,
+        "standing_charge_inc_vat": 5.25042
+      }
+    },
+    "_M": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-12M-LOWSC-26-07-09-M",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 4761,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 7.4968,
+        "standard_unit_rate_inc_vat": 7.87164,
+        "standing_charge_exc_vat": 5.4251,
+        "standing_charge_inc_vat": 5.696355
+      }
+    },
+    "_N": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-12M-LOWSC-26-07-09-N",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 4761,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 7.3835,
+        "standard_unit_rate_inc_vat": 7.752675,
+        "standing_charge_exc_vat": 5.5374,
+        "standing_charge_inc_vat": 5.81427
+      }
+    },
+    "_P": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-12M-LOWSC-26-07-09-P",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 4761,
+        "exit_fees_inc_vat": 5000,
+        "exit_fees_type": "FLAT",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 7.3828,
+        "standard_unit_rate_inc_vat": 7.75194,
+        "standing_charge_exc_vat": 5.521,
+        "standing_charge_inc_vat": 5.79705
+      }
+    }
+  },
+  "term": 12
+}

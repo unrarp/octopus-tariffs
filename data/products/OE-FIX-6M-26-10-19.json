@@ -1,0 +1,184 @@
+{
+  "available_from": "2026-10-19T15:00:00+01:00",
+  "available_to": null,
+  "brand": "OCTOPUS_ENERGY",
+  "code": "OE-FIX-6M-26-10-19",
+  "description": "This fixed tariff locks in your unit rates and standing charges for 6 months through the winter.",
+  "display_name": "Octopus 6M Winter Fix",
+  "dual_register_electricity_tariffs": {
+    "_C": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-6M-26-10-19-C",
+        "day_unit_rate_exc_vat": 36.7888,
+        "day_unit_rate_inc_vat": 36.7888,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "night_unit_rate_exc_vat": 15.5435,
+        "night_unit_rate_inc_vat": 15.5435,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": 40.9555,
+        "standing_charge_inc_vat": 40.9555
+      }
+    },
+    "_G": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-6M-26-10-19-G",
+        "day_unit_rate_exc_vat": 37.6538,
+        "day_unit_rate_inc_vat": 37.6538,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "night_unit_rate_exc_vat": 16.1205,
+        "night_unit_rate_inc_vat": 16.1205,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": 43.4957,
+        "standing_charge_inc_vat": 43.4957
+      }
+    }
+  },
+  "fetchedAt": "2026-10-21T10:40:15.870Z",
+  "four_rate_ev_electricity_tariffs": {},
+  "full_name": "Octopus 6M Winter Fix October 2026 v1",
+  "is_business": false,
+  "is_green": false,
+  "is_prepay": false,
+  "is_restricted": false,
+  "is_tracker": false,
+  "is_variable": false,
+  "sample_consumption": {
+    "dual_fuel_dual_rate": {
+      "electricity_day": 1972,
+      "electricity_night": 1428,
+      "gas_standard": 9500
+    },
+    "dual_fuel_single_rate": {
+      "electricity_standard": 2500,
+      "gas_standard": 9500
+    },
+    "electricity_dual_rate": {
+      "electricity_day": 1972,
+      "electricity_night": 1428
+    },
+    "electricity_single_rate": {
+      "electricity_standard": 2500
+    }
+  },
+  "sample_quotes": {
+    "_C": {
+      "direct_debit_monthly": {
+        "dual_fuel_dual_rate": {
+          "annual_cost_exc_vat": 206304,
+          "annual_cost_inc_vat": 211135
+        },
+        "dual_fuel_single_rate": {
+          "annual_cost_exc_vat": 186736,
+          "annual_cost_inc_vat": 191566
+        },
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 109692,
+          "annual_cost_inc_vat": 109692
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 90124,
+          "annual_cost_inc_vat": 90124
+        }
+      }
+    },
+    "_G": {
+      "direct_debit_monthly": {
+        "dual_fuel_dual_rate": {
+          "annual_cost_exc_vat": 206092,
+          "annual_cost_inc_vat": 210739
+        },
+        "dual_fuel_single_rate": {
+          "annual_cost_exc_vat": 187290,
+          "annual_cost_inc_vat": 191937
+        },
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 113149,
+          "annual_cost_inc_vat": 113149
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 94347,
+          "annual_cost_inc_vat": 94347
+        }
+      }
+    }
+  },
+  "single_register_electricity_tariffs": {
+    "_C": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-6M-26-10-19-C",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 30.007,
+        "standard_unit_rate_inc_vat": 30.007,
+        "standing_charge_exc_vat": 41.3869,
+        "standing_charge_inc_vat": 41.3869
+      }
+    },
+    "_G": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-6M-26-10-19-G",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 31.2838,
+        "standard_unit_rate_inc_vat": 31.2838,
+        "standing_charge_exc_vat": 44.2119,
+        "standing_charge_inc_vat": 44.2119
+      }
+    }
+  },
+  "single_register_gas_tariffs": {
+    "_C": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-6M-26-10-19-C",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 9.0997,
+        "standard_unit_rate_inc_vat": 9.554685,
+        "standing_charge_exc_vat": 27.8484,
+        "standing_charge_inc_vat": 29.24082
+      }
+    },
+    "_G": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-6M-26-10-19-G",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": 8.7277,
+        "standard_unit_rate_inc_vat": 9.164085,
+        "standing_charge_exc_vat": 27.4785,
+        "standing_charge_inc_vat": 28.852425
+      }
+    }
+  },
+  "term": 6
+}

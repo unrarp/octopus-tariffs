@@ -1,0 +1,687 @@
+{
+  "available_from": "2026-02-26T17:00:00Z",
+  "available_to": "2026-03-03T00:00:00Z",
+  "brand": "OCTOPUS_ENERGY",
+  "code": "OE-FIX-12M-26-02-26-BESPOKE-MHHS",
+  "description": "This fixed tariff locks in your unit rates and standing charges for 12 months with no exit fees.",
+  "display_name": "Octopus 12M Fixed (HH)",
+  "dual_register_electricity_tariffs": {
+    "_A": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-26-02-26-A-BESPOKE-MHHS",
+        "day_unit_rate_exc_vat": null,
+        "day_unit_rate_inc_vat": null,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "night_unit_rate_exc_vat": null,
+        "night_unit_rate_inc_vat": null,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_B": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-26-02-26-B-BESPOKE-MHHS",
+        "day_unit_rate_exc_vat": null,
+        "day_unit_rate_inc_vat": null,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "night_unit_rate_exc_vat": null,
+        "night_unit_rate_inc_vat": null,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_C": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-26-02-26-C-BESPOKE-MHHS",
+        "day_unit_rate_exc_vat": null,
+        "day_unit_rate_inc_vat": null,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "night_unit_rate_exc_vat": null,
+        "night_unit_rate_inc_vat": null,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_D": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-26-02-26-D-BESPOKE-MHHS",
+        "day_unit_rate_exc_vat": null,
+        "day_unit_rate_inc_vat": null,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "night_unit_rate_exc_vat": null,
+        "night_unit_rate_inc_vat": null,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_E": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-26-02-26-E-BESPOKE-MHHS",
+        "day_unit_rate_exc_vat": null,
+        "day_unit_rate_inc_vat": null,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "night_unit_rate_exc_vat": null,
+        "night_unit_rate_inc_vat": null,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_F": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-26-02-26-F-BESPOKE-MHHS",
+        "day_unit_rate_exc_vat": null,
+        "day_unit_rate_inc_vat": null,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "night_unit_rate_exc_vat": null,
+        "night_unit_rate_inc_vat": null,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_G": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-26-02-26-G-BESPOKE-MHHS",
+        "day_unit_rate_exc_vat": null,
+        "day_unit_rate_inc_vat": null,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "night_unit_rate_exc_vat": null,
+        "night_unit_rate_inc_vat": null,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_H": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-26-02-26-H-BESPOKE-MHHS",
+        "day_unit_rate_exc_vat": null,
+        "day_unit_rate_inc_vat": null,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "night_unit_rate_exc_vat": null,
+        "night_unit_rate_inc_vat": null,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_J": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-26-02-26-J-BESPOKE-MHHS",
+        "day_unit_rate_exc_vat": null,
+        "day_unit_rate_inc_vat": null,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "night_unit_rate_exc_vat": null,
+        "night_unit_rate_inc_vat": null,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_K": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-26-02-26-K-BESPOKE-MHHS",
+        "day_unit_rate_exc_vat": null,
+        "day_unit_rate_inc_vat": null,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "night_unit_rate_exc_vat": null,
+        "night_unit_rate_inc_vat": null,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_L": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-26-02-26-L-BESPOKE-MHHS",
+        "day_unit_rate_exc_vat": null,
+        "day_unit_rate_inc_vat": null,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "night_unit_rate_exc_vat": null,
+        "night_unit_rate_inc_vat": null,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_M": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-26-02-26-M-BESPOKE-MHHS",
+        "day_unit_rate_exc_vat": null,
+        "day_unit_rate_inc_vat": null,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "night_unit_rate_exc_vat": null,
+        "night_unit_rate_inc_vat": null,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_N": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-26-02-26-N-BESPOKE-MHHS",
+        "day_unit_rate_exc_vat": null,
+        "day_unit_rate_inc_vat": null,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "night_unit_rate_exc_vat": null,
+        "night_unit_rate_inc_vat": null,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_P": {
+      "direct_debit_monthly": {
+        "code": "E-2R-OE-FIX-12M-26-02-26-P-BESPOKE-MHHS",
+        "day_unit_rate_exc_vat": null,
+        "day_unit_rate_inc_vat": null,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "night_unit_rate_exc_vat": null,
+        "night_unit_rate_inc_vat": null,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    }
+  },
+  "fetchedAt": "2026-10-21T10:49:05.882Z",
+  "four_rate_ev_electricity_tariffs": {},
+  "full_name": "Octopus 12M Fixed February 2026 v7 (HH)",
+  "is_business": false,
+  "is_green": false,
+  "is_prepay": false,
+  "is_restricted": true,
+  "is_tracker": false,
+  "is_variable": false,
+  "sample_consumption": {
+    "dual_fuel_dual_rate": {
+      "electricity_day": 1972,
+      "electricity_night": 1428,
+      "gas_standard": 9500
+    },
+    "dual_fuel_single_rate": {
+      "electricity_standard": 2500,
+      "gas_standard": 9500
+    },
+    "electricity_dual_rate": {
+      "electricity_day": 1972,
+      "electricity_night": 1428
+    },
+    "electricity_single_rate": {
+      "electricity_standard": 2500
+    }
+  },
+  "sample_quotes": {
+    "_A": {
+      "direct_debit_monthly": {
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        }
+      }
+    },
+    "_B": {
+      "direct_debit_monthly": {
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        }
+      }
+    },
+    "_C": {
+      "direct_debit_monthly": {
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        }
+      }
+    },
+    "_D": {
+      "direct_debit_monthly": {
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        }
+      }
+    },
+    "_E": {
+      "direct_debit_monthly": {
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        }
+      }
+    },
+    "_F": {
+      "direct_debit_monthly": {
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        }
+      }
+    },
+    "_G": {
+      "direct_debit_monthly": {
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        }
+      }
+    },
+    "_H": {
+      "direct_debit_monthly": {
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        }
+      }
+    },
+    "_J": {
+      "direct_debit_monthly": {
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        }
+      }
+    },
+    "_K": {
+      "direct_debit_monthly": {
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        }
+      }
+    },
+    "_L": {
+      "direct_debit_monthly": {
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        }
+      }
+    },
+    "_M": {
+      "direct_debit_monthly": {
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        }
+      }
+    },
+    "_N": {
+      "direct_debit_monthly": {
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        }
+      }
+    },
+    "_P": {
+      "direct_debit_monthly": {
+        "electricity_dual_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        },
+        "electricity_single_rate": {
+          "annual_cost_exc_vat": 0,
+          "annual_cost_inc_vat": 0
+        }
+      }
+    }
+  },
+  "single_register_electricity_tariffs": {
+    "_A": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-26-02-26-A-BESPOKE-MHHS",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": null,
+        "standard_unit_rate_inc_vat": null,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_B": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-26-02-26-B-BESPOKE-MHHS",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": null,
+        "standard_unit_rate_inc_vat": null,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_C": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-26-02-26-C-BESPOKE-MHHS",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": null,
+        "standard_unit_rate_inc_vat": null,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_D": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-26-02-26-D-BESPOKE-MHHS",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": null,
+        "standard_unit_rate_inc_vat": null,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_E": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-26-02-26-E-BESPOKE-MHHS",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": null,
+        "standard_unit_rate_inc_vat": null,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_F": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-26-02-26-F-BESPOKE-MHHS",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": null,
+        "standard_unit_rate_inc_vat": null,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_G": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-26-02-26-G-BESPOKE-MHHS",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": null,
+        "standard_unit_rate_inc_vat": null,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_H": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-26-02-26-H-BESPOKE-MHHS",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": null,
+        "standard_unit_rate_inc_vat": null,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_J": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-26-02-26-J-BESPOKE-MHHS",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": null,
+        "standard_unit_rate_inc_vat": null,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_K": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-26-02-26-K-BESPOKE-MHHS",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": null,
+        "standard_unit_rate_inc_vat": null,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_L": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-26-02-26-L-BESPOKE-MHHS",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": null,
+        "standard_unit_rate_inc_vat": null,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_M": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-26-02-26-M-BESPOKE-MHHS",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": null,
+        "standard_unit_rate_inc_vat": null,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_N": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-26-02-26-N-BESPOKE-MHHS",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": null,
+        "standard_unit_rate_inc_vat": null,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    },
+    "_P": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-26-02-26-P-BESPOKE-MHHS",
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "NONE",
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "standard_unit_rate_exc_vat": null,
+        "standard_unit_rate_inc_vat": null,
+        "standing_charge_exc_vat": null,
+        "standing_charge_inc_vat": null
+      }
+    }
+  },
+  "single_register_gas_tariffs": {},
+  "term": 12
+}

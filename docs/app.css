@@ -1,0 +1,466 @@
+/* Chrome and ink follow the dataviz reference tokens; every colour is a light-dark(light, dark) pair picked by the OS
+   scheme. app.js reads the ones the canvas paints through css(), so the charts follow the scheme too. */
+:root {
+  color-scheme: light dark;
+  --page: light-dark(#f9f9f7, #0d0d0d);
+  --surface: light-dark(#fcfcfb, #1a1a19);
+  --border: light-dark(rgba(11, 11, 11, 0.1), rgba(255, 255, 255, 0.1));
+  --text: light-dark(#0b0b0b, #f0efec);
+  --text-2: light-dark(#52514e, #c3c2b7);
+  --muted: light-dark(#6b6a65, #898781);
+  --link: light-dark(#1c5cab, #86b6ef);
+  /* canvas only: gridlines, axis, the cap line and cap-change verticals, the not-yet-collected hatch, the tooltip */
+  --grid: light-dark(#e1e0d9, #2c2c2a);
+  --axis: light-dark(#c3c2b7, #383835);
+  --tick: light-dark(#6b6a65, #898781);
+  --cap: light-dark(#898781, #898781);
+  --marker: light-dark(rgba(82, 81, 78, 0.55), rgba(195, 194, 183, 0.45));
+  --hatch: light-dark(rgba(0, 0, 0, 0.16), rgba(255, 255, 255, 0.22));
+  --tip-bg: light-dark(rgba(252, 252, 251, 0.97), rgba(26, 26, 25, 0.97));
+  --tip-line: light-dark(#e1e0d9, #383835);
+}
+[hidden] {
+  /* biome-ignore lint/complexity/noImportantStyles: [hidden] must beat every display rule, the grid's included */
+  display: none !important;
+} /* beats every display rule below, the grid's included */
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text);
+  font:
+    14px / 1.45 system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+}
+a {
+  color: var(--link);
+}
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+button {
+  cursor: pointer;
+}
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+h1 {
+  font-size: 22px;
+  margin: 0;
+}
+.lede {
+  color: var(--text-2);
+  margin: 4px 0 16px;
+  max-width: 72ch;
+}
+.btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+.btn:hover {
+  color: var(--text);
+}
+.info {
+  margin-left: auto;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  flex: none;
+  font:
+    italic 600 14px / 1 Georgia,
+    "Times New Roman",
+    serif;
+}
+
+/* The You row: one bordered row at the top. */
+.you {
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  margin-bottom: 16px;
+}
+.you-row,
+.compare-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+}
+.you-row + .you-row {
+  margin-top: 8px;
+}
+.mine-line {
+  margin: 8px 0 0;
+}
+.field {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-2);
+}
+.field select,
+.field input {
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--page);
+  color: var(--text);
+  min-width: 0;
+}
+.field input {
+  width: 6.5em;
+}
+.field input[type="date"] {
+  width: auto;
+} /* the whole date and the calendar button */
+.hint {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Controls in one row above the chips; segmented buttons, the pressed one in ink. */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-bottom: 10px;
+}
+.seg {
+  display: inline-flex;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--surface);
+}
+.seg button {
+  border: 0;
+  background: transparent;
+  padding: 5px 11px;
+  color: var(--text-2);
+}
+.seg button[aria-pressed="true"] {
+  background: var(--text);
+  color: var(--surface);
+}
+
+/* The chips are the legend: a line key in the family colour, the name, then its estimate at the viewer's usage. */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-bottom: 10px;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px 12px 4px 10px;
+  background: var(--surface);
+  color: var(--text);
+  text-align: left;
+}
+.chip[aria-pressed="false"] {
+  opacity: 0.45;
+}
+.chip:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+.chip b {
+  font-weight: 600;
+}
+.chip small {
+  font-size: 13px;
+  color: var(--muted);
+}
+.key {
+  width: 16px;
+  height: 0;
+  border-top: 2px solid var(--c);
+  flex: none;
+}
+.key.dash {
+  border-top-style: dashed;
+}
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.sw.hatch {
+  display: inline-block;
+  width: 14px;
+  height: 12px;
+  background: repeating-linear-gradient(135deg, light-dark(#9a9893, #6b6a65) 0 1px, transparent 1px 4px);
+  border: 1px solid var(--grid);
+}
+
+/* Charts: each canvas box includes its x-axis band, so nothing scrolls inside it. */
+.chart {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px;
+  background: var(--surface);
+  min-width: 0;
+}
+.chart canvas {
+  display: block;
+}
+.annual-chart {
+  height: 360px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.panel-chart {
+  height: 230px;
+}
+.panel-chart h3 {
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  right: 12px;
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  z-index: 1;
+} /* inside the panel's top-left; the chart's top padding keeps the highest y tick below it */
+.load-error {
+  padding: 40px 16px;
+  text-align: center;
+  color: var(--text-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  margin: 0;
+}
+a.term {
+  color: inherit;
+  text-decoration: underline dotted;
+  text-decoration-color: var(--muted);
+  text-underline-offset: 3px;
+}
+.note {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 8px 0 0;
+}
+.footer {
+  margin-top: 24px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.footer p {
+  margin: 0 0 4px;
+}
+
+/* The comparison: picked chips, the add select and the date in one row; one bar per tariff on one scale. */
+.compare {
+  margin-top: 22px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+.compare h2 {
+  font-size: 16px;
+  margin: 0 0 10px;
+}
+.compare-row select {
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--page);
+  color: var(--text);
+  max-width: 100%;
+  min-width: 0;
+}
+.chip .x {
+  color: var(--muted);
+  margin-left: 2px;
+}
+.lead {
+  font-size: 16px;
+  margin: 14px 0 8px;
+}
+.bars {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(80px, 1fr) max-content;
+  gap: 6px 14px;
+  align-items: center;
+}
+.bars .name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.bars .type,
+.bars .delta,
+.bars .unranked {
+  color: var(--muted);
+}
+.bars .you-tag {
+  font-weight: 600;
+}
+.bars .unranked {
+  grid-column: 2 / -1;
+}
+.bar {
+  height: 14px;
+  background: var(--c);
+  border-radius: 0 4px 4px 0;
+} /* square at the baseline, rounded at the data end */
+.bars .total {
+  white-space: nowrap;
+}
+
+/* The help dialog: a panel over the page, a full-height sheet on a phone. */
+.help {
+  width: min(640px, calc(100% - 32px));
+  max-height: 85vh;
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  overflow: auto;
+}
+.help::backdrop {
+  background: light-dark(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.6));
+}
+.help-body {
+  padding: 0 20px 18px;
+}
+.help-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: var(--surface);
+  padding: 18px 0 10px;
+}
+.help h2 {
+  font-size: 16px;
+  margin: 0;
+}
+.help dl {
+  margin: 0;
+  color: var(--text-2);
+}
+.help dt {
+  color: var(--text);
+  font-weight: 600;
+}
+.help dd {
+  margin: 0;
+}
+.help dl > div {
+  padding: 6px 10px;
+  margin: 2px -10px 0;
+  border-left: 3px solid transparent;
+  border-radius: 6px;
+  scroll-margin-top: 60px;
+}
+.help dl > div.current {
+  border-left-color: var(--text-2);
+  background: light-dark(rgba(11, 11, 11, 0.05), rgba(255, 255, 255, 0.07));
+}
+
+@media (max-width: 719px) {
+  .wrap {
+    padding: 12px 10px 32px;
+  }
+  h1 {
+    font-size: 19px;
+  }
+  .you-row,
+  .compare-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .bars {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .bar {
+    display: none;
+  } /* on a phone the totals carry the comparison */
+  .field {
+    display: grid;
+    grid-template-columns: 5.5em minmax(0, 1fr) 3.5em;
+    gap: 8px;
+  } /* label text, control, unit: the controls line up one under another */
+  .field select,
+  .field input,
+  .field input[type="date"] {
+    width: 100%;
+  }
+  .controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .panel-chart {
+    height: 180px;
+  }
+  .annual-chart {
+    height: 280px;
+  }
+  .help {
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+  }
+}
