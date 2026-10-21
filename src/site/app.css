@@ -94,15 +94,24 @@ h1 {
 
 /* The You row: one bordered row at the top. */
 .you {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 18px;
   padding: 12px 14px;
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--surface);
   margin-bottom: 16px;
+}
+.you-row,
+.compare-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+}
+.you-row + .you-row {
+  margin-top: 8px;
+}
+.mine-line {
+  margin: 8px 0 0;
 }
 .field {
   display: inline-flex;
@@ -122,6 +131,9 @@ h1 {
 .field input {
   width: 6.5em;
 }
+.field input[type="date"] {
+  width: auto;
+} /* the whole date and the calendar button */
 .hint {
   font-size: 13px;
   color: var(--muted);
@@ -282,6 +294,68 @@ a.term {
   font-size: 13px;
   color: var(--muted);
 }
+.footer p {
+  margin: 0 0 4px;
+}
+
+/* The comparison: picked chips, the add select and the date in one row; one bar per tariff on one scale. */
+.compare {
+  margin-top: 22px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+.compare h2 {
+  font-size: 16px;
+  margin: 0 0 10px;
+}
+.compare-row select {
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--page);
+  color: var(--text);
+  max-width: 100%;
+  min-width: 0;
+}
+.chip .x {
+  color: var(--muted);
+  margin-left: 2px;
+}
+.lead {
+  font-size: 16px;
+  margin: 14px 0 8px;
+}
+.bars {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(80px, 1fr) max-content;
+  gap: 6px 14px;
+  align-items: center;
+}
+.bars .name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.bars .type,
+.bars .delta,
+.bars .unranked {
+  color: var(--muted);
+}
+.bars .you-tag {
+  font-weight: 600;
+}
+.bars .unranked {
+  grid-column: 2 / -1;
+}
+.bar {
+  height: 14px;
+  background: var(--c);
+  border-radius: 0 4px 4px 0;
+} /* square at the baseline, rounded at the data end */
+.bars .total {
+  white-space: nowrap;
+}
 
 /* The help dialog: a panel over the page, a full-height sheet on a phone. */
 .help {
@@ -346,17 +420,25 @@ a.term {
   h1 {
     font-size: 19px;
   }
-  .you {
+  .you-row,
+  .compare-row {
     flex-direction: column;
     align-items: stretch;
   }
+  .bars {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .bar {
+    display: none;
+  } /* on a phone the totals carry the comparison */
   .field {
     display: grid;
     grid-template-columns: 5.5em minmax(0, 1fr) 3.5em;
     gap: 8px;
   } /* label text, control, unit: the controls line up one under another */
   .field select,
-  .field input {
+  .field input,
+  .field input[type="date"] {
     width: 100%;
   }
   .controls {

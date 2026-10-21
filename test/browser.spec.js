@@ -5,6 +5,7 @@ import { extname, join, normalize, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { expect, test } from '@playwright/test';
 import { build } from '../src/build.js';
+import { annualAt, capSeries, costSince, versionSeries } from '../src/site/lib/compare.js';
 
 const ROOT = fileURLToPath(new URL('./fixtures/build', import.meta.url));
 const BUILT = new Date('2026-10-21T06:00:00.000Z'); // the fixture's collection time, the build's generatedAt
@@ -406,4 +407,325 @@ test('link check: no href, src, fetch or import starts with /', async ({ page })
     /(?:href|src)\s*=\s*["']\/|fetch\(\s*[`'"]\/|get\(\s*[`'"]\/|\bimport\b[^;'"`]*['"`]\/|from\s+['"`]\/|url\(\s*['"]?\//;
   const hits = files(out).filter((f) => absolute.test(readFileSync(f, 'utf8')));
   expect(hits.map((f) => relative(out, f))).toEqual([]);
+});
+
+// ---- the comparison (PLAN.md Step 3.2): expected £ figures come from the same lib on the same built files ----
+const CUTOFF = '2026-10-21'; // the fixture's generatedAt day: comparisons run up to it
+const FAMILY = {
+  'OE-FIX-12M': ['oe-fix-12m', 'fixed'],
+  'OE-FIX-6M-': ['oe-fix-6m', 'fixed'],
+  'VAR-': ['flexible', 'variable'],
+};
+const builtFile = (region, id) => JSON.parse(readFileSync(join(out, 'data', region, `${id}.json`), 'utf8'));
+const seriesOf = (code, fuel, region = '_C') => {
+  if (code === 'cap') return capSeries(builtFile(region, 'cap')[fuel]);
+  const [id, kind] = Object.entries(FAMILY).find(([p]) => code.startsWith(p))[1];
+  return versionSeries(kind, builtFile(region, id)[fuel], code);
+};
+const usage = (gas = true) => ({ electricity: 2500, ...(gas ? { gas: 9500 } : {}) });
+const costFrom = (code, from, kwh = usage()) =>
+  Object.entries(kwh).reduce((sum, [fuel, k]) => sum + costSince(seriesOf(code, fuel), from, CUTOFF, fuel, k).cost, 0);
+const yearNow = (code, kwh = usage()) =>
+  Object.entries(kwh).reduce((sum, [fuel, k]) => sum + annualAt(seriesOf(code, fuel), CUTOFF, k), 0);
+const gbp = (v) => `£${Math.round(v).toLocaleString('en-GB')}`;
+const picked = (page) => page.locator('#picked .chip').evaluateAll((cs) => cs.map((c) => c.dataset.key));
+/** The ranked bars in page order: [key, total text]. */
+const totals = (page) =>
+  page.locator('#bars .total').evaluateAll((ts) => ts.map((t) => [t.dataset.key, t.querySelector('b').textContent]));
+
+test('the comparison runs from the default date to generatedAt’s day, cheapest first', async ({ page }) => {
+  await open(page);
+  // No tariff of mine and no OE-FIX-18M-26-09-11 in the fixture: side A is the latest launch, 12M May 2026, then Flexible.
+  expect(await picked(page)).toEqual(['OE-FIX-12M-26-05-10', 'VAR-25-12-15']);
+  await expect(page.locator('#from')).toHaveValue('2026-05-10');
+  await expect(page.locator('#lead')).toHaveText('From 10 May 2026 to today (164 days), cheapest first:');
+  const want = ['OE-FIX-12M-26-05-10', 'VAR-25-12-15']
+    .map((c) => [c, costFrom(c, '2026-05-10')])
+    .sort((a, b) => a[1] - b[1])
+    .map(([c, v]) => [c, `about ${gbp(v)}`]);
+  expect(await totals(page)).toEqual(want);
+  await expect(page.locator('#forward')).toHaveText(
+    `If today's rates stayed the same: 12M May 2026 v1 (fixed 12M) about ${gbp(yearNow('OE-FIX-12M-26-05-10'))}/yr · ` +
+      `Flexible Octopus December 2025 v2 (variable) about ${gbp(yearNow('VAR-25-12-15'))}/yr. A variable tariff's rates move with the price cap.`,
+  );
+  await expect(page.locator('#compare-hint')).toHaveText(
+    "Estimates, not bills. Your usage follows a typical home's seasonal pattern; standing charge and VAT included; direct debit. Each tariff is costed at its own rates from the date, on sale then or not. Exit fees, service and brand ignored.",
+  );
+});
+
+test('choosing my tariff picks it first, sets the date to its since-date and draws the compare-from line', async ({
+  page,
+}) => {
+  await open(page);
+  await page.selectOption('#mine', 'OE-FIX-12M-26-01-15');
+  expect(await picked(page)).toEqual(['OE-FIX-12M-26-01-15', 'VAR-25-12-15']);
+  await expect(page.locator('#from')).toHaveValue('2026-01-15');
+  await expect(page.locator('#since')).toHaveValue('2026-01-15');
+  await expect(page.locator('#lead')).toContainText('From 15 Jan 2026 to today (279 days)');
+  await expect(page.locator('#mine-line')).toHaveText(
+    `Fixed until 15 Jan 2027 · about ${gbp(yearNow('OE-FIX-12M-26-01-15'))}/yr · £150 to leave early.`,
+  );
+  await expect(page.locator('#bars .you-tag')).toHaveCount(1);
+  await view(page, 'annual');
+  await expect
+    .poll(() =>
+      page.evaluate((ids) => ids.map((id) => [__charts[id].$compareFrom, __charts[id].$compareLabel]), CHARTS),
+    )
+    .toEqual([...CHARTS.slice(0, 4).map(() => ['2026-01-15', false]), ['2026-01-15', true]]);
+  await page.fill('#since', '2026-02-01'); // a later since-date moves the comparison with it, and is remembered
+  await page.locator('#since').dispatchEvent('change');
+  await expect(page.locator('#from')).toHaveValue('2026-02-01');
+  await page.reload();
+  await page.waitForSelector('body[data-ready]', { state: 'attached' });
+  await expect(page.locator('#mine')).toHaveValue('OE-FIX-12M-26-01-15');
+  await expect(page.locator('#from')).toHaveValue('2026-02-01');
+  await expect(page.locator('#mine-line')).toContainText('Fixed until 1 Feb 2027');
+});
+
+test('an empty gas field removes gas from every figure: totals, today’s rates and the exit fee', async ({ page }) => {
+  await open(page);
+  await page.selectOption('#mine', 'OE-FIX-12M-26-01-15');
+  await page.fill('#kwh-gas', '');
+  const elec = usage(false);
+  await expect(page.locator('#mine-line')).toHaveText(
+    `Fixed until 15 Jan 2027 · about ${gbp(yearNow('OE-FIX-12M-26-01-15', elec))}/yr · £75 to leave early.`,
+  );
+  const want = ['OE-FIX-12M-26-01-15', 'VAR-25-12-15']
+    .map((c) => [c, costFrom(c, '2026-01-15', elec)])
+    .sort((a, b) => a[1] - b[1])
+    .map(([c, v]) => [c, `about ${gbp(v)}`]);
+  expect(await totals(page)).toEqual(want);
+  await expect(page.locator('#forward')).toContainText(
+    `Flexible Octopus December 2025 v2 (variable) about ${gbp(yearNow('VAR-25-12-15', elec))}/yr`,
+  );
+});
+
+test('fewer than two picked tariffs reads "Add at least two tariffs."', async ({ page }) => {
+  await open(page);
+  await page.click('#picked .chip[data-key="VAR-25-12-15"]');
+  expect(await picked(page)).toEqual(['OE-FIX-12M-26-05-10']);
+  await expect(page.locator('#lead')).toHaveText('Add at least two tariffs.');
+  await expect(page.locator('#bars > *')).toHaveCount(0);
+  await expect(page.locator('#forward')).toHaveText('');
+});
+
+test('the Ofgem price cap can be added; with no cap rates before 1 Jul 2026 it is listed unranked', async ({
+  page,
+}) => {
+  await open(page);
+  await page.selectOption('#add', 'cap');
+  expect(await picked(page)).toEqual(['OE-FIX-12M-26-05-10', 'VAR-25-12-15', 'cap']);
+  await expect(page.locator('#bars .unranked[data-key="cap"]')).toHaveText('no rates before 1 Jul 2026');
+  await expect(page.locator('#bars .name').last()).toHaveText('Ofgem price cap (cap level)');
+  await expect(page.locator('#forward')).toContainText(`Ofgem price cap (cap level) about ${gbp(yearNow('cap'))}/yr`);
+  await page.fill('#from', '2026-07-01'); // from the cap's first day it is priced and ranked
+  await page.locator('#from').dispatchEvent('change');
+  await expect(page.locator('#bars .total[data-key="cap"]')).toHaveText(`about ${gbp(costFrom('cap', '2026-07-01'))}`);
+});
+
+test('adding and removing tariffs recomputes the bars and keeps them cheapest first', async ({ page }) => {
+  await open(page);
+  const ranked = async () => {
+    const t = await totals(page);
+    const want = t.map(([c]) => [c, costFrom(c, '2026-05-10')]).sort((a, b) => a[1] - b[1]);
+    expect(t).toEqual(want.map(([c, v]) => [c, `about ${gbp(v)}`])); // every total right, in cheapest-first order
+    return t.map(([c]) => c);
+  };
+  expect(await ranked()).toHaveLength(2);
+  await page.selectOption('#add', 'OE-FIX-12M-26-01-15');
+  await page.selectOption('#add', 'VAR-25-01-01');
+  expect((await ranked()).sort()).toEqual([
+    'OE-FIX-12M-26-01-15',
+    'OE-FIX-12M-26-05-10',
+    'VAR-25-01-01',
+    'VAR-25-12-15',
+  ]);
+  await expect(page.locator('#bars .delta')).toHaveCount(3); // "+£n" against the cheapest on all but the cheapest
+  await page.click('#picked .chip[data-key="OE-FIX-12M-26-05-10"]');
+  expect((await ranked()).sort()).toEqual(['OE-FIX-12M-26-01-15', 'VAR-25-01-01', 'VAR-25-12-15']);
+});
+
+test('clicking a family line sets the comparison date to that version’s launch', async ({ page }) => {
+  await open(page);
+  await view(page, 'annual');
+  await frames(page);
+  const { x, y } = await page.evaluate(() => {
+    const c = __charts.annual;
+    const ds = c.data.datasets.findIndex((d) => d.label === '12M Fixed');
+    const i = c.data.datasets[ds].data.findIndex((p) => p.x === Date.parse('2026-02-15T00:00:00Z'));
+    const pt = c.getDatasetMeta(ds).data[i];
+    const box = c.canvas.getBoundingClientRect();
+    return { x: box.left + pt.x + 2, y: box.top + pt.y };
+  });
+  await page.mouse.click(x, y); // 12M Fixed January 2026 v1 was on sale that day
+  await expect(page.locator('#from')).toHaveValue('2026-01-15');
+  await expect(page.locator('#lead')).toContainText('From 15 Jan 2026');
+});
+
+test.describe('phone 390x844, four tariffs picked', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+  test('no horizontal overflow; bars hidden, totals kept', async ({ page }) => {
+    await open(page);
+    await page.selectOption('#add', 'cap');
+    await page.selectOption('#add', 'OE-FIX-12M-26-01-15');
+    expect(await picked(page)).toHaveLength(4);
+    expect(await noOverflow(page)).toBe(true);
+    await expect(page.locator('#bars .bar').first()).toBeHidden();
+    await expect(page.locator('#bars .total').first()).toBeVisible();
+  });
+});
+
+test('the CSV links resolve under the prefix, one per family of the region', async ({ page }) => {
+  await open(page);
+  const links = await page.locator('#csv a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+  expect(links).toEqual(['./data/_C/oe-fix-12m.csv', './data/_C/oe-fix-6m.csv', './data/_C/flexible.csv']);
+  const got = await page.evaluate(
+    (hrefs) =>
+      Promise.all(
+        hrefs.map(async (h) => {
+          const r = await fetch(h);
+          return [r.status, (await r.text()).split('\n')[0]];
+        }),
+      ),
+    links,
+  );
+  for (const [status, head] of got) {
+    expect(status).toBe(200);
+    expect(head).toBe(
+      'day,electricity_version,electricity_unit_rate,electricity_standing_charge,gas_version,gas_unit_rate,gas_standing_charge',
+    );
+  }
+});
+
+// ---- review fixes for the comparison ----
+test('after a region fails to load, the tariff and comparison controls are off and the comparison hidden', async ({
+  page,
+}) => {
+  await open(page);
+  await page.selectOption('#mine', 'OE-FIX-12M-26-05-10');
+  await page.route('**/data/_G/*.json', (route) => route.fulfill({ status: 500 }));
+  await page.selectOption('#region', '_G');
+  await expect(page.locator('#load-error')).toHaveText('Could not load data for North West');
+  for (const id of ['#mine', '#since', '#add', '#from']) await expect(page.locator(id)).toBeDisabled();
+  await expect(page.locator('#compare')).toBeHidden();
+  await expect(page.locator('#mine-line')).toBeHidden();
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(String(e)));
+  await page.evaluate(() => {
+    for (const id of ['mine', 'since', 'add', 'from']) document.getElementById(id).dispatchEvent(new Event('change'));
+  });
+  await frames(page);
+  expect(errors).toEqual([]);
+});
+
+test('unpriced days are named by where they sit: a gap inside the span, or no rates after the last priced day', async ({
+  page,
+}) => {
+  // London's cap with August missing: priced in July and again from September.
+  await page.route('**/data/_C/cap.json', async (route) => {
+    const file = await (await route.fetch()).json();
+    for (const p of file.electricity.days)
+      if (p.day.startsWith('2026-08')) Object.assign(p, { unit: null, standingCharge: null });
+    await route.fulfill({ json: file });
+  });
+  await open(page);
+  await page.selectOption('#add', 'cap');
+  await page.fill('#from', '2026-07-01');
+  await page.locator('#from').dispatchEvent('change');
+  await expect(page.locator('#bars .unranked[data-key="cap"]')).toHaveText('no rates 1 Aug 2026 – 31 Aug 2026');
+  // North West's cap stops after September (no row for the October period).
+  await page.selectOption('#region', '_G');
+  await expect(page.locator('#footer')).toContainText('· North West ·');
+  await page.selectOption('#add', 'cap');
+  await page.fill('#from', '2026-07-01');
+  await page.locator('#from').dispatchEvent('change');
+  await expect(page.locator('#bars .unranked[data-key="cap"]')).toHaveText('no rates after 30 Sept 2026');
+});
+
+for (const [name, viewport] of [
+  ['desktop', { width: 1280, height: 800 }],
+  ['phone', { width: 390, height: 844 }],
+]) {
+  test.describe(name, () => {
+    test.use({ viewport });
+    test('the date inputs show the whole date', async ({ page }) => {
+      await open(page);
+      await page.selectOption('#mine', 'OE-FIX-12M-26-01-15');
+      const clipped = await page.evaluate(() =>
+        // narrower than its own intrinsic width (the whole date plus the calendar button) means clipped
+        ['since', 'from'].filter((id) => {
+          const i = document.getElementById(id);
+          const shown = i.getBoundingClientRect().width;
+          const set = i.style.width;
+          i.style.width = 'auto';
+          const natural = i.getBoundingClientRect().width;
+          i.style.width = set;
+          return shown + 0.5 < natural;
+        }),
+      );
+      expect(clipped).toEqual([]);
+    });
+  });
+}
+
+test('a click on blank plot area leaves the comparison date alone', async ({ page }) => {
+  await open(page);
+  await view(page, 'annual');
+  await frames(page);
+  const { x, y } = await page.evaluate(() => {
+    const c = __charts.annual;
+    const box = c.canvas.getBoundingClientRect();
+    return {
+      x: box.left + c.scales.x.getPixelForValue(Date.parse('2026-02-15T12:00:00Z')),
+      y: box.top + c.scales.y.getPixelForValue(500), // far below every line
+    };
+  });
+  await page.mouse.click(x, y);
+  await frames(page);
+  await expect(page.locator('#from')).toHaveValue('2026-05-10');
+});
+
+test('switching region resets the comparison to that region’s defaults', async ({ page }) => {
+  await open(page);
+  await page.selectOption('#add', 'cap');
+  await page.fill('#from', '2026-03-01');
+  await page.locator('#from').dispatchEvent('change');
+  await page.selectOption('#region', '_G');
+  await expect(page.locator('#footer')).toContainText('· North West ·');
+  expect(await picked(page)).toEqual(['OE-FIX-12M-26-01-15', 'VAR-25-12-15']); // 12M May 2026 is not sold there
+  await expect(page.locator('#from')).toHaveValue('2026-01-15');
+});
+
+test('a variable tariff of mine reads "Variable · about £X/yr · no exit fee."', async ({ page }) => {
+  await open(page);
+  await page.selectOption('#mine', 'VAR-25-12-15');
+  await expect(page.locator('#mine-line')).toHaveText(
+    `Variable · about ${gbp(yearNow('VAR-25-12-15'))}/yr · no exit fee.`,
+  );
+  // it is the Flexible head itself, so the reference fix (here the latest launch, 12M May 2026) is the second pick
+  expect(await picked(page)).toEqual(['VAR-25-12-15', 'OE-FIX-12M-26-05-10']);
+});
+
+test('a remembered tariff not sold in the region shows none, stays remembered, and returns in its region', async ({
+  page,
+}) => {
+  await page.addInitScript(() =>
+    localStorage.setItem('octopus-tariffs:mine', JSON.stringify({ code: 'OE-FIX-12M-26-05-10', since: null })),
+  );
+  await open(page, '?region=_G');
+  await expect(page.locator('#mine')).toHaveValue('');
+  await expect(page.locator('#mine-line')).toBeHidden();
+  expect(JSON.parse(await page.evaluate(() => localStorage.getItem('octopus-tariffs:mine'))).code).toBe(
+    'OE-FIX-12M-26-05-10',
+  );
+  await page.selectOption('#region', '_C');
+  await expect(page.locator('#mine')).toHaveValue('OE-FIX-12M-26-05-10');
+  expect((await picked(page))[0]).toBe('OE-FIX-12M-26-05-10');
+});
+
+test('a one-day span reads "(1 day)"', async ({ page }) => {
+  await open(page);
+  await page.fill('#from', '2026-10-20');
+  await page.locator('#from').dispatchEvent('change');
+  await expect(page.locator('#lead')).toHaveText('From 20 Oct 2026 to today (1 day), cheapest first:');
 });

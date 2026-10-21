@@ -1,3 +1,4 @@
+import { annualAt, capSeries, costSince, MIN_START, versionSeries } from './lib/compare.js';
 import { annualCost } from './lib/cost.js';
 
 // The family line colours, slot n going to the n-th family in families.json (categorical: fixed order, never cycled, so
@@ -18,6 +19,11 @@ const DAY = 86_400_000;
 const WINDOWS = ['6', '12', '24', 'all']; // months back from the right edge, smallest first
 const REGION_KEY = 'octopus-tariffs:region';
 const USAGE_KEY = 'octopus-tariffs:usage';
+const MINE_KEY = 'octopus-tariffs:mine';
+/** The comparison's reference version when the viewer has picked no tariff (PLAN.md section 1, Comparison). */
+const REF_VERSION = 'OE-FIX-18M-26-09-11';
+const HINT =
+  "Estimates, not bills. Your usage follows a typical home's seasonal pattern; standing charge and VAT included; direct debit. Each tariff is costed at its own rates from the date, on sale then or not. Exit fees, service and brand ignored.";
 const PANELS = [
   { id: 'electricity-unit', fuel: 'electricity', field: 'unit', unit: 'p/kWh' },
   { id: 'electricity-standing', fuel: 'electricity', field: 'standingCharge', unit: 'p/day' },
@@ -123,6 +129,18 @@ async function main() {
       'Price cap',
       "Ofgem's default tariff cap: the most a supplier may charge per kWh and per day on a standard variable tariff, set by Ofgem for each region every quarter. A limit on rates, not a recommended tariff or an average bill. Source: Ofgem's published cap levels, entered by hand each quarter; the grey dashed line stops at the last period entered.",
     ],
+    exitfee: [
+      'Exit fee',
+      'What a fixed tariff charges, per fuel, to leave before its fixed term ends. The comparison leaves exit fees out.',
+    ],
+    compare: [
+      'Compare tariffs',
+      'Each picked tariff is costed day by day from the date to the last day collected, at the rates it would have charged, at your usage: a fixed version\'s own rates, its first rate reaching back to days before it was on sale; a variable version, and the price cap, at their own rates, a variable version taking the Flexible version on sale before its launch. A tariff with no rate on some day of the span is listed without a total. "If today\'s rates stayed the same" is a full year at the latest rates collected.',
+    ],
+    profile: [
+      'Seasonal pattern',
+      'Your kWh a year is spread over the months as a typical home uses it. Electricity: Elexon Profile Class 1 half-hourly demand for April 2025 to March 2026 summed per month, from Ofgem\'s price cap "Supplementary workbook to annex 2, 3 and 4 – demand and losses" v1.19; one weather year. Gas: Xoserve\'s Annual Load Profile for gas year 2026-27, EUC E2601BND (domestic), summed per month and averaged over the 13 mainland LDZs.',
+    ],
     notyet: ['Not yet collected', 'The hatched days after the last data update: prices are collected once a day.'],
     region: [
       'Region',
@@ -184,7 +202,27 @@ async function main() {
   const fuels = () => (kwh.gas == null ? ['electricity'] : ['electricity', 'gas']);
 
   // region: the one selected; shown: the one whose lines are loaded (they differ while a fetch is in flight or failed)
-  const state = { view: 'rates', window: '12', per: 'year', off: new Set(), region: null, shown: null, lines: null };
+  // mine: the viewer's tariff {code, since} (since null = its launch), remembered; picked and from: the comparison
+  const storedMine = (() => {
+    try {
+      const m = JSON.parse(remembered(MINE_KEY));
+      return typeof m?.code === 'string' ? { code: m.code, since: m.since ?? null } : null;
+    } catch {
+      return null;
+    }
+  })();
+  const state = {
+    view: 'rates',
+    window: '12',
+    per: 'year',
+    off: new Set(),
+    region: null,
+    shown: null,
+    lines: null,
+    mine: storedMine,
+    picked: [],
+    from: null,
+  };
   const perMonth = () => state.view === 'annual' && state.per === 'month';
   const select = $('region');
   select.replaceChildren(
@@ -294,6 +332,28 @@ async function main() {
         ctx.stroke();
       }
       ctx.restore();
+      // the solid "compare from" vertical on every chart, labelled only on the annual-cost chart
+      ctx.save();
+      const fx = Math.round(x.getPixelForValue(ms(state.from ?? '0000-01-01'))) + 0.5;
+      const shown = state.from != null && fx >= a.left && fx <= a.right;
+      chart.$compareFrom = shown ? state.from : null;
+      chart.$compareLabel = shown && chart === charts.annual;
+      if (shown) {
+        ctx.strokeStyle = css('--text-2');
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(fx, a.top);
+        ctx.lineTo(fx, a.bottom);
+        ctx.stroke();
+        if (chart.$compareLabel) {
+          ctx.fillStyle = css('--text-2');
+          ctx.font = '11px system-ui, sans-serif';
+          ctx.textBaseline = 'bottom'; // in the top padding, above the plot, so it never sits on a line
+          const w = ctx.measureText('compare from').width;
+          ctx.fillText('compare from', fx + 4 + w > a.right ? fx - 4 - w : fx + 4, a.top - 2);
+        }
+      }
+      ctx.restore();
     },
   };
 
@@ -343,6 +403,7 @@ async function main() {
         parsing: false,
         normalized: true,
         interaction: { mode: 'index', intersect: false },
+        onClick: (e, _active, chart) => pickLine(e, chart),
         layout: { padding: { top, right: 6 } },
         plugins: { legend: { display: false }, tooltip: tooltip(fmt) },
         scales: {
@@ -357,7 +418,7 @@ async function main() {
             min: 0,
             grid: { color: () => css('--grid') },
             border: { display: false },
-            ticks: { maxTicksLimit: top > 10 ? 5 : 7, color: () => css('--tick'), callback: tick },
+            ticks: { maxTicksLimit: top > 25 ? 5 : 7, color: () => css('--tick'), callback: tick },
           },
         },
       },
@@ -401,11 +462,259 @@ async function main() {
       tick: (v) => (Number.isInteger(v) ? v : v.toFixed(1)),
     });
   charts.annual = makeChart($('c-annual'), {
-    top: 8,
+    top: 20, // room for the "compare from" label above the plot
     fmt: (v) => `${pounds(v)}${perLabel()}`,
     tick: (v) => pounds(v),
   });
   window.__charts = charts; // test hook read by test/browser.spec.js
+
+  // ---- my tariff and the comparison (PLAN.md section 1, You row and Comparison) ----
+  const versionInfo = new Map(); // code -> {family, version, colour}
+  meta.families.forEach((f, i) => {
+    for (const v of f.versions) versionInfo.set(v.code, { family: f, version: v, colour: pair(PALETTE[i]) });
+  });
+  const cutoff = () => view.lastDay; // generatedAt's day: comparisons run up to it, never past it
+  const yesterday = () => addDays(cutoff(), -1);
+  const clampDay = (d) => (d < MIN_START ? MIN_START : d > yesterday() ? yesterday() : d);
+  const launchOf = (code) => versionInfo.get(code).version.availableFrom;
+  const lineOf = (code) => state.lines.find((l) => l.id === versionInfo.get(code).family.id);
+  /** The versions offered in the region, per family, newest first: those with rates since 2023-07-01 (build emits them). */
+  const offered = (f) =>
+    Object.keys(state.lines.find((l) => l.id === f.id)?.file.electricity.versions ?? {}).sort((a, b) =>
+      launchOf(b).localeCompare(launchOf(a)),
+    );
+  const isOffered = (code) => versionInfo.has(code) && offered(versionInfo.get(code).family).includes(code);
+  const mineCode = () => (state.mine && isOffered(state.mine.code) ? state.mine.code : null);
+  const saveMine = () => remember(MINE_KEY, JSON.stringify(state.mine));
+  /** The earliest since-date of a version: its launch, or the earliest comparison start if it launched before. */
+  const firstSince = (code) => (launchOf(code) > MIN_START ? launchOf(code) : MIN_START);
+  const mineSince = () => {
+    const first = firstSince(mineCode());
+    return clampDay(state.mine.since && state.mine.since >= first ? state.mine.since : first);
+  };
+  /** Side A when the viewer has no tariff: the reference version if sold here, else the latest launched version. */
+  /** The reference version, skipping `skip`: OE-FIX-18M-26-09-11 if sold here, else the latest launched version. */
+  const refCode = (skip = []) =>
+    isOffered(REF_VERSION) && !skip.includes(REF_VERSION)
+      ? REF_VERSION
+      : (meta.families
+          .flatMap(offered)
+          .filter((c) => !skip.includes(c))
+          .sort((a, b) => launchOf(b).localeCompare(launchOf(a)))
+          .at(0) ?? null);
+  /** Picks that would be fewer than two (my tariff is the Flexible version itself) take the reference as the second. */
+  const atLeastTwo = (picks) => (picks.length < 2 ? [...picks, refCode(picks)].filter(Boolean) : picks);
+  const flexCode = () => {
+    const f = meta.families.find((x) => x.kind === 'variable');
+    return f ? (offered(f)[0] ?? null) : null;
+  };
+  const resetComparison = () => {
+    const a = mineCode() ?? refCode();
+    state.picked = atLeastTwo([...new Set([a, flexCode()].filter(Boolean))]);
+    state.from = mineCode() ? mineSince() : a ? clampDay(launchOf(a)) : yesterday();
+  };
+  const typeOf = (key) => {
+    if (key === 'cap') return 'cap level';
+    const { family, version } = versionInfo.get(key);
+    return family.kind === 'fixed' ? `fixed ${version.term}M` : 'variable';
+  };
+  const shortName = (key) => {
+    if (key === 'cap') return 'Ofgem price cap';
+    const { family, version } = versionInfo.get(key);
+    const name = version.fullName.replace(/^Octopus /, '');
+    return family.kind === 'fixed' ? name.replace(' Fixed ', ' ') : name;
+  };
+  const named = (key) => `${shortName(key)} (${typeOf(key)})`;
+  const colourOf = (key) => (key === 'cap' ? 'var(--cap)' : versionInfo.get(key).colour);
+  /** The comparison series of one tariff for one fuel, or null when it has no rates for that fuel in the region. */
+  const seriesFor = (key, fuel) => {
+    if (key === 'cap') return capSeries(state.lines.find((l) => l.id === 'cap').file[fuel]);
+    const file = lineOf(key).file[fuel];
+    return file.versions[key] ? versionSeries(versionInfo.get(key).family.kind, file, key) : null;
+  };
+  /** Cost from state.from to the cutoff over the viewer's fuels: {cost, days, unpriced (sorted days)}. */
+  const costOf = (key) => {
+    let cost = 0;
+    let days = 0;
+    const unpriced = new Set();
+    for (const fuel of fuels()) {
+      const series = seriesFor(key, fuel);
+      const r = costSince(series ?? capSeries({ days: [] }), state.from, cutoff(), fuel, kwh[fuel]); // none: no rates at all
+      cost += r.cost;
+      days = r.days;
+      for (const d of r.unpriced) unpriced.add(d);
+    }
+    return { key, cost, days, unpriced: [...unpriced].sort() };
+  };
+  /** £ a year at the latest rates collected, over the viewer's fuels; null when any has no rate that day. */
+  const annualNow = (key) => {
+    let total = 0;
+    for (const fuel of fuels()) {
+      const series = seriesFor(key, fuel);
+      const a = series ? annualAt(series, cutoff(), kwh[fuel]) : null;
+      if (a == null) return null;
+      total += a;
+    }
+    return total;
+  };
+  /** Where a tariff's unpriced days sit in the span: at the start, at the end, one gap inside, or several gaps. */
+  const unpricedText = ({ unpriced }) => {
+    const runs = [];
+    for (const d of unpriced) {
+      if (runs.length && addDays(runs.at(-1)[1], 1) === d) runs.at(-1)[1] = d;
+      else runs.push([d, d]);
+    }
+    if (runs.length > 1) return 'no rates on some days';
+    const [[a, b]] = runs;
+    const atStart = a === state.from;
+    const atEnd = b === addDays(cutoff(), -1);
+    if (atStart && atEnd) return 'no rates in this span';
+    if (atStart) return `no rates before ${fmtDate(addDays(b, 1))}`;
+    if (atEnd) return `no rates after ${fmtDate(addDays(a, -1))}`;
+    return `no rates ${fmtDate(a)} – ${fmtDate(b)}`;
+  };
+  const setFrom = (day) => {
+    state.from = clampDay(day);
+    draw();
+  };
+  /** A click within HIT px of a family line, above or below its step on the clicked day, sets the date to that version's launch. */
+  const HIT = 8;
+  const pickLine = (e, chart) => {
+    if (!state.lines) return;
+    const i = view.days.indexOf(dayOf(Math.floor(chart.scales.x.getValueForPixel(e.x) / DAY) * DAY));
+    if (i < 0) return;
+    let near = null;
+    chart.data.datasets.forEach((ds, k) => {
+      const y = ds.data[2 * i].y;
+      if (ds.lineId === 'cap' || y == null || !chart.isDatasetVisible(k)) return;
+      const d = Math.abs(chart.scales.y.getPixelForValue(y) - e.y);
+      if (d <= HIT && (!near || d < near.d)) near = { d, id: ds.lineId };
+    });
+    if (!near) return;
+    const line = state.lines.find((l) => l.id === near.id);
+    const code = line.byDay.electricity.get(view.days[i])?.version ?? line.byDay.gas.get(view.days[i])?.version;
+    if (code) setFrom(launchOf(code));
+  };
+  const optgroups = (skip) =>
+    meta.families
+      .map((f) => {
+        const codes = offered(f).filter((c) => !skip.includes(c));
+        return codes.length
+          ? el(
+              'optgroup',
+              { label: f.label },
+              ...codes.map((c) => el('option', { value: c, textContent: shortName(c) })),
+            )
+          : null;
+      })
+      .filter(Boolean);
+  const drawMine = () => {
+    const code = mineCode();
+    $('mine').replaceChildren(el('option', { value: '', textContent: 'none' }), ...optgroups([]));
+    $('mine').value = code ?? '';
+    const since = $('since');
+    since.disabled = !code;
+    const line = $('mine-line');
+    line.hidden = !code;
+    if (!code) {
+      since.value = '';
+      return;
+    }
+    Object.assign(since, { min: firstSince(code), max: yesterday(), value: mineSince() });
+    const { family, version } = versionInfo.get(code);
+    const a = annualNow(code);
+    const about = a == null ? [] : [` · about ${pounds(a)}/yr`];
+    if (family.kind === 'fixed') {
+      const fee = fuels().reduce((sum, f) => sum + (lineOf(code).file[f].versions[code]?.exitFee ?? 0), 0);
+      line.replaceChildren(
+        term('fixed', 'Fixed'),
+        ` until ${fmtDate(addMonths(mineSince(), version.term))}`,
+        ...about,
+        ` · ${pounds(fee)} `,
+        term('exitfee', 'to leave early'),
+        '.',
+      );
+    } else line.replaceChildren(term('variable', 'Variable'), ...about, ' · no ', term('exitfee', 'exit fee'), '.');
+  };
+  const drawCompare = () => {
+    $('picked').replaceChildren(
+      ...state.picked.map((key) => {
+        const b = el(
+          'button',
+          { type: 'button', className: 'chip', dataset: { key }, ariaLabel: `Remove ${shortName(key)}` },
+          el('span', { className: `key${key === 'cap' ? ' dash' : ''}`, style: `--c:${colourOf(key)}` }),
+          shortName(key),
+          el('span', { className: 'x', textContent: '×', ariaHidden: 'true' }),
+        );
+        b.addEventListener('click', () => {
+          state.picked = state.picked.filter((k) => k !== key);
+          draw();
+        });
+        return b;
+      }),
+    );
+    $('add').replaceChildren(
+      el('option', { value: '', textContent: 'Add a tariff…' }),
+      ...(state.picked.includes('cap') ? [] : [el('option', { value: 'cap', textContent: 'Ofgem price cap' })]),
+      ...optgroups(state.picked),
+    );
+    Object.assign($('from'), { min: MIN_START, max: yesterday(), value: state.from });
+    if (state.picked.length < 2) {
+      $('lead').textContent = 'Add at least two tariffs.';
+      $('bars').replaceChildren();
+      $('forward').textContent = '';
+      return;
+    }
+    const rows = state.picked.map(costOf);
+    const ranked = rows.filter((r) => !r.unpriced.length).sort((a, b) => a.cost - b.cost);
+    const unranked = rows.filter((r) => r.unpriced.length);
+    const today = dayOf(Date.now()) <= cutoff() ? 'today' : fmtDate(cutoff());
+    $('lead').replaceChildren(
+      'From ',
+      el('b', { textContent: fmtDate(state.from) }),
+      ` to ${today} (${rows[0].days} ${rows[0].days === 1 ? 'day' : 'days'}), `,
+      term('compare', 'cheapest first'),
+      ':',
+    );
+    const top = Math.max(...ranked.map((r) => r.cost), 0);
+    const label = (key) =>
+      el(
+        'span',
+        { className: 'name' },
+        `${shortName(key)} `,
+        el('span', { className: 'type', textContent: `(${typeOf(key)})` }),
+        ...(key === mineCode() ? [' ', el('span', { className: 'you-tag', textContent: 'you' })] : []),
+      );
+    $('bars').replaceChildren(
+      ...ranked.flatMap((r) => {
+        const d = Math.round(r.cost - ranked[0].cost);
+        return [
+          label(r.key),
+          el('span', {
+            className: 'bar',
+            style: `--c:${colourOf(r.key)};width:${top ? (r.cost / top) * 100 : 0}%`,
+            dataset: { key: r.key },
+          }),
+          el(
+            'span',
+            { className: 'total', dataset: { key: r.key } },
+            el('b', { textContent: `about ${pounds(r.cost)}` }),
+            ...(d >= 1 ? [' ', el('span', { className: 'delta', textContent: `+${pounds(d)}` })] : []),
+          ),
+        ];
+      }),
+      ...unranked.flatMap((r) => [
+        label(r.key),
+        el('span', { className: 'unranked', textContent: unpricedText(r), dataset: { key: r.key } }),
+      ]),
+    );
+    $('forward').textContent = `If today's rates stayed the same: ${state.picked
+      .map((key) => {
+        const a = annualNow(key);
+        return a == null ? `${named(key)} no rates today` : `${named(key)} about ${pounds(a)}/yr`;
+      })
+      .join(' · ')}. A variable tariff's rates move with the price cap.`;
+  };
 
   // ---- drawing: every control and input calls draw(); everything is recomputed from the current state ----
   const chipText = (line) => {
@@ -487,17 +796,34 @@ async function main() {
     drawChips();
     drawNote();
     drawTitles();
+    drawMine();
+    drawCompare();
     $('legend-hatch').hidden = !(view.to > addDays(view.lastDay, 1));
     drawFooter();
   }
   function drawFooter() {
     $('footer').textContent =
       `Data: Octopus Energy public API · ${regionName(state.shown)} · direct debit · prices inc VAT · updated ${fmtDate(meta.generatedAt.slice(0, 10))}.`;
+    const files = state.lines ? state.lines.filter((l) => l.id !== 'cap') : [];
+    $('csv').replaceChildren(
+      ...(files.length ? ['Daily rates as CSV: '] : []),
+      ...files.flatMap((l, i) => [
+        ...(i ? [' · '] : []),
+        el('a', { href: `./data/${state.shown}/${l.id}.csv`, download: '', textContent: l.label }),
+      ]),
+    );
   }
 
   const showView = () => {
     $('rates').hidden = !state.lines || state.view !== 'rates'; // no charts while the selected region has no data
     $('annual').hidden = !state.lines || state.view !== 'annual';
+    $('compare').hidden = !state.lines;
+    // the tariff and comparison controls read the region's lines: off, and the summary line hidden, without them
+    for (const id of ['mine', 'add', 'from']) $(id).disabled = !state.lines;
+    if (!state.lines) {
+      $('since').disabled = true;
+      $('mine-line').hidden = true;
+    }
     $('per').hidden = state.view !== 'annual';
   };
   const segment = (id, onPick) =>
@@ -532,6 +858,39 @@ async function main() {
   };
   $('kwh-electricity').addEventListener('input', onUsage);
   $('kwh-gas').addEventListener('input', onUsage);
+
+  // Choosing my tariff makes it side A, in place of the previous one, and starts the comparison at its since-date.
+  $('mine').addEventListener('change', () => {
+    if (!state.lines) return;
+    const code = $('mine').value || null;
+    const before = mineCode() ?? refCode();
+    state.mine = code ? { code, since: null } : null;
+    saveMine();
+    const a = code ?? refCode();
+    state.picked = atLeastTwo([a, ...state.picked.filter((k) => k !== a && k !== before)].filter(Boolean));
+    if (a) state.from = code ? mineSince() : clampDay(launchOf(a));
+    draw();
+  });
+  $('since').addEventListener('change', () => {
+    if (!state.lines) return;
+    if (!mineCode()) return;
+    state.mine.since = $('since').value || null;
+    saveMine();
+    state.from = mineSince();
+    draw();
+  });
+  $('add').addEventListener('change', () => {
+    if (!state.lines) return;
+    const key = $('add').value;
+    if (key && !state.picked.includes(key)) state.picked.push(key);
+    draw();
+  });
+  $('from').addEventListener('change', () => {
+    if (!state.lines) return;
+    if ($('from').value) setFrom($('from').value);
+  });
+  const [hintHead, hintTail] = HINT.split("typical home's seasonal pattern");
+  $('compare-hint').replaceChildren(hintHead, term('profile', "typical home's seasonal pattern"), hintTail);
 
   // ---- deep links: #<productCode> opens that version's tooltip on its first day on sale; #YYYY-MM-DD opens the day's ----
   const openTooltip = (day, lineId) => {
@@ -602,6 +961,8 @@ async function main() {
     if (state.region !== region) return; // superseded by a later pick: its response decides
     state.lines = lineSet(region, files);
     state.shown = region;
+    view = range();
+    resetComparison();
     $('load-error').hidden = true;
     showView();
     draw();

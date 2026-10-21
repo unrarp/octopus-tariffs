@@ -16,11 +16,18 @@
     <p class="lede">How have Octopus Energy tariff prices moved over time, and would a fix or the variable have been cheaper?</p>
   </header>
 
-  <section class="you" aria-label="Your region and usage">
-    <label class="field">Region <select id="region"></select></label>
-    <label class="field">Electricity <input id="kwh-electricity" type="number" min="0" step="100" inputmode="numeric"> kWh/yr</label>
-    <label class="field">Gas <input id="kwh-gas" type="number" min="0" step="100" inputmode="numeric" placeholder="none"> kWh/yr</label>
-    <span id="usage-hint" class="hint"></span>
+  <section class="you" aria-label="Your region, usage and tariff">
+    <div class="you-row">
+      <label class="field">Region <select id="region"></select></label>
+      <label class="field">Electricity <input id="kwh-electricity" type="number" min="0" step="100" inputmode="numeric"> kWh/yr</label>
+      <label class="field">Gas <input id="kwh-gas" type="number" min="0" step="100" inputmode="numeric" placeholder="none"> kWh/yr</label>
+      <span id="usage-hint" class="hint"></span>
+    </div>
+    <div class="you-row">
+      <label class="field">My tariff <select id="mine"><option value="">none</option></select></label>
+      <label class="field">since <input id="since" type="date" disabled></label>
+    </div>
+    <p id="mine-line" class="hint mine-line" hidden></p>
   </section>
 
   <div class="controls">
@@ -51,7 +58,20 @@
   </div>
   <p id="note" class="note"></p>
 
-  <footer id="footer" class="footer"></footer>
+  <section id="compare" class="compare" aria-labelledby="compare-title">
+    <h2 id="compare-title">Compare tariffs</h2>
+    <div class="compare-row">
+      <div id="picked" class="chips"></div>
+      <select id="add" aria-label="Add a tariff"></select>
+      <label class="field">from <input id="from" type="date"></label>
+    </div>
+    <p id="lead" class="lead"></p>
+    <div id="bars" class="bars"></div>
+    <p id="forward" class="hint"></p>
+    <p id="compare-hint" class="hint"></p>
+  </section>
+
+  <footer class="footer"><p id="footer"></p><p id="csv"></p></footer>
 </main>
 <!-- Every definition the page uses: opened by the (i) button, by any term link (at its entry) and by a #fn-… deep link. -->
 <dialog id="help" class="help" aria-labelledby="help-title">
