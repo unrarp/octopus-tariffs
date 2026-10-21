@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Octopus Energy tariffs over time</title>
+<link rel="stylesheet" href="./app.css">
+</head>
+<body>
+<main class="wrap">
+  <header class="head">
+    <div class="title-row">
+      <h1>Octopus Energy tariffs over time</h1>
+      <button id="info" class="btn info" type="button" title="How to read this page" aria-label="How to read this page">i</button>
+    </div>
+    <p class="lede">How have Octopus Energy tariff prices moved over time, and would a fix or the variable have been cheaper?</p>
+  </header>
+
+  <section class="you" aria-label="Your region and usage">
+    <label class="field">Region <select id="region"></select></label>
+    <label class="field">Electricity <input id="kwh-electricity" type="number" min="0" step="100" inputmode="numeric"> kWh/yr</label>
+    <label class="field">Gas <input id="kwh-gas" type="number" min="0" step="100" inputmode="numeric" placeholder="none"> kWh/yr</label>
+    <span id="usage-hint" class="hint"></span>
+  </section>
+
+  <div class="controls">
+    <fieldset id="window" class="seg" aria-label="Window">
+      <button type="button" data-v="6" aria-pressed="false">6 months</button><button type="button" data-v="12" aria-pressed="true">1 year</button><button type="button" data-v="24" aria-pressed="false">2 years</button><button type="button" data-v="all" aria-pressed="false">All</button>
+    </fieldset>
+    <fieldset id="view" class="seg" aria-label="View">
+      <button type="button" data-v="rates" aria-pressed="true">Rates</button><button type="button" data-v="annual" aria-pressed="false">Annual cost</button>
+    </fieldset>
+    <fieldset id="per" class="seg" aria-label="Per year or per month" hidden>
+      <button type="button" data-v="year" aria-pressed="true">Per year</button><button type="button" data-v="month" aria-pressed="false">Per month</button>
+    </fieldset>
+  </div>
+  <div class="legend">
+    <div id="chips" class="chips"></div>
+    <span id="legend-hatch" class="legend-item" hidden><span class="sw hatch"></span><span id="hatch-term"></span></span>
+  </div>
+
+  <div id="chart-area">
+    <p id="load-error" class="load-error" hidden></p>
+    <div id="rates" class="grid">
+      <div class="chart panel-chart"><h3 id="t-electricity-unit">Electricity unit rate p/kWh</h3><canvas id="c-electricity-unit"></canvas></div>
+      <div class="chart panel-chart"><h3 id="t-electricity-standing">Electricity standing charge p/day</h3><canvas id="c-electricity-standing"></canvas></div>
+      <div class="chart panel-chart"><h3 id="t-gas-unit">Gas unit rate p/kWh</h3><canvas id="c-gas-unit"></canvas></div>
+      <div class="chart panel-chart"><h3 id="t-gas-standing">Gas standing charge p/day</h3><canvas id="c-gas-standing"></canvas></div>
+    </div>
+    <div id="annual" class="chart annual-chart" hidden><canvas id="c-annual"></canvas></div>
+  </div>
+  <p id="note" class="note"></p>
+
+  <footer id="footer" class="footer"></footer>
+</main>
+<!-- Every definition the page uses: opened by the (i) button, by any term link (at its entry) and by a #fn-… deep link. -->
+<dialog id="help" class="help" aria-labelledby="help-title">
+  <div class="help-body">
+    <div class="help-head">
+      <h2 id="help-title">How to read this page</h2>
+      <button id="help-close" class="btn" type="button">Close</button>
+    </div>
+    <dl id="defs"></dl>
+  </div>
+</dialog>
+<script src="./vendor/chart.umd.js"></script>
+<script type="module" src="./app.js"></script>
+</body>
+</html>
