@@ -31,3 +31,10 @@ export function dayRange(from, to) {
   for (let d = from; d < to; d = addDays(d, 1)) out.push(d);
   return out;
 }
+
+/** The epoch milliseconds of 00:00 UK-local on `day` (YYYY-MM-DD): 23:00Z the day before in BST, 00:00Z in GMT. */
+export function ukMidnight(day) {
+  const utc = Date.parse(`${day}T00:00:00Z`);
+  const bst = utc - 3600000;
+  return ukDay(new Date(bst).toISOString()) === day ? bst : utc;
+}

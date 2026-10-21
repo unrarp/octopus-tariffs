@@ -2,10 +2,14 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { readCsv } from './csv.js';
+import { addDays } from './days.js';
 import { endpointsOf } from './families.js';
 
-/** The series modules that exist (PLAN.md §4.3); adding a series means adding its name here and its module under src/series/. */
-export const KNOWN_SERIES = ['stepped'];
+/** The series modules that exist (PLAN.md §4.3), read from src/series/: adding a series means adding its module there. */
+export const KNOWN_SERIES = readdirSync(join(dirname(fileURLToPath(import.meta.url)), 'series'))
+  .filter((n) => n.endsWith('.js'))
+  .map((n) => n.slice(0, -'.js'.length))
+  .sort();
 
 const KEBAB = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const FORBIDDEN_KEYS = ['links', 'tariffs_active_at'];
@@ -72,18 +76,80 @@ function checkRows(rows, label, failures) {
   }
 }
 
-/** Validates families.json and the data tree (PLAN.md §3, §4.1); returns {failures, warnings} message lists. */
+const DAY = /^\d{4}-\d{2}-\d{2}$/;
+// Round-trips through Date so an impossible day such as 2026-02-30 (which Date.parse rolls into March) fails.
+const isDay = (v) =>
+  typeof v === 'string' && DAY.test(v) && new Date(`${v}T00:00:00Z`).toISOString().slice(0, 10) === v;
+const isNum = (v) => typeof v === 'number' && Number.isFinite(v);
+
+/** Pushes failures for a cap.json row of the wrong shape (PLAN.md §1 Price cap); returns whether the row is well formed. */
+function checkCapRow(r, i, regionKeys, failures) {
+  const at = `cap.json[${i}]`;
+  const before = failures.length;
+  if (r === null || typeof r !== 'object') {
+    failures.push(`${at}: not an object`);
+    return false;
+  }
+  if (!isDay(r.from)) failures.push(`${at}: from ${JSON.stringify(r.from)} is not a YYYY-MM-DD day`);
+  if (!isDay(r.to)) failures.push(`${at}: to ${JSON.stringify(r.to)} is not a YYYY-MM-DD day`);
+  if (isDay(r.from) && isDay(r.to) && r.from > r.to) failures.push(`${at}: from ${r.from} is after to ${r.to}`);
+  if (!regionKeys.includes(r.region))
+    failures.push(`${at}: region ${JSON.stringify(r.region)} is not in families.json`);
+  for (const fuel of ['electricity', 'gas']) {
+    for (const k of ['unit', 'standing']) {
+      if (!isNum(r[fuel]?.[k])) failures.push(`${at}: ${fuel}.${k} is not a number`);
+    }
+  }
+  if (!isNum(r.typicalBill)) failures.push(`${at}: typicalBill is not a number`);
+  if (typeof r.source !== 'string' || r.source === '') failures.push(`${at}: source is not a non-empty string`);
+  return failures.length === before;
+}
+
+/** Validates the cap.json rows (schema, no overlap within a region; a gap only warns); returns the latest `to` or null. */
+export function checkCap(rows, regionKeys, failures, warnings) {
+  if (!Array.isArray(rows)) {
+    failures.push('cap.json: not an array');
+    return null;
+  }
+  const good = rows.filter((r, i) => checkCapRow(r, i, regionKeys, failures));
+  const latest = good.reduce((l, r) => (l === null || r.to > l ? r.to : l), null);
+  for (const region of regionKeys) {
+    const mine = good.filter((r) => r.region === region).sort((a, b) => a.from.localeCompare(b.from));
+    if (!mine.length) warnings.push(`cap.json: region ${region} has no cap rows`);
+    else if (mine.at(-1).to < latest) {
+      warnings.push(`cap.json: region ${region} has no cap after ${mine.at(-1).to} (others run to ${latest})`);
+    }
+    for (let i = 1; i < mine.length; i++) {
+      const prev = mine[i - 1];
+      const cur = mine[i];
+      if (cur.from <= prev.to) {
+        failures.push(`cap.json: region ${region} periods ${prev.from}..${prev.to} and ${cur.from}..${cur.to} overlap`);
+      } else if (cur.from !== addDays(prev.to, 1)) {
+        warnings.push(`cap.json: region ${region} has no cap between ${prev.to} and ${cur.from}`);
+      }
+    }
+  }
+  return latest;
+}
+
+/** Validates families.json, cap.json and the data tree (PLAN.md §3, §4.1); returns {failures, warnings, capThrough} (capThrough: the latest cap period's last day, for the build to compare with generatedAt). */
 export function validate({ root, dataRoot = join(root, 'data') }) {
   const failures = [];
   const warnings = [];
   const config = JSON.parse(readFileSync(join(root, 'families.json'), 'utf8'));
   const matchers = checkConfig(config, failures);
+  const regionKeys = Object.keys(config.regions);
+  let capThrough = null;
+  try {
+    capThrough = checkCap(JSON.parse(readFileSync(join(root, 'cap.json'), 'utf8')), regionKeys, failures, warnings);
+  } catch (e) {
+    failures.push(`cap.json: unreadable: ${e.message}`);
+  }
   const productsDir = join(dataRoot, 'products');
   if (!existsSync(productsDir)) {
     failures.push(`${productsDir} is missing: run npm run collect to backfill data/ first`);
-    return { failures, warnings };
+    return { failures, warnings, capThrough };
   }
-  const regionKeys = Object.keys(config.regions);
   const skipRates = config.log.skipRateHistory.map((p) => new RegExp(p));
   const sold = new Set(); // `${familyId}|${region}` for every family × region with a stored tariff
 
@@ -134,7 +200,7 @@ export function validate({ root, dataRoot = join(root, 'data') }) {
       if (!sold.has(`${f.id}|${region}`)) warnings.push(`family ${f.id} has no stored tariff in region ${region}`);
     }
   }
-  return { failures, warnings };
+  return { failures, warnings, capThrough };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

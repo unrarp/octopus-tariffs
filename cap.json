@@ -1,0 +1,3572 @@
+[
+  {
+    "from": "2022-10-01",
+    "to": "2022-12-31",
+    "region": "_A",
+    "electricity": {
+      "unit": 50.39,
+      "standing": 37.08
+    },
+    "gas": {
+      "unit": 14.04,
+      "standing": 27.13
+    },
+    "typicalBill": 3549,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-08/Default%20tariff%20cap%20level%20-%201%20October%202022%20-%2031%20December%202022.pdf"
+  },
+  {
+    "from": "2022-10-01",
+    "to": "2022-12-31",
+    "region": "_B",
+    "electricity": {
+      "unit": 48.44,
+      "standing": 43.59
+    },
+    "gas": {
+      "unit": 13.97,
+      "standing": 27.13
+    },
+    "typicalBill": 3549,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-08/Default%20tariff%20cap%20level%20-%201%20October%202022%20-%2031%20December%202022.pdf"
+  },
+  {
+    "from": "2022-10-01",
+    "to": "2022-12-31",
+    "region": "_C",
+    "electricity": {
+      "unit": 51.09,
+      "standing": 31.58
+    },
+    "gas": {
+      "unit": 14.23,
+      "standing": 27.13
+    },
+    "typicalBill": 3549,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-08/Default%20tariff%20cap%20level%20-%201%20October%202022%20-%2031%20December%202022.pdf"
+  },
+  {
+    "from": "2022-10-01",
+    "to": "2022-12-31",
+    "region": "_D",
+    "electricity": {
+      "unit": 51.27,
+      "standing": 46.28
+    },
+    "gas": {
+      "unit": 14.07,
+      "standing": 27.13
+    },
+    "typicalBill": 3549,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-08/Default%20tariff%20cap%20level%20-%201%20October%202022%20-%2031%20December%202022.pdf"
+  },
+  {
+    "from": "2022-10-01",
+    "to": "2022-12-31",
+    "region": "_E",
+    "electricity": {
+      "unit": 49.12,
+      "standing": 46.81
+    },
+    "gas": {
+      "unit": 14.06,
+      "standing": 27.13
+    },
+    "typicalBill": 3549,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-08/Default%20tariff%20cap%20level%20-%201%20October%202022%20-%2031%20December%202022.pdf"
+  },
+  {
+    "from": "2022-10-01",
+    "to": "2022-12-31",
+    "region": "_F",
+    "electricity": {
+      "unit": 47.7,
+      "standing": 47.55
+    },
+    "gas": {
+      "unit": 13.93,
+      "standing": 27.13
+    },
+    "typicalBill": 3549,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-08/Default%20tariff%20cap%20level%20-%201%20October%202022%20-%2031%20December%202022.pdf"
+  },
+  {
+    "from": "2022-10-01",
+    "to": "2022-12-31",
+    "region": "_G",
+    "electricity": {
+      "unit": 48.88,
+      "standing": 41.2
+    },
+    "gas": {
+      "unit": 14.05,
+      "standing": 27.13
+    },
+    "typicalBill": 3549,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-08/Default%20tariff%20cap%20level%20-%201%20October%202022%20-%2031%20December%202022.pdf"
+  },
+  {
+    "from": "2022-10-01",
+    "to": "2022-12-31",
+    "region": "_H",
+    "electricity": {
+      "unit": 49.59,
+      "standing": 42.3
+    },
+    "gas": {
+      "unit": 14.18,
+      "standing": 27.13
+    },
+    "typicalBill": 3549,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-08/Default%20tariff%20cap%20level%20-%201%20October%202022%20-%2031%20December%202022.pdf"
+  },
+  {
+    "from": "2022-10-01",
+    "to": "2022-12-31",
+    "region": "_J",
+    "electricity": {
+      "unit": 50.63,
+      "standing": 40.65
+    },
+    "gas": {
+      "unit": 14.02,
+      "standing": 27.13
+    },
+    "typicalBill": 3549,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-08/Default%20tariff%20cap%20level%20-%201%20October%202022%20-%2031%20December%202022.pdf"
+  },
+  {
+    "from": "2022-10-01",
+    "to": "2022-12-31",
+    "region": "_K",
+    "electricity": {
+      "unit": 49.35,
+      "standing": 46.83
+    },
+    "gas": {
+      "unit": 14.12,
+      "standing": 27.13
+    },
+    "typicalBill": 3549,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-08/Default%20tariff%20cap%20level%20-%201%20October%202022%20-%2031%20December%202022.pdf"
+  },
+  {
+    "from": "2022-10-01",
+    "to": "2022-12-31",
+    "region": "_L",
+    "electricity": {
+      "unit": 49.25,
+      "standing": 50.14
+    },
+    "gas": {
+      "unit": 14.15,
+      "standing": 27.13
+    },
+    "typicalBill": 3549,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-08/Default%20tariff%20cap%20level%20-%201%20October%202022%20-%2031%20December%202022.pdf"
+  },
+  {
+    "from": "2022-10-01",
+    "to": "2022-12-31",
+    "region": "_M",
+    "electricity": {
+      "unit": 48.45,
+      "standing": 47.19
+    },
+    "gas": {
+      "unit": 13.97,
+      "standing": 27.13
+    },
+    "typicalBill": 3549,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-08/Default%20tariff%20cap%20level%20-%201%20October%202022%20-%2031%20December%202022.pdf"
+  },
+  {
+    "from": "2022-10-01",
+    "to": "2022-12-31",
+    "region": "_N",
+    "electricity": {
+      "unit": 49.15,
+      "standing": 48.25
+    },
+    "gas": {
+      "unit": 14.0,
+      "standing": 27.13
+    },
+    "typicalBill": 3549,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-08/Default%20tariff%20cap%20level%20-%201%20October%202022%20-%2031%20December%202022.pdf"
+  },
+  {
+    "from": "2022-10-01",
+    "to": "2022-12-31",
+    "region": "_P",
+    "electricity": {
+      "unit": 48.49,
+      "standing": 48.64
+    },
+    "gas": {
+      "unit": 14.0,
+      "standing": 27.13
+    },
+    "typicalBill": 3549,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-08/Default%20tariff%20cap%20level%20-%201%20October%202022%20-%2031%20December%202022.pdf"
+  },
+  {
+    "from": "2023-01-01",
+    "to": "2023-03-31",
+    "region": "_A",
+    "electricity": {
+      "unit": 65.3,
+      "standing": 37.08
+    },
+    "gas": {
+      "unit": 16.24,
+      "standing": 27.13
+    },
+    "typicalBill": 4279,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-11/Default%20tariff%20cap%20level%20-%201%20January%202023%20-%2031%20March%202023.pdf"
+  },
+  {
+    "from": "2023-01-01",
+    "to": "2023-03-31",
+    "region": "_B",
+    "electricity": {
+      "unit": 63.09,
+      "standing": 43.59
+    },
+    "gas": {
+      "unit": 16.17,
+      "standing": 27.13
+    },
+    "typicalBill": 4279,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-11/Default%20tariff%20cap%20level%20-%201%20January%202023%20-%2031%20March%202023.pdf"
+  },
+  {
+    "from": "2023-01-01",
+    "to": "2023-03-31",
+    "region": "_C",
+    "electricity": {
+      "unit": 66.2,
+      "standing": 31.58
+    },
+    "gas": {
+      "unit": 16.43,
+      "standing": 27.13
+    },
+    "typicalBill": 4279,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-11/Default%20tariff%20cap%20level%20-%201%20January%202023%20-%2031%20March%202023.pdf"
+  },
+  {
+    "from": "2023-01-01",
+    "to": "2023-03-31",
+    "region": "_D",
+    "electricity": {
+      "unit": 66.55,
+      "standing": 46.28
+    },
+    "gas": {
+      "unit": 16.28,
+      "standing": 27.13
+    },
+    "typicalBill": 4279,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-11/Default%20tariff%20cap%20level%20-%201%20January%202023%20-%2031%20March%202023.pdf"
+  },
+  {
+    "from": "2023-01-01",
+    "to": "2023-03-31",
+    "region": "_E",
+    "electricity": {
+      "unit": 64.06,
+      "standing": 46.81
+    },
+    "gas": {
+      "unit": 16.27,
+      "standing": 27.13
+    },
+    "typicalBill": 4279,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-11/Default%20tariff%20cap%20level%20-%201%20January%202023%20-%2031%20March%202023.pdf"
+  },
+  {
+    "from": "2023-01-01",
+    "to": "2023-03-31",
+    "region": "_F",
+    "electricity": {
+      "unit": 62.19,
+      "standing": 47.55
+    },
+    "gas": {
+      "unit": 16.14,
+      "standing": 27.13
+    },
+    "typicalBill": 4279,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-11/Default%20tariff%20cap%20level%20-%201%20January%202023%20-%2031%20March%202023.pdf"
+  },
+  {
+    "from": "2023-01-01",
+    "to": "2023-03-31",
+    "region": "_G",
+    "electricity": {
+      "unit": 63.58,
+      "standing": 41.2
+    },
+    "gas": {
+      "unit": 16.26,
+      "standing": 27.13
+    },
+    "typicalBill": 4279,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-11/Default%20tariff%20cap%20level%20-%201%20January%202023%20-%2031%20March%202023.pdf"
+  },
+  {
+    "from": "2023-01-01",
+    "to": "2023-03-31",
+    "region": "_H",
+    "electricity": {
+      "unit": 64.49,
+      "standing": 42.3
+    },
+    "gas": {
+      "unit": 16.38,
+      "standing": 27.13
+    },
+    "typicalBill": 4279,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-11/Default%20tariff%20cap%20level%20-%201%20January%202023%20-%2031%20March%202023.pdf"
+  },
+  {
+    "from": "2023-01-01",
+    "to": "2023-03-31",
+    "region": "_J",
+    "electricity": {
+      "unit": 65.56,
+      "standing": 40.65
+    },
+    "gas": {
+      "unit": 16.23,
+      "standing": 27.13
+    },
+    "typicalBill": 4279,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-11/Default%20tariff%20cap%20level%20-%201%20January%202023%20-%2031%20March%202023.pdf"
+  },
+  {
+    "from": "2023-01-01",
+    "to": "2023-03-31",
+    "region": "_K",
+    "electricity": {
+      "unit": 64.19,
+      "standing": 46.83
+    },
+    "gas": {
+      "unit": 16.32,
+      "standing": 27.13
+    },
+    "typicalBill": 4279,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-11/Default%20tariff%20cap%20level%20-%201%20January%202023%20-%2031%20March%202023.pdf"
+  },
+  {
+    "from": "2023-01-01",
+    "to": "2023-03-31",
+    "region": "_L",
+    "electricity": {
+      "unit": 63.93,
+      "standing": 50.14
+    },
+    "gas": {
+      "unit": 16.35,
+      "standing": 27.13
+    },
+    "typicalBill": 4279,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-11/Default%20tariff%20cap%20level%20-%201%20January%202023%20-%2031%20March%202023.pdf"
+  },
+  {
+    "from": "2023-01-01",
+    "to": "2023-03-31",
+    "region": "_M",
+    "electricity": {
+      "unit": 63.27,
+      "standing": 47.19
+    },
+    "gas": {
+      "unit": 16.18,
+      "standing": 27.13
+    },
+    "typicalBill": 4279,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-11/Default%20tariff%20cap%20level%20-%201%20January%202023%20-%2031%20March%202023.pdf"
+  },
+  {
+    "from": "2023-01-01",
+    "to": "2023-03-31",
+    "region": "_N",
+    "electricity": {
+      "unit": 64.14,
+      "standing": 48.25
+    },
+    "gas": {
+      "unit": 16.21,
+      "standing": 27.13
+    },
+    "typicalBill": 4279,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-11/Default%20tariff%20cap%20level%20-%201%20January%202023%20-%2031%20March%202023.pdf"
+  },
+  {
+    "from": "2023-01-01",
+    "to": "2023-03-31",
+    "region": "_P",
+    "electricity": {
+      "unit": 63.05,
+      "standing": 48.64
+    },
+    "gas": {
+      "unit": 16.21,
+      "standing": 27.13
+    },
+    "typicalBill": 4279,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2022-11/Default%20tariff%20cap%20level%20-%201%20January%202023%20-%2031%20March%202023.pdf"
+  },
+  {
+    "from": "2023-04-01",
+    "to": "2023-06-30",
+    "region": "_A",
+    "electricity": {
+      "unit": 48.93,
+      "standing": 41.58
+    },
+    "gas": {
+      "unit": 11.9,
+      "standing": 27.73
+    },
+    "typicalBill": 3280,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-02/Default%20tariff%20cap%20level%20-%201%20April%202023%20-%2030%20June%202023.pdf"
+  },
+  {
+    "from": "2023-04-01",
+    "to": "2023-06-30",
+    "region": "_B",
+    "electricity": {
+      "unit": 47.43,
+      "standing": 47.91
+    },
+    "gas": {
+      "unit": 11.88,
+      "standing": 27.73
+    },
+    "typicalBill": 3280,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-02/Default%20tariff%20cap%20level%20-%201%20April%202023%20-%2030%20June%202023.pdf"
+  },
+  {
+    "from": "2023-04-01",
+    "to": "2023-06-30",
+    "region": "_C",
+    "electricity": {
+      "unit": 49.6,
+      "standing": 36.36
+    },
+    "gas": {
+      "unit": 12.01,
+      "standing": 27.73
+    },
+    "typicalBill": 3280,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-02/Default%20tariff%20cap%20level%20-%201%20April%202023%20-%2030%20June%202023.pdf"
+  },
+  {
+    "from": "2023-04-01",
+    "to": "2023-06-30",
+    "region": "_D",
+    "electricity": {
+      "unit": 49.68,
+      "standing": 58.88
+    },
+    "gas": {
+      "unit": 12.04,
+      "standing": 27.73
+    },
+    "typicalBill": 3280,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-02/Default%20tariff%20cap%20level%20-%201%20April%202023%20-%2030%20June%202023.pdf"
+  },
+  {
+    "from": "2023-04-01",
+    "to": "2023-06-30",
+    "region": "_E",
+    "electricity": {
+      "unit": 47.82,
+      "standing": 51.39
+    },
+    "gas": {
+      "unit": 11.93,
+      "standing": 27.73
+    },
+    "typicalBill": 3280,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-02/Default%20tariff%20cap%20level%20-%201%20April%202023%20-%2030%20June%202023.pdf"
+  },
+  {
+    "from": "2023-04-01",
+    "to": "2023-06-30",
+    "region": "_F",
+    "electricity": {
+      "unit": 46.97,
+      "standing": 54.32
+    },
+    "gas": {
+      "unit": 11.93,
+      "standing": 27.73
+    },
+    "typicalBill": 3280,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-02/Default%20tariff%20cap%20level%20-%201%20April%202023%20-%2030%20June%202023.pdf"
+  },
+  {
+    "from": "2023-04-01",
+    "to": "2023-06-30",
+    "region": "_G",
+    "electricity": {
+      "unit": 47.73,
+      "standing": 48.97
+    },
+    "gas": {
+      "unit": 12.01,
+      "standing": 27.73
+    },
+    "typicalBill": 3280,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-02/Default%20tariff%20cap%20level%20-%201%20April%202023%20-%2030%20June%202023.pdf"
+  },
+  {
+    "from": "2023-04-01",
+    "to": "2023-06-30",
+    "region": "_H",
+    "electricity": {
+      "unit": 48.49,
+      "standing": 47.24
+    },
+    "gas": {
+      "unit": 12.1,
+      "standing": 27.73
+    },
+    "typicalBill": 3280,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-02/Default%20tariff%20cap%20level%20-%201%20April%202023%20-%2030%20June%202023.pdf"
+  },
+  {
+    "from": "2023-04-01",
+    "to": "2023-06-30",
+    "region": "_J",
+    "electricity": {
+      "unit": 49.12,
+      "standing": 44.96
+    },
+    "gas": {
+      "unit": 12.04,
+      "standing": 27.73
+    },
+    "typicalBill": 3280,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-02/Default%20tariff%20cap%20level%20-%201%20April%202023%20-%2030%20June%202023.pdf"
+  },
+  {
+    "from": "2023-04-01",
+    "to": "2023-06-30",
+    "region": "_K",
+    "electricity": {
+      "unit": 48.27,
+      "standing": 51.26
+    },
+    "gas": {
+      "unit": 12.16,
+      "standing": 27.73
+    },
+    "typicalBill": 3280,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-02/Default%20tariff%20cap%20level%20-%201%20April%202023%20-%2030%20June%202023.pdf"
+  },
+  {
+    "from": "2023-04-01",
+    "to": "2023-06-30",
+    "region": "_L",
+    "electricity": {
+      "unit": 47.8,
+      "standing": 55.5
+    },
+    "gas": {
+      "unit": 12.2,
+      "standing": 27.73
+    },
+    "typicalBill": 3280,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-02/Default%20tariff%20cap%20level%20-%201%20April%202023%20-%2030%20June%202023.pdf"
+  },
+  {
+    "from": "2023-04-01",
+    "to": "2023-06-30",
+    "region": "_M",
+    "electricity": {
+      "unit": 47.39,
+      "standing": 52.95
+    },
+    "gas": {
+      "unit": 11.94,
+      "standing": 27.73
+    },
+    "typicalBill": 3280,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-02/Default%20tariff%20cap%20level%20-%201%20April%202023%20-%2030%20June%202023.pdf"
+  },
+  {
+    "from": "2023-04-01",
+    "to": "2023-06-30",
+    "region": "_N",
+    "electricity": {
+      "unit": 47.91,
+      "standing": 58.73
+    },
+    "gas": {
+      "unit": 11.96,
+      "standing": 27.73
+    },
+    "typicalBill": 3280,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-02/Default%20tariff%20cap%20level%20-%201%20April%202023%20-%2030%20June%202023.pdf"
+  },
+  {
+    "from": "2023-04-01",
+    "to": "2023-06-30",
+    "region": "_P",
+    "electricity": {
+      "unit": 47.58,
+      "standing": 56.17
+    },
+    "gas": {
+      "unit": 11.96,
+      "standing": 27.73
+    },
+    "typicalBill": 3280,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-02/Default%20tariff%20cap%20level%20-%201%20April%202023%20-%2030%20June%202023.pdf"
+  },
+  {
+    "from": "2023-07-01",
+    "to": "2023-09-30",
+    "region": "_A",
+    "electricity": {
+      "unit": 29.26,
+      "standing": 41.58
+    },
+    "gas": {
+      "unit": 7.05,
+      "standing": 27.73
+    },
+    "typicalBill": 2074,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-05/Default%20tariff%20cap%20level%20-%201%20July%202023%20-%2030%20September%202023.pdf"
+  },
+  {
+    "from": "2023-07-01",
+    "to": "2023-09-30",
+    "region": "_B",
+    "electricity": {
+      "unit": 28.08,
+      "standing": 47.91
+    },
+    "gas": {
+      "unit": 7.03,
+      "standing": 27.73
+    },
+    "typicalBill": 2074,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-05/Default%20tariff%20cap%20level%20-%201%20July%202023%20-%2030%20September%202023.pdf"
+  },
+  {
+    "from": "2023-07-01",
+    "to": "2023-09-30",
+    "region": "_C",
+    "electricity": {
+      "unit": 29.71,
+      "standing": 36.36
+    },
+    "gas": {
+      "unit": 7.15,
+      "standing": 27.73
+    },
+    "typicalBill": 2074,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-05/Default%20tariff%20cap%20level%20-%201%20July%202023%20-%2030%20September%202023.pdf"
+  },
+  {
+    "from": "2023-07-01",
+    "to": "2023-09-30",
+    "region": "_D",
+    "electricity": {
+      "unit": 29.62,
+      "standing": 58.88
+    },
+    "gas": {
+      "unit": 7.18,
+      "standing": 27.73
+    },
+    "typicalBill": 2074,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-05/Default%20tariff%20cap%20level%20-%201%20July%202023%20-%2030%20September%202023.pdf"
+  },
+  {
+    "from": "2023-07-01",
+    "to": "2023-09-30",
+    "region": "_E",
+    "electricity": {
+      "unit": 28.2,
+      "standing": 51.39
+    },
+    "gas": {
+      "unit": 7.08,
+      "standing": 27.73
+    },
+    "typicalBill": 2074,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-05/Default%20tariff%20cap%20level%20-%201%20July%202023%20-%2030%20September%202023.pdf"
+  },
+  {
+    "from": "2023-07-01",
+    "to": "2023-09-30",
+    "region": "_F",
+    "electricity": {
+      "unit": 27.89,
+      "standing": 54.32
+    },
+    "gas": {
+      "unit": 7.08,
+      "standing": 27.73
+    },
+    "typicalBill": 2074,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-05/Default%20tariff%20cap%20level%20-%201%20July%202023%20-%2030%20September%202023.pdf"
+  },
+  {
+    "from": "2023-07-01",
+    "to": "2023-09-30",
+    "region": "_G",
+    "electricity": {
+      "unit": 28.51,
+      "standing": 48.97
+    },
+    "gas": {
+      "unit": 7.16,
+      "standing": 27.73
+    },
+    "typicalBill": 2074,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-05/Default%20tariff%20cap%20level%20-%201%20July%202023%20-%2030%20September%202023.pdf"
+  },
+  {
+    "from": "2023-07-01",
+    "to": "2023-09-30",
+    "region": "_H",
+    "electricity": {
+      "unit": 28.85,
+      "standing": 47.24
+    },
+    "gas": {
+      "unit": 7.25,
+      "standing": 27.73
+    },
+    "typicalBill": 2074,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-05/Default%20tariff%20cap%20level%20-%201%20July%202023%20-%2030%20September%202023.pdf"
+  },
+  {
+    "from": "2023-07-01",
+    "to": "2023-09-30",
+    "region": "_J",
+    "electricity": {
+      "unit": 29.43,
+      "standing": 44.96
+    },
+    "gas": {
+      "unit": 7.18,
+      "standing": 27.73
+    },
+    "typicalBill": 2074,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-05/Default%20tariff%20cap%20level%20-%201%20July%202023%20-%2030%20September%202023.pdf"
+  },
+  {
+    "from": "2023-07-01",
+    "to": "2023-09-30",
+    "region": "_K",
+    "electricity": {
+      "unit": 28.78,
+      "standing": 51.26
+    },
+    "gas": {
+      "unit": 7.3,
+      "standing": 27.73
+    },
+    "typicalBill": 2074,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-05/Default%20tariff%20cap%20level%20-%201%20July%202023%20-%2030%20September%202023.pdf"
+  },
+  {
+    "from": "2023-07-01",
+    "to": "2023-09-30",
+    "region": "_L",
+    "electricity": {
+      "unit": 28.52,
+      "standing": 55.5
+    },
+    "gas": {
+      "unit": 7.35,
+      "standing": 27.73
+    },
+    "typicalBill": 2074,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-05/Default%20tariff%20cap%20level%20-%201%20July%202023%20-%2030%20September%202023.pdf"
+  },
+  {
+    "from": "2023-07-01",
+    "to": "2023-09-30",
+    "region": "_M",
+    "electricity": {
+      "unit": 27.87,
+      "standing": 52.95
+    },
+    "gas": {
+      "unit": 7.09,
+      "standing": 27.73
+    },
+    "typicalBill": 2074,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-05/Default%20tariff%20cap%20level%20-%201%20July%202023%20-%2030%20September%202023.pdf"
+  },
+  {
+    "from": "2023-07-01",
+    "to": "2023-09-30",
+    "region": "_N",
+    "electricity": {
+      "unit": 28.25,
+      "standing": 58.73
+    },
+    "gas": {
+      "unit": 7.11,
+      "standing": 27.73
+    },
+    "typicalBill": 2074,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-05/Default%20tariff%20cap%20level%20-%201%20July%202023%20-%2030%20September%202023.pdf"
+  },
+  {
+    "from": "2023-07-01",
+    "to": "2023-09-30",
+    "region": "_P",
+    "electricity": {
+      "unit": 28.54,
+      "standing": 56.17
+    },
+    "gas": {
+      "unit": 7.11,
+      "standing": 27.73
+    },
+    "typicalBill": 2074,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-05/Default%20tariff%20cap%20level%20-%201%20July%202023%20-%2030%20September%202023.pdf"
+  },
+  {
+    "from": "2023-10-01",
+    "to": "2023-12-31",
+    "region": "_A",
+    "electricity": {
+      "unit": 26.6,
+      "standing": 41.92
+    },
+    "gas": {
+      "unit": 6.46,
+      "standing": 28.21
+    },
+    "typicalBill": 1834,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-08/Default%20tariff%20cap%20level%20-%201%20October%202023%20-%2031%20December%202023.pdf"
+  },
+  {
+    "from": "2023-10-01",
+    "to": "2023-12-31",
+    "region": "_B",
+    "electricity": {
+      "unit": 25.49,
+      "standing": 48.29
+    },
+    "gas": {
+      "unit": 6.44,
+      "standing": 28.21
+    },
+    "typicalBill": 1834,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-08/Default%20tariff%20cap%20level%20-%201%20October%202023%20-%2031%20December%202023.pdf"
+  },
+  {
+    "from": "2023-10-01",
+    "to": "2023-12-31",
+    "region": "_C",
+    "electricity": {
+      "unit": 27.07,
+      "standing": 36.68
+    },
+    "gas": {
+      "unit": 6.57,
+      "standing": 28.21
+    },
+    "typicalBill": 1834,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-08/Default%20tariff%20cap%20level%20-%201%20October%202023%20-%2031%20December%202023.pdf"
+  },
+  {
+    "from": "2023-10-01",
+    "to": "2023-12-31",
+    "region": "_D",
+    "electricity": {
+      "unit": 26.91,
+      "standing": 59.26
+    },
+    "gas": {
+      "unit": 6.6,
+      "standing": 28.21
+    },
+    "typicalBill": 1834,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-08/Default%20tariff%20cap%20level%20-%201%20October%202023%20-%2031%20December%202023.pdf"
+  },
+  {
+    "from": "2023-10-01",
+    "to": "2023-12-31",
+    "region": "_E",
+    "electricity": {
+      "unit": 25.57,
+      "standing": 51.79
+    },
+    "gas": {
+      "unit": 6.49,
+      "standing": 28.21
+    },
+    "typicalBill": 1834,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-08/Default%20tariff%20cap%20level%20-%201%20October%202023%20-%2031%20December%202023.pdf"
+  },
+  {
+    "from": "2023-10-01",
+    "to": "2023-12-31",
+    "region": "_F",
+    "electricity": {
+      "unit": 25.31,
+      "standing": 54.72
+    },
+    "gas": {
+      "unit": 6.49,
+      "standing": 28.21
+    },
+    "typicalBill": 1834,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-08/Default%20tariff%20cap%20level%20-%201%20October%202023%20-%2031%20December%202023.pdf"
+  },
+  {
+    "from": "2023-10-01",
+    "to": "2023-12-31",
+    "region": "_G",
+    "electricity": {
+      "unit": 25.92,
+      "standing": 49.35
+    },
+    "gas": {
+      "unit": 6.57,
+      "standing": 28.21
+    },
+    "typicalBill": 1834,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-08/Default%20tariff%20cap%20level%20-%201%20October%202023%20-%2031%20December%202023.pdf"
+  },
+  {
+    "from": "2023-10-01",
+    "to": "2023-12-31",
+    "region": "_H",
+    "electricity": {
+      "unit": 26.2,
+      "standing": 47.61
+    },
+    "gas": {
+      "unit": 6.66,
+      "standing": 28.21
+    },
+    "typicalBill": 1834,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-08/Default%20tariff%20cap%20level%20-%201%20October%202023%20-%2031%20December%202023.pdf"
+  },
+  {
+    "from": "2023-10-01",
+    "to": "2023-12-31",
+    "region": "_J",
+    "electricity": {
+      "unit": 26.76,
+      "standing": 45.32
+    },
+    "gas": {
+      "unit": 6.59,
+      "standing": 28.21
+    },
+    "typicalBill": 1834,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-08/Default%20tariff%20cap%20level%20-%201%20October%202023%20-%2031%20December%202023.pdf"
+  },
+  {
+    "from": "2023-10-01",
+    "to": "2023-12-31",
+    "region": "_K",
+    "electricity": {
+      "unit": 26.14,
+      "standing": 51.64
+    },
+    "gas": {
+      "unit": 6.71,
+      "standing": 28.2
+    },
+    "typicalBill": 1834,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-08/Default%20tariff%20cap%20level%20-%201%20October%202023%20-%2031%20December%202023.pdf"
+  },
+  {
+    "from": "2023-10-01",
+    "to": "2023-12-31",
+    "region": "_L",
+    "electricity": {
+      "unit": 25.89,
+      "standing": 55.9
+    },
+    "gas": {
+      "unit": 6.76,
+      "standing": 28.2
+    },
+    "typicalBill": 1834,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-08/Default%20tariff%20cap%20level%20-%201%20October%202023%20-%2031%20December%202023.pdf"
+  },
+  {
+    "from": "2023-10-01",
+    "to": "2023-12-31",
+    "region": "_M",
+    "electricity": {
+      "unit": 25.26,
+      "standing": 53.36
+    },
+    "gas": {
+      "unit": 6.5,
+      "standing": 28.21
+    },
+    "typicalBill": 1834,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-08/Default%20tariff%20cap%20level%20-%201%20October%202023%20-%2031%20December%202023.pdf"
+  },
+  {
+    "from": "2023-10-01",
+    "to": "2023-12-31",
+    "region": "_N",
+    "electricity": {
+      "unit": 25.6,
+      "standing": 59.14
+    },
+    "gas": {
+      "unit": 6.52,
+      "standing": 28.21
+    },
+    "typicalBill": 1834,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-08/Default%20tariff%20cap%20level%20-%201%20October%202023%20-%2031%20December%202023.pdf"
+  },
+  {
+    "from": "2023-10-01",
+    "to": "2023-12-31",
+    "region": "_P",
+    "electricity": {
+      "unit": 25.96,
+      "standing": 56.57
+    },
+    "gas": {
+      "unit": 6.52,
+      "standing": 28.21
+    },
+    "typicalBill": 1834,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-08/Default%20tariff%20cap%20level%20-%201%20October%202023%20-%2031%20December%202023.pdf"
+  },
+  {
+    "from": "2024-01-01",
+    "to": "2024-03-31",
+    "region": "_A",
+    "electricity": {
+      "unit": 27.82,
+      "standing": 41.91
+    },
+    "gas": {
+      "unit": 6.96,
+      "standing": 28.19
+    },
+    "typicalBill": 1928,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-11/Default%20tariff%20cap%20level%20-%201%20January%202024%20-%2031%20March%202024.pdf"
+  },
+  {
+    "from": "2024-01-01",
+    "to": "2024-03-31",
+    "region": "_B",
+    "electricity": {
+      "unit": 26.68,
+      "standing": 48.27
+    },
+    "gas": {
+      "unit": 6.94,
+      "standing": 28.19
+    },
+    "typicalBill": 1928,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-11/Default%20tariff%20cap%20level%20-%201%20January%202024%20-%2031%20March%202024.pdf"
+  },
+  {
+    "from": "2024-01-01",
+    "to": "2024-03-31",
+    "region": "_C",
+    "electricity": {
+      "unit": 28.31,
+      "standing": 36.67
+    },
+    "gas": {
+      "unit": 7.07,
+      "standing": 28.19
+    },
+    "typicalBill": 1928,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-11/Default%20tariff%20cap%20level%20-%201%20January%202024%20-%2031%20March%202024.pdf"
+  },
+  {
+    "from": "2024-01-01",
+    "to": "2024-03-31",
+    "region": "_D",
+    "electricity": {
+      "unit": 28.16,
+      "standing": 59.24
+    },
+    "gas": {
+      "unit": 7.1,
+      "standing": 28.19
+    },
+    "typicalBill": 1928,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-11/Default%20tariff%20cap%20level%20-%201%20January%202024%20-%2031%20March%202024.pdf"
+  },
+  {
+    "from": "2024-01-01",
+    "to": "2024-03-31",
+    "region": "_E",
+    "electricity": {
+      "unit": 26.78,
+      "standing": 51.77
+    },
+    "gas": {
+      "unit": 6.99,
+      "standing": 28.19
+    },
+    "typicalBill": 1928,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-11/Default%20tariff%20cap%20level%20-%201%20January%202024%20-%2031%20March%202024.pdf"
+  },
+  {
+    "from": "2024-01-01",
+    "to": "2024-03-31",
+    "region": "_F",
+    "electricity": {
+      "unit": 26.48,
+      "standing": 54.7
+    },
+    "gas": {
+      "unit": 6.99,
+      "standing": 28.19
+    },
+    "typicalBill": 1928,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-11/Default%20tariff%20cap%20level%20-%201%20January%202024%20-%2031%20March%202024.pdf"
+  },
+  {
+    "from": "2024-01-01",
+    "to": "2024-03-31",
+    "region": "_G",
+    "electricity": {
+      "unit": 27.09,
+      "standing": 49.33
+    },
+    "gas": {
+      "unit": 7.07,
+      "standing": 28.19
+    },
+    "typicalBill": 1928,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-11/Default%20tariff%20cap%20level%20-%201%20January%202024%20-%2031%20March%202024.pdf"
+  },
+  {
+    "from": "2024-01-01",
+    "to": "2024-03-31",
+    "region": "_H",
+    "electricity": {
+      "unit": 27.42,
+      "standing": 47.59
+    },
+    "gas": {
+      "unit": 7.16,
+      "standing": 28.19
+    },
+    "typicalBill": 1928,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-11/Default%20tariff%20cap%20level%20-%201%20January%202024%20-%2031%20March%202024.pdf"
+  },
+  {
+    "from": "2024-01-01",
+    "to": "2024-03-31",
+    "region": "_J",
+    "electricity": {
+      "unit": 27.98,
+      "standing": 45.3
+    },
+    "gas": {
+      "unit": 7.09,
+      "standing": 28.19
+    },
+    "typicalBill": 1928,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-11/Default%20tariff%20cap%20level%20-%201%20January%202024%20-%2031%20March%202024.pdf"
+  },
+  {
+    "from": "2024-01-01",
+    "to": "2024-03-31",
+    "region": "_K",
+    "electricity": {
+      "unit": 27.34,
+      "standing": 51.62
+    },
+    "gas": {
+      "unit": 7.21,
+      "standing": 28.18
+    },
+    "typicalBill": 1928,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-11/Default%20tariff%20cap%20level%20-%201%20January%202024%20-%2031%20March%202024.pdf"
+  },
+  {
+    "from": "2024-01-01",
+    "to": "2024-03-31",
+    "region": "_L",
+    "electricity": {
+      "unit": 27.07,
+      "standing": 55.88
+    },
+    "gas": {
+      "unit": 7.26,
+      "standing": 28.18
+    },
+    "typicalBill": 1928,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-11/Default%20tariff%20cap%20level%20-%201%20January%202024%20-%2031%20March%202024.pdf"
+  },
+  {
+    "from": "2024-01-01",
+    "to": "2024-03-31",
+    "region": "_M",
+    "electricity": {
+      "unit": 26.47,
+      "standing": 53.33
+    },
+    "gas": {
+      "unit": 7.0,
+      "standing": 28.19
+    },
+    "typicalBill": 1928,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-11/Default%20tariff%20cap%20level%20-%201%20January%202024%20-%2031%20March%202024.pdf"
+  },
+  {
+    "from": "2024-01-01",
+    "to": "2024-03-31",
+    "region": "_N",
+    "electricity": {
+      "unit": 26.82,
+      "standing": 59.12
+    },
+    "gas": {
+      "unit": 7.02,
+      "standing": 28.19
+    },
+    "typicalBill": 1928,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-11/Default%20tariff%20cap%20level%20-%201%20January%202024%20-%2031%20March%202024.pdf"
+  },
+  {
+    "from": "2024-01-01",
+    "to": "2024-03-31",
+    "region": "_P",
+    "electricity": {
+      "unit": 27.12,
+      "standing": 56.55
+    },
+    "gas": {
+      "unit": 7.02,
+      "standing": 28.19
+    },
+    "typicalBill": 1928,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2023-11/Default%20tariff%20cap%20level%20-%201%20January%202024%20-%2031%20March%202024.pdf"
+  },
+  {
+    "from": "2024-04-01",
+    "to": "2024-06-30",
+    "region": "_A",
+    "electricity": {
+      "unit": 24.05,
+      "standing": 47.54
+    },
+    "gas": {
+      "unit": 5.68,
+      "standing": 29.53
+    },
+    "typicalBill": 1690,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-09/Default%20tariff%20cap%20level%20-%201%20April%202024%20-%2030%20June%202024.pdf"
+  },
+  {
+    "from": "2024-04-01",
+    "to": "2024-06-30",
+    "region": "_B",
+    "electricity": {
+      "unit": 22.64,
+      "standing": 53.33
+    },
+    "gas": {
+      "unit": 5.62,
+      "standing": 29.63
+    },
+    "typicalBill": 1690,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-09/Default%20tariff%20cap%20level%20-%201%20April%202024%20-%2030%20June%202024.pdf"
+  },
+  {
+    "from": "2024-04-01",
+    "to": "2024-06-30",
+    "region": "_C",
+    "electricity": {
+      "unit": 24.5,
+      "standing": 38.85
+    },
+    "gas": {
+      "unit": 5.82,
+      "standing": 30.52
+    },
+    "typicalBill": 1690,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-09/Default%20tariff%20cap%20level%20-%201%20April%202024%20-%2030%20June%202024.pdf"
+  },
+  {
+    "from": "2024-04-01",
+    "to": "2024-06-30",
+    "region": "_D",
+    "electricity": {
+      "unit": 24.21,
+      "standing": 63.85
+    },
+    "gas": {
+      "unit": 5.73,
+      "standing": 30.38
+    },
+    "typicalBill": 1690,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-09/Default%20tariff%20cap%20level%20-%201%20April%202024%20-%2030%20June%202024.pdf"
+  },
+  {
+    "from": "2024-04-01",
+    "to": "2024-06-30",
+    "region": "_E",
+    "electricity": {
+      "unit": 22.7,
+      "standing": 59.74
+    },
+    "gas": {
+      "unit": 5.72,
+      "standing": 29.96
+    },
+    "typicalBill": 1690,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-09/Default%20tariff%20cap%20level%20-%201%20April%202024%20-%2030%20June%202024.pdf"
+  },
+  {
+    "from": "2024-04-01",
+    "to": "2024-06-30",
+    "region": "_F",
+    "electricity": {
+      "unit": 22.24,
+      "standing": 67.81
+    },
+    "gas": {
+      "unit": 5.74,
+      "standing": 30.08
+    },
+    "typicalBill": 1690,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-09/Default%20tariff%20cap%20level%20-%201%20April%202024%20-%2030%20June%202024.pdf"
+  },
+  {
+    "from": "2024-04-01",
+    "to": "2024-06-30",
+    "region": "_G",
+    "electricity": {
+      "unit": 23.49,
+      "standing": 48.75
+    },
+    "gas": {
+      "unit": 5.68,
+      "standing": 30.12
+    },
+    "typicalBill": 1690,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-09/Default%20tariff%20cap%20level%20-%201%20April%202024%20-%2030%20June%202024.pdf"
+  },
+  {
+    "from": "2024-04-01",
+    "to": "2024-06-30",
+    "region": "_H",
+    "electricity": {
+      "unit": 23.48,
+      "standing": 60.32
+    },
+    "gas": {
+      "unit": 5.83,
+      "standing": 29.31
+    },
+    "typicalBill": 1690,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-09/Default%20tariff%20cap%20level%20-%201%20April%202024%20-%2030%20June%202024.pdf"
+  },
+  {
+    "from": "2024-04-01",
+    "to": "2024-06-30",
+    "region": "_J",
+    "electricity": {
+      "unit": 24.09,
+      "standing": 54.19
+    },
+    "gas": {
+      "unit": 5.69,
+      "standing": 29.47
+    },
+    "typicalBill": 1690,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-09/Default%20tariff%20cap%20level%20-%201%20April%202024%20-%2030%20June%202024.pdf"
+  },
+  {
+    "from": "2024-04-01",
+    "to": "2024-06-30",
+    "region": "_K",
+    "electricity": {
+      "unit": 23.35,
+      "standing": 60.24
+    },
+    "gas": {
+      "unit": 5.95,
+      "standing": 30.24
+    },
+    "typicalBill": 1690,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-09/Default%20tariff%20cap%20level%20-%201%20April%202024%20-%2030%20June%202024.pdf"
+  },
+  {
+    "from": "2024-04-01",
+    "to": "2024-06-30",
+    "region": "_L",
+    "electricity": {
+      "unit": 23.06,
+      "standing": 63.99
+    },
+    "gas": {
+      "unit": 6.02,
+      "standing": 29.5
+    },
+    "typicalBill": 1690,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-09/Default%20tariff%20cap%20level%20-%201%20April%202024%20-%2030%20June%202024.pdf"
+  },
+  {
+    "from": "2024-04-01",
+    "to": "2024-06-30",
+    "region": "_M",
+    "electricity": {
+      "unit": 22.24,
+      "standing": 64.22
+    },
+    "gas": {
+      "unit": 5.73,
+      "standing": 30.06
+    },
+    "typicalBill": 1690,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-09/Default%20tariff%20cap%20level%20-%201%20April%202024%20-%2030%20June%202024.pdf"
+  },
+  {
+    "from": "2024-04-01",
+    "to": "2024-06-30",
+    "region": "_N",
+    "electricity": {
+      "unit": 22.83,
+      "standing": 60.29
+    },
+    "gas": {
+      "unit": 5.68,
+      "standing": 30.16
+    },
+    "typicalBill": 1690,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-09/Default%20tariff%20cap%20level%20-%201%20April%202024%20-%2030%20June%202024.pdf"
+  },
+  {
+    "from": "2024-04-01",
+    "to": "2024-06-30",
+    "region": "_P",
+    "electricity": {
+      "unit": 23.77,
+      "standing": 58.19
+    },
+    "gas": {
+      "unit": 5.68,
+      "standing": 30.08
+    },
+    "typicalBill": 1690,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-09/Default%20tariff%20cap%20level%20-%201%20April%202024%20-%2030%20June%202024.pdf"
+  },
+  {
+    "from": "2024-07-01",
+    "to": "2024-09-30",
+    "region": "_A",
+    "electricity": {
+      "unit": 21.98,
+      "standing": 47.56
+    },
+    "gas": {
+      "unit": 5.14,
+      "standing": 29.53
+    },
+    "typicalBill": 1568,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-05/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2012b.pdf"
+  },
+  {
+    "from": "2024-07-01",
+    "to": "2024-09-30",
+    "region": "_B",
+    "electricity": {
+      "unit": 20.62,
+      "standing": 53.35
+    },
+    "gas": {
+      "unit": 5.08,
+      "standing": 29.62
+    },
+    "typicalBill": 1568,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-05/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2012b.pdf"
+  },
+  {
+    "from": "2024-07-01",
+    "to": "2024-09-30",
+    "region": "_C",
+    "electricity": {
+      "unit": 22.41,
+      "standing": 38.85
+    },
+    "gas": {
+      "unit": 5.29,
+      "standing": 30.5
+    },
+    "typicalBill": 1568,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-05/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2012b.pdf"
+  },
+  {
+    "from": "2024-07-01",
+    "to": "2024-09-30",
+    "region": "_D",
+    "electricity": {
+      "unit": 22.12,
+      "standing": 63.86
+    },
+    "gas": {
+      "unit": 5.19,
+      "standing": 30.35
+    },
+    "typicalBill": 1568,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-05/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2012b.pdf"
+  },
+  {
+    "from": "2024-07-01",
+    "to": "2024-09-30",
+    "region": "_E",
+    "electricity": {
+      "unit": 20.65,
+      "standing": 59.76
+    },
+    "gas": {
+      "unit": 5.18,
+      "standing": 29.94
+    },
+    "typicalBill": 1568,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-05/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2012b.pdf"
+  },
+  {
+    "from": "2024-07-01",
+    "to": "2024-09-30",
+    "region": "_F",
+    "electricity": {
+      "unit": 20.27,
+      "standing": 67.83
+    },
+    "gas": {
+      "unit": 5.21,
+      "standing": 30.05
+    },
+    "typicalBill": 1568,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-05/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2012b.pdf"
+  },
+  {
+    "from": "2024-07-01",
+    "to": "2024-09-30",
+    "region": "_G",
+    "electricity": {
+      "unit": -21.53,
+      "standing": 231.44
+    },
+    "gas": {
+      "unit": 5.14,
+      "standing": 30.09
+    },
+    "typicalBill": 1568,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-05/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2012b.pdf"
+  },
+  {
+    "from": "2024-07-01",
+    "to": "2024-09-30",
+    "region": "_H",
+    "electricity": {
+      "unit": 21.42,
+      "standing": 60.34
+    },
+    "gas": {
+      "unit": 5.29,
+      "standing": 29.32
+    },
+    "typicalBill": 1568,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-05/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2012b.pdf"
+  },
+  {
+    "from": "2024-07-01",
+    "to": "2024-09-30",
+    "region": "_J",
+    "electricity": {
+      "unit": 22.03,
+      "standing": 54.22
+    },
+    "gas": {
+      "unit": 5.15,
+      "standing": 29.47
+    },
+    "typicalBill": 1568,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-05/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2012b.pdf"
+  },
+  {
+    "from": "2024-07-01",
+    "to": "2024-09-30",
+    "region": "_K",
+    "electricity": {
+      "unit": 21.31,
+      "standing": 60.26
+    },
+    "gas": {
+      "unit": 5.42,
+      "standing": 30.22
+    },
+    "typicalBill": 1568,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-05/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2012b.pdf"
+  },
+  {
+    "from": "2024-07-01",
+    "to": "2024-09-30",
+    "region": "_L",
+    "electricity": {
+      "unit": 21.05,
+      "standing": 64.01
+    },
+    "gas": {
+      "unit": 5.49,
+      "standing": 29.49
+    },
+    "typicalBill": 1568,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-05/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2012b.pdf"
+  },
+  {
+    "from": "2024-07-01",
+    "to": "2024-09-30",
+    "region": "_M",
+    "electricity": {
+      "unit": 20.21,
+      "standing": 64.24
+    },
+    "gas": {
+      "unit": 5.19,
+      "standing": 30.03
+    },
+    "typicalBill": 1568,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-05/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2012b.pdf"
+  },
+  {
+    "from": "2024-07-01",
+    "to": "2024-09-30",
+    "region": "_N",
+    "electricity": {
+      "unit": 20.79,
+      "standing": 60.31
+    },
+    "gas": {
+      "unit": 5.14,
+      "standing": 30.15
+    },
+    "typicalBill": 1568,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-05/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2012b.pdf"
+  },
+  {
+    "from": "2024-07-01",
+    "to": "2024-09-30",
+    "region": "_P",
+    "electricity": {
+      "unit": 21.81,
+      "standing": 58.21
+    },
+    "gas": {
+      "unit": 5.14,
+      "standing": 30.08
+    },
+    "typicalBill": 1568,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-05/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2012b.pdf"
+  },
+  {
+    "from": "2024-10-01",
+    "to": "2024-12-31",
+    "region": "_A",
+    "electricity": {
+      "unit": 24.01,
+      "standing": 48.42
+    },
+    "gas": {
+      "unit": 5.87,
+      "standing": 29.94
+    },
+    "typicalBill": 1717,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-08/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013a.pdf"
+  },
+  {
+    "from": "2024-10-01",
+    "to": "2024-12-31",
+    "region": "_B",
+    "electricity": {
+      "unit": 22.64,
+      "standing": 54.19
+    },
+    "gas": {
+      "unit": 5.81,
+      "standing": 29.99
+    },
+    "typicalBill": 1717,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-08/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013a.pdf"
+  },
+  {
+    "from": "2024-10-01",
+    "to": "2024-12-31",
+    "region": "_C",
+    "electricity": {
+      "unit": 24.46,
+      "standing": 39.61
+    },
+    "gas": {
+      "unit": 6.01,
+      "standing": 30.48
+    },
+    "typicalBill": 1717,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-08/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013a.pdf"
+  },
+  {
+    "from": "2024-10-01",
+    "to": "2024-12-31",
+    "region": "_D",
+    "electricity": {
+      "unit": 24.18,
+      "standing": 64.66
+    },
+    "gas": {
+      "unit": 5.92,
+      "standing": 30.4
+    },
+    "typicalBill": 1717,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-08/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013a.pdf"
+  },
+  {
+    "from": "2024-10-01",
+    "to": "2024-12-31",
+    "region": "_E",
+    "electricity": {
+      "unit": 22.7,
+      "standing": 60.59
+    },
+    "gas": {
+      "unit": 5.9,
+      "standing": 30.16
+    },
+    "typicalBill": 1717,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-08/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013a.pdf"
+  },
+  {
+    "from": "2024-10-01",
+    "to": "2024-12-31",
+    "region": "_F",
+    "electricity": {
+      "unit": 22.08,
+      "standing": 68.67
+    },
+    "gas": {
+      "unit": 5.93,
+      "standing": 30.22
+    },
+    "typicalBill": 1717,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-08/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013a.pdf"
+  },
+  {
+    "from": "2024-10-01",
+    "to": "2024-12-31",
+    "region": "_G",
+    "electricity": {
+      "unit": 23.82,
+      "standing": 49.56
+    },
+    "gas": {
+      "unit": 5.86,
+      "standing": 30.25
+    },
+    "typicalBill": 1717,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-08/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013a.pdf"
+  },
+  {
+    "from": "2024-10-01",
+    "to": "2024-12-31",
+    "region": "_H",
+    "electricity": {
+      "unit": 23.44,
+      "standing": 61.22
+    },
+    "gas": {
+      "unit": 6.02,
+      "standing": 29.81
+    },
+    "typicalBill": 1717,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-08/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013a.pdf"
+  },
+  {
+    "from": "2024-10-01",
+    "to": "2024-12-31",
+    "region": "_J",
+    "electricity": {
+      "unit": 24.03,
+      "standing": 55.08
+    },
+    "gas": {
+      "unit": 5.87,
+      "standing": 29.9
+    },
+    "typicalBill": 1717,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-08/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013a.pdf"
+  },
+  {
+    "from": "2024-10-01",
+    "to": "2024-12-31",
+    "region": "_K",
+    "electricity": {
+      "unit": 23.33,
+      "standing": 61.07
+    },
+    "gas": {
+      "unit": 6.14,
+      "standing": 30.31
+    },
+    "typicalBill": 1717,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-08/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013a.pdf"
+  },
+  {
+    "from": "2024-10-01",
+    "to": "2024-12-31",
+    "region": "_L",
+    "electricity": {
+      "unit": 23.03,
+      "standing": 64.88
+    },
+    "gas": {
+      "unit": 6.21,
+      "standing": 29.91
+    },
+    "typicalBill": 1717,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-08/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013a.pdf"
+  },
+  {
+    "from": "2024-10-01",
+    "to": "2024-12-31",
+    "region": "_M",
+    "electricity": {
+      "unit": 22.39,
+      "standing": 65.07
+    },
+    "gas": {
+      "unit": 5.92,
+      "standing": 30.22
+    },
+    "typicalBill": 1717,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-08/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013a.pdf"
+  },
+  {
+    "from": "2024-10-01",
+    "to": "2024-12-31",
+    "region": "_N",
+    "electricity": {
+      "unit": 22.82,
+      "standing": 61.12
+    },
+    "gas": {
+      "unit": 5.86,
+      "standing": 30.28
+    },
+    "typicalBill": 1717,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-08/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013a.pdf"
+  },
+  {
+    "from": "2024-10-01",
+    "to": "2024-12-31",
+    "region": "_P",
+    "electricity": {
+      "unit": 23.77,
+      "standing": 59.03
+    },
+    "gas": {
+      "unit": 5.86,
+      "standing": 30.25
+    },
+    "typicalBill": 1717,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-08/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013a.pdf"
+  },
+  {
+    "from": "2025-01-01",
+    "to": "2025-03-31",
+    "region": "_A",
+    "electricity": {
+      "unit": 24.36,
+      "standing": 48.42
+    },
+    "gas": {
+      "unit": 5.96,
+      "standing": 29.93
+    },
+    "typicalBill": 1738,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-11/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013b.pdf"
+  },
+  {
+    "from": "2025-01-01",
+    "to": "2025-03-31",
+    "region": "_B",
+    "electricity": {
+      "unit": 22.97,
+      "standing": 54.18
+    },
+    "gas": {
+      "unit": 5.9,
+      "standing": 29.98
+    },
+    "typicalBill": 1738,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-11/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013b.pdf"
+  },
+  {
+    "from": "2025-01-01",
+    "to": "2025-03-31",
+    "region": "_C",
+    "electricity": {
+      "unit": 24.82,
+      "standing": 39.59
+    },
+    "gas": {
+      "unit": 6.1,
+      "standing": 30.47
+    },
+    "typicalBill": 1738,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-11/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013b.pdf"
+  },
+  {
+    "from": "2025-01-01",
+    "to": "2025-03-31",
+    "region": "_D",
+    "electricity": {
+      "unit": 24.53,
+      "standing": 64.64
+    },
+    "gas": {
+      "unit": 6.01,
+      "standing": 30.39
+    },
+    "typicalBill": 1738,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-11/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013b.pdf"
+  },
+  {
+    "from": "2025-01-01",
+    "to": "2025-03-31",
+    "region": "_E",
+    "electricity": {
+      "unit": 23.04,
+      "standing": 60.58
+    },
+    "gas": {
+      "unit": 6.0,
+      "standing": 30.16
+    },
+    "typicalBill": 1738,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-11/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013b.pdf"
+  },
+  {
+    "from": "2025-01-01",
+    "to": "2025-03-31",
+    "region": "_F",
+    "electricity": {
+      "unit": 22.39,
+      "standing": 68.66
+    },
+    "gas": {
+      "unit": 6.02,
+      "standing": 30.22
+    },
+    "typicalBill": 1738,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-11/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013b.pdf"
+  },
+  {
+    "from": "2025-01-01",
+    "to": "2025-03-31",
+    "region": "_G",
+    "electricity": {
+      "unit": 24.15,
+      "standing": 49.55
+    },
+    "gas": {
+      "unit": 5.96,
+      "standing": 30.24
+    },
+    "typicalBill": 1738,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-11/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013b.pdf"
+  },
+  {
+    "from": "2025-01-01",
+    "to": "2025-03-31",
+    "region": "_H",
+    "electricity": {
+      "unit": 23.79,
+      "standing": 61.21
+    },
+    "gas": {
+      "unit": 6.11,
+      "standing": 29.81
+    },
+    "typicalBill": 1738,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-11/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013b.pdf"
+  },
+  {
+    "from": "2025-01-01",
+    "to": "2025-03-31",
+    "region": "_J",
+    "electricity": {
+      "unit": 24.38,
+      "standing": 55.08
+    },
+    "gas": {
+      "unit": 5.97,
+      "standing": 29.89
+    },
+    "typicalBill": 1738,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-11/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013b.pdf"
+  },
+  {
+    "from": "2025-01-01",
+    "to": "2025-03-31",
+    "region": "_K",
+    "electricity": {
+      "unit": 23.67,
+      "standing": 61.05
+    },
+    "gas": {
+      "unit": 6.23,
+      "standing": 30.3
+    },
+    "typicalBill": 1738,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-11/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013b.pdf"
+  },
+  {
+    "from": "2025-01-01",
+    "to": "2025-03-31",
+    "region": "_L",
+    "electricity": {
+      "unit": 23.36,
+      "standing": 64.86
+    },
+    "gas": {
+      "unit": 6.31,
+      "standing": 29.9
+    },
+    "typicalBill": 1738,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-11/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013b.pdf"
+  },
+  {
+    "from": "2025-01-01",
+    "to": "2025-03-31",
+    "region": "_M",
+    "electricity": {
+      "unit": 22.73,
+      "standing": 65.05
+    },
+    "gas": {
+      "unit": 6.01,
+      "standing": 30.21
+    },
+    "typicalBill": 1738,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-11/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013b.pdf"
+  },
+  {
+    "from": "2025-01-01",
+    "to": "2025-03-31",
+    "region": "_N",
+    "electricity": {
+      "unit": 23.15,
+      "standing": 61.1
+    },
+    "gas": {
+      "unit": 5.96,
+      "standing": 30.27
+    },
+    "typicalBill": 1738,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-11/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013b.pdf"
+  },
+  {
+    "from": "2025-01-01",
+    "to": "2025-03-31",
+    "region": "_P",
+    "electricity": {
+      "unit": 24.08,
+      "standing": 59.02
+    },
+    "gas": {
+      "unit": 5.96,
+      "standing": 30.24
+    },
+    "typicalBill": 1738,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2024-11/Benchmark%20Maximum%20Charges%20for%20the%20Charge%20Restriction%20Period%2013b.pdf"
+  },
+  {
+    "from": "2025-04-01",
+    "to": "2025-06-30",
+    "region": "_A",
+    "electricity": {
+      "unit": 26.03,
+      "standing": 46.33
+    },
+    "gas": {
+      "unit": 6.59,
+      "standing": 30.93
+    },
+    "typicalBill": 1849,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-02/Benchmark-Maximum-Charges-for-the-Charge-Restriction-Period-14a.pdf"
+  },
+  {
+    "from": "2025-04-01",
+    "to": "2025-06-30",
+    "region": "_B",
+    "electricity": {
+      "unit": 25.11,
+      "standing": 47.03
+    },
+    "gas": {
+      "unit": 6.53,
+      "standing": 30.97
+    },
+    "typicalBill": 1849,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-02/Benchmark-Maximum-Charges-for-the-Charge-Restriction-Period-14a.pdf"
+  },
+  {
+    "from": "2025-04-01",
+    "to": "2025-06-30",
+    "region": "_C",
+    "electricity": {
+      "unit": 25.22,
+      "standing": 44.0
+    },
+    "gas": {
+      "unit": 6.74,
+      "standing": 31.39
+    },
+    "typicalBill": 1849,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-02/Benchmark-Maximum-Charges-for-the-Charge-Restriction-Period-14a.pdf"
+  },
+  {
+    "from": "2025-04-01",
+    "to": "2025-06-30",
+    "region": "_D",
+    "electricity": {
+      "unit": 27.14,
+      "standing": 66.23
+    },
+    "gas": {
+      "unit": 6.66,
+      "standing": 31.32
+    },
+    "typicalBill": 1849,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-02/Benchmark-Maximum-Charges-for-the-Charge-Restriction-Period-14a.pdf"
+  },
+  {
+    "from": "2025-04-01",
+    "to": "2025-06-30",
+    "region": "_E",
+    "electricity": {
+      "unit": 25.2,
+      "standing": 50.61
+    },
+    "gas": {
+      "unit": 6.6,
+      "standing": 31.13
+    },
+    "typicalBill": 1849,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-02/Benchmark-Maximum-Charges-for-the-Charge-Restriction-Period-14a.pdf"
+  },
+  {
+    "from": "2025-04-01",
+    "to": "2025-06-30",
+    "region": "_F",
+    "electricity": {
+      "unit": 24.99,
+      "standing": 56.98
+    },
+    "gas": {
+      "unit": 6.61,
+      "standing": 31.18
+    },
+    "typicalBill": 1849,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-02/Benchmark-Maximum-Charges-for-the-Charge-Restriction-Period-14a.pdf"
+  },
+  {
+    "from": "2025-04-01",
+    "to": "2025-06-30",
+    "region": "_G",
+    "electricity": {
+      "unit": 26.6,
+      "standing": 48.87
+    },
+    "gas": {
+      "unit": 6.63,
+      "standing": 31.19
+    },
+    "typicalBill": 1849,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-02/Benchmark-Maximum-Charges-for-the-Charge-Restriction-Period-14a.pdf"
+  },
+  {
+    "from": "2025-04-01",
+    "to": "2025-06-30",
+    "region": "_H",
+    "electricity": {
+      "unit": 25.94,
+      "standing": 42.98
+    },
+    "gas": {
+      "unit": 6.74,
+      "standing": 30.82
+    },
+    "typicalBill": 1849,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-02/Benchmark-Maximum-Charges-for-the-Charge-Restriction-Period-14a.pdf"
+  },
+  {
+    "from": "2025-04-01",
+    "to": "2025-06-30",
+    "region": "_J",
+    "electricity": {
+      "unit": 26.36,
+      "standing": 45.74
+    },
+    "gas": {
+      "unit": 6.59,
+      "standing": 30.89
+    },
+    "typicalBill": 1849,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-02/Benchmark-Maximum-Charges-for-the-Charge-Restriction-Period-14a.pdf"
+  },
+  {
+    "from": "2025-04-01",
+    "to": "2025-06-30",
+    "region": "_K",
+    "electricity": {
+      "unit": 26.29,
+      "standing": 49.32
+    },
+    "gas": {
+      "unit": 6.79,
+      "standing": 31.25
+    },
+    "typicalBill": 1849,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-02/Benchmark-Maximum-Charges-for-the-Charge-Restriction-Period-14a.pdf"
+  },
+  {
+    "from": "2025-04-01",
+    "to": "2025-06-30",
+    "region": "_L",
+    "electricity": {
+      "unit": 26.26,
+      "standing": 51.68
+    },
+    "gas": {
+      "unit": 6.88,
+      "standing": 30.9
+    },
+    "typicalBill": 1849,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-02/Benchmark-Maximum-Charges-for-the-Charge-Restriction-Period-14a.pdf"
+  },
+  {
+    "from": "2025-04-01",
+    "to": "2025-06-30",
+    "region": "_M",
+    "electricity": {
+      "unit": 24.94,
+      "standing": 55.84
+    },
+    "gas": {
+      "unit": 6.63,
+      "standing": 31.16
+    },
+    "typicalBill": 1849,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-02/Benchmark-Maximum-Charges-for-the-Charge-Restriction-Period-14a.pdf"
+  },
+  {
+    "from": "2025-04-01",
+    "to": "2025-06-30",
+    "region": "_N",
+    "electricity": {
+      "unit": 24.59,
+      "standing": 53.81
+    },
+    "gas": {
+      "unit": 6.59,
+      "standing": 31.22
+    },
+    "typicalBill": 1849,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-02/Benchmark-Maximum-Charges-for-the-Charge-Restriction-Period-14a.pdf"
+  },
+  {
+    "from": "2025-04-01",
+    "to": "2025-06-30",
+    "region": "_P",
+    "electricity": {
+      "unit": 25.7,
+      "standing": 57.97
+    },
+    "gas": {
+      "unit": 6.59,
+      "standing": 31.2
+    },
+    "typicalBill": 1849,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-02/Benchmark-Maximum-Charges-for-the-Charge-Restriction-Period-14a.pdf"
+  },
+  {
+    "from": "2025-07-01",
+    "to": "2025-09-30",
+    "region": "_A",
+    "electricity": {
+      "unit": 24.77,
+      "standing": 43.75
+    },
+    "gas": {
+      "unit": 5.97,
+      "standing": 28.18
+    },
+    "typicalBill": 1720,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-05/Energy%20price%20cap%20levels%201%20July%20to%2030%20September%202025_0.pdf"
+  },
+  {
+    "from": "2025-07-01",
+    "to": "2025-09-30",
+    "region": "_B",
+    "electricity": {
+      "unit": 23.87,
+      "standing": 44.55
+    },
+    "gas": {
+      "unit": 5.9,
+      "standing": 28.23
+    },
+    "typicalBill": 1720,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-05/Energy%20price%20cap%20levels%201%20July%20to%2030%20September%202025_0.pdf"
+  },
+  {
+    "from": "2025-07-01",
+    "to": "2025-09-30",
+    "region": "_C",
+    "electricity": {
+      "unit": 23.93,
+      "standing": 41.67
+    },
+    "gas": {
+      "unit": 6.12,
+      "standing": 28.74
+    },
+    "typicalBill": 1720,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-05/Energy%20price%20cap%20levels%201%20July%20to%2030%20September%202025_0.pdf"
+  },
+  {
+    "from": "2025-07-01",
+    "to": "2025-09-30",
+    "region": "_D",
+    "electricity": {
+      "unit": 25.9,
+      "standing": 64.43
+    },
+    "gas": {
+      "unit": 6.04,
+      "standing": 28.65
+    },
+    "typicalBill": 1720,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-05/Energy%20price%20cap%20levels%201%20July%20to%2030%20September%202025_0.pdf"
+  },
+  {
+    "from": "2025-07-01",
+    "to": "2025-09-30",
+    "region": "_E",
+    "electricity": {
+      "unit": 23.94,
+      "standing": 48.28
+    },
+    "gas": {
+      "unit": 5.98,
+      "standing": 28.42
+    },
+    "typicalBill": 1720,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-05/Energy%20price%20cap%20levels%201%20July%20to%2030%20September%202025_0.pdf"
+  },
+  {
+    "from": "2025-07-01",
+    "to": "2025-09-30",
+    "region": "_F",
+    "electricity": {
+      "unit": 23.77,
+      "standing": 54.82
+    },
+    "gas": {
+      "unit": 5.98,
+      "standing": 28.48
+    },
+    "typicalBill": 1720,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-05/Energy%20price%20cap%20levels%201%20July%20to%2030%20September%202025_0.pdf"
+  },
+  {
+    "from": "2025-07-01",
+    "to": "2025-09-30",
+    "region": "_G",
+    "electricity": {
+      "unit": 25.38,
+      "standing": 46.52
+    },
+    "gas": {
+      "unit": 6.01,
+      "standing": 28.5
+    },
+    "typicalBill": 1720,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-05/Energy%20price%20cap%20levels%201%20July%20to%2030%20September%202025_0.pdf"
+  },
+  {
+    "from": "2025-07-01",
+    "to": "2025-09-30",
+    "region": "_H",
+    "electricity": {
+      "unit": 24.7,
+      "standing": 40.29
+    },
+    "gas": {
+      "unit": 6.12,
+      "standing": 28.06
+    },
+    "typicalBill": 1720,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-05/Energy%20price%20cap%20levels%201%20July%20to%2030%20September%202025_0.pdf"
+  },
+  {
+    "from": "2025-07-01",
+    "to": "2025-09-30",
+    "region": "_J",
+    "electricity": {
+      "unit": 25.13,
+      "standing": 43.13
+    },
+    "gas": {
+      "unit": 5.96,
+      "standing": 28.14
+    },
+    "typicalBill": 1720,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-05/Energy%20price%20cap%20levels%201%20July%20to%2030%20September%202025_0.pdf"
+  },
+  {
+    "from": "2025-07-01",
+    "to": "2025-09-30",
+    "region": "_K",
+    "electricity": {
+      "unit": 25.07,
+      "standing": 47.03
+    },
+    "gas": {
+      "unit": 6.17,
+      "standing": 28.57
+    },
+    "typicalBill": 1720,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-05/Energy%20price%20cap%20levels%201%20July%20to%2030%20September%202025_0.pdf"
+  },
+  {
+    "from": "2025-07-01",
+    "to": "2025-09-30",
+    "region": "_L",
+    "electricity": {
+      "unit": 25.05,
+      "standing": 49.26
+    },
+    "gas": {
+      "unit": 6.26,
+      "standing": 28.16
+    },
+    "typicalBill": 1720,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-05/Energy%20price%20cap%20levels%201%20July%20to%2030%20September%202025_0.pdf"
+  },
+  {
+    "from": "2025-07-01",
+    "to": "2025-09-30",
+    "region": "_M",
+    "electricity": {
+      "unit": 23.65,
+      "standing": 53.66
+    },
+    "gas": {
+      "unit": 6.0,
+      "standing": 28.47
+    },
+    "typicalBill": 1720,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-05/Energy%20price%20cap%20levels%201%20July%20to%2030%20September%202025_0.pdf"
+  },
+  {
+    "from": "2025-07-01",
+    "to": "2025-09-30",
+    "region": "_N",
+    "electricity": {
+      "unit": 23.37,
+      "standing": 51.67
+    },
+    "gas": {
+      "unit": 5.97,
+      "standing": 28.54
+    },
+    "typicalBill": 1720,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-05/Energy%20price%20cap%20levels%201%20July%20to%2030%20September%202025_0.pdf"
+  },
+  {
+    "from": "2025-07-01",
+    "to": "2025-09-30",
+    "region": "_P",
+    "electricity": {
+      "unit": 24.56,
+      "standing": 55.9
+    },
+    "gas": {
+      "unit": 5.97,
+      "standing": 28.52
+    },
+    "typicalBill": 1720,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-05/Energy%20price%20cap%20levels%201%20July%20to%2030%20September%202025_0.pdf"
+  },
+  {
+    "from": "2025-10-01",
+    "to": "2025-12-31",
+    "region": "_A",
+    "electricity": {
+      "unit": 25.27,
+      "standing": 45.95
+    },
+    "gas": {
+      "unit": 5.92,
+      "standing": 32.07
+    },
+    "typicalBill": 1755,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-08/energy-price-cap-levels-1-october-31-december-2025.pdf"
+  },
+  {
+    "from": "2025-10-01",
+    "to": "2025-12-31",
+    "region": "_B",
+    "electricity": {
+      "unit": 24.34,
+      "standing": 46.75
+    },
+    "gas": {
+      "unit": 5.85,
+      "standing": 32.15
+    },
+    "typicalBill": 1755,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-08/energy-price-cap-levels-1-october-31-december-2025.pdf"
+  },
+  {
+    "from": "2025-10-01",
+    "to": "2025-12-31",
+    "region": "_C",
+    "electricity": {
+      "unit": 24.41,
+      "standing": 43.86
+    },
+    "gas": {
+      "unit": 6.08,
+      "standing": 32.93
+    },
+    "typicalBill": 1755,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-08/energy-price-cap-levels-1-october-31-december-2025.pdf"
+  },
+  {
+    "from": "2025-10-01",
+    "to": "2025-12-31",
+    "region": "_D",
+    "electricity": {
+      "unit": 26.4,
+      "standing": 66.62
+    },
+    "gas": {
+      "unit": 6.0,
+      "standing": 32.79
+    },
+    "typicalBill": 1755,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-08/energy-price-cap-levels-1-october-31-december-2025.pdf"
+  },
+  {
+    "from": "2025-10-01",
+    "to": "2025-12-31",
+    "region": "_E",
+    "electricity": {
+      "unit": 24.42,
+      "standing": 50.48
+    },
+    "gas": {
+      "unit": 5.91,
+      "standing": 32.43
+    },
+    "typicalBill": 1755,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-08/energy-price-cap-levels-1-october-31-december-2025.pdf"
+  },
+  {
+    "from": "2025-10-01",
+    "to": "2025-12-31",
+    "region": "_F",
+    "electricity": {
+      "unit": 24.22,
+      "standing": 57.01
+    },
+    "gas": {
+      "unit": 5.99,
+      "standing": 32.52
+    },
+    "typicalBill": 1755,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-08/energy-price-cap-levels-1-october-31-december-2025.pdf"
+  },
+  {
+    "from": "2025-10-01",
+    "to": "2025-12-31",
+    "region": "_G",
+    "electricity": {
+      "unit": 25.82,
+      "standing": 48.72
+    },
+    "gas": {
+      "unit": 5.95,
+      "standing": 32.55
+    },
+    "typicalBill": 1755,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-08/energy-price-cap-levels-1-october-31-december-2025.pdf"
+  },
+  {
+    "from": "2025-10-01",
+    "to": "2025-12-31",
+    "region": "_H",
+    "electricity": {
+      "unit": 25.21,
+      "standing": 42.5
+    },
+    "gas": {
+      "unit": 6.05,
+      "standing": 31.89
+    },
+    "typicalBill": 1755,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-08/energy-price-cap-levels-1-october-31-december-2025.pdf"
+  },
+  {
+    "from": "2025-10-01",
+    "to": "2025-12-31",
+    "region": "_J",
+    "electricity": {
+      "unit": 25.64,
+      "standing": 45.33
+    },
+    "gas": {
+      "unit": 5.89,
+      "standing": 32.0
+    },
+    "typicalBill": 1755,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-08/energy-price-cap-levels-1-october-31-december-2025.pdf"
+  },
+  {
+    "from": "2025-10-01",
+    "to": "2025-12-31",
+    "region": "_K",
+    "electricity": {
+      "unit": 25.56,
+      "standing": 49.23
+    },
+    "gas": {
+      "unit": 6.15,
+      "standing": 32.67
+    },
+    "typicalBill": 1755,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-08/energy-price-cap-levels-1-october-31-december-2025.pdf"
+  },
+  {
+    "from": "2025-10-01",
+    "to": "2025-12-31",
+    "region": "_L",
+    "electricity": {
+      "unit": 25.55,
+      "standing": 51.46
+    },
+    "gas": {
+      "unit": 6.19,
+      "standing": 32.04
+    },
+    "typicalBill": 1755,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-08/energy-price-cap-levels-1-october-31-december-2025.pdf"
+  },
+  {
+    "from": "2025-10-01",
+    "to": "2025-12-31",
+    "region": "_M",
+    "electricity": {
+      "unit": 24.12,
+      "standing": 55.85
+    },
+    "gas": {
+      "unit": 5.96,
+      "standing": 32.5
+    },
+    "typicalBill": 1755,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-08/energy-price-cap-levels-1-october-31-december-2025.pdf"
+  },
+  {
+    "from": "2025-10-01",
+    "to": "2025-12-31",
+    "region": "_N",
+    "electricity": {
+      "unit": 24.6,
+      "standing": 53.86
+    },
+    "gas": {
+      "unit": 5.95,
+      "standing": 32.61
+    },
+    "typicalBill": 1755,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-08/energy-price-cap-levels-1-october-31-december-2025.pdf"
+  },
+  {
+    "from": "2025-10-01",
+    "to": "2025-12-31",
+    "region": "_P",
+    "electricity": {
+      "unit": 25.77,
+      "standing": 58.09
+    },
+    "gas": {
+      "unit": 5.95,
+      "standing": 32.59
+    },
+    "typicalBill": 1755,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-08/energy-price-cap-levels-1-october-31-december-2025.pdf"
+  },
+  {
+    "from": "2026-01-01",
+    "to": "2026-03-31",
+    "region": "_A",
+    "electricity": {
+      "unit": 26.56,
+      "standing": 46.98
+    },
+    "gas": {
+      "unit": 5.59,
+      "standing": 33.08
+    },
+    "typicalBill": 1758,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-11/15b-cap-tables.pdf"
+  },
+  {
+    "from": "2026-01-01",
+    "to": "2026-03-31",
+    "region": "_B",
+    "electricity": {
+      "unit": 25.61,
+      "standing": 47.78
+    },
+    "gas": {
+      "unit": 5.51,
+      "standing": 33.16
+    },
+    "typicalBill": 1758,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-11/15b-cap-tables.pdf"
+  },
+  {
+    "from": "2026-01-01",
+    "to": "2026-03-31",
+    "region": "_C",
+    "electricity": {
+      "unit": 25.71,
+      "standing": 44.87
+    },
+    "gas": {
+      "unit": 5.74,
+      "standing": 33.93
+    },
+    "typicalBill": 1758,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-11/15b-cap-tables.pdf"
+  },
+  {
+    "from": "2026-01-01",
+    "to": "2026-03-31",
+    "region": "_D",
+    "electricity": {
+      "unit": 27.7,
+      "standing": 67.63
+    },
+    "gas": {
+      "unit": 5.66,
+      "standing": 33.8
+    },
+    "typicalBill": 1758,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-11/15b-cap-tables.pdf"
+  },
+  {
+    "from": "2026-01-01",
+    "to": "2026-03-31",
+    "region": "_E",
+    "electricity": {
+      "unit": 25.7,
+      "standing": 51.51
+    },
+    "gas": {
+      "unit": 5.57,
+      "standing": 33.44
+    },
+    "typicalBill": 1758,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-11/15b-cap-tables.pdf"
+  },
+  {
+    "from": "2026-01-01",
+    "to": "2026-03-31",
+    "region": "_F",
+    "electricity": {
+      "unit": 25.47,
+      "standing": 58.03
+    },
+    "gas": {
+      "unit": 5.65,
+      "standing": 33.53
+    },
+    "typicalBill": 1758,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-11/15b-cap-tables.pdf"
+  },
+  {
+    "from": "2026-01-01",
+    "to": "2026-03-31",
+    "region": "_G",
+    "electricity": {
+      "unit": 27.09,
+      "standing": 49.74
+    },
+    "gas": {
+      "unit": 5.61,
+      "standing": 33.55
+    },
+    "typicalBill": 1758,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-11/15b-cap-tables.pdf"
+  },
+  {
+    "from": "2026-01-01",
+    "to": "2026-03-31",
+    "region": "_H",
+    "electricity": {
+      "unit": 26.5,
+      "standing": 43.53
+    },
+    "gas": {
+      "unit": 5.72,
+      "standing": 32.91
+    },
+    "typicalBill": 1758,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-11/15b-cap-tables.pdf"
+  },
+  {
+    "from": "2026-01-01",
+    "to": "2026-03-31",
+    "region": "_J",
+    "electricity": {
+      "unit": 26.92,
+      "standing": 46.35
+    },
+    "gas": {
+      "unit": 5.55,
+      "standing": 33.02
+    },
+    "typicalBill": 1758,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-11/15b-cap-tables.pdf"
+  },
+  {
+    "from": "2026-01-01",
+    "to": "2026-03-31",
+    "region": "_K",
+    "electricity": {
+      "unit": 26.84,
+      "standing": 50.24
+    },
+    "gas": {
+      "unit": 5.82,
+      "standing": 33.67
+    },
+    "typicalBill": 1758,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-11/15b-cap-tables.pdf"
+  },
+  {
+    "from": "2026-01-01",
+    "to": "2026-03-31",
+    "region": "_L",
+    "electricity": {
+      "unit": 26.82,
+      "standing": 52.48
+    },
+    "gas": {
+      "unit": 5.85,
+      "standing": 33.05
+    },
+    "typicalBill": 1758,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-11/15b-cap-tables.pdf"
+  },
+  {
+    "from": "2026-01-01",
+    "to": "2026-03-31",
+    "region": "_M",
+    "electricity": {
+      "unit": 25.42,
+      "standing": 56.87
+    },
+    "gas": {
+      "unit": 5.62,
+      "standing": 33.5
+    },
+    "typicalBill": 1758,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-11/15b-cap-tables.pdf"
+  },
+  {
+    "from": "2026-01-01",
+    "to": "2026-03-31",
+    "region": "_N",
+    "electricity": {
+      "unit": 25.89,
+      "standing": 54.88
+    },
+    "gas": {
+      "unit": 5.61,
+      "standing": 33.62
+    },
+    "typicalBill": 1758,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-11/15b-cap-tables.pdf"
+  },
+  {
+    "from": "2026-01-01",
+    "to": "2026-03-31",
+    "region": "_P",
+    "electricity": {
+      "unit": 27.01,
+      "standing": 59.11
+    },
+    "gas": {
+      "unit": 5.61,
+      "standing": 33.6
+    },
+    "typicalBill": 1758,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2025-11/15b-cap-tables.pdf"
+  },
+  {
+    "from": "2026-04-01",
+    "to": "2026-06-30",
+    "region": "_A",
+    "electricity": {
+      "unit": 23.75,
+      "standing": 51.38
+    },
+    "gas": {
+      "unit": 5.4,
+      "standing": 27.38
+    },
+    "typicalBill": 1641,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-02/16a-PDF-cap-tables.pdf"
+  },
+  {
+    "from": "2026-04-01",
+    "to": "2026-06-30",
+    "region": "_B",
+    "electricity": {
+      "unit": 22.55,
+      "standing": 51.05
+    },
+    "gas": {
+      "unit": 5.33,
+      "standing": 27.45
+    },
+    "typicalBill": 1641,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-02/16a-PDF-cap-tables.pdf"
+  },
+  {
+    "from": "2026-04-01",
+    "to": "2026-06-30",
+    "region": "_C",
+    "electricity": {
+      "unit": 23.71,
+      "standing": 42.7
+    },
+    "gas": {
+      "unit": 5.63,
+      "standing": 28.19
+    },
+    "typicalBill": 1641,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-02/16a-PDF-cap-tables.pdf"
+  },
+  {
+    "from": "2026-04-01",
+    "to": "2026-06-30",
+    "region": "_D",
+    "electricity": {
+      "unit": 24.95,
+      "standing": 67.41
+    },
+    "gas": {
+      "unit": 5.42,
+      "standing": 28.07
+    },
+    "typicalBill": 1641,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-02/16a-PDF-cap-tables.pdf"
+  },
+  {
+    "from": "2026-04-01",
+    "to": "2026-06-30",
+    "region": "_E",
+    "electricity": {
+      "unit": 22.76,
+      "standing": 56.88
+    },
+    "gas": {
+      "unit": 5.42,
+      "standing": 27.73
+    },
+    "typicalBill": 1641,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-02/16a-PDF-cap-tables.pdf"
+  },
+  {
+    "from": "2026-04-01",
+    "to": "2026-06-30",
+    "region": "_F",
+    "electricity": {
+      "unit": 22.67,
+      "standing": 61.24
+    },
+    "gas": {
+      "unit": 5.42,
+      "standing": 27.81
+    },
+    "typicalBill": 1641,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-02/16a-PDF-cap-tables.pdf"
+  },
+  {
+    "from": "2026-04-01",
+    "to": "2026-06-30",
+    "region": "_G",
+    "electricity": {
+      "unit": 23.53,
+      "standing": 45.36
+    },
+    "gas": {
+      "unit": 5.38,
+      "standing": 27.83
+    },
+    "typicalBill": 1641,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-02/16a-PDF-cap-tables.pdf"
+  },
+  {
+    "from": "2026-04-01",
+    "to": "2026-06-30",
+    "region": "_H",
+    "electricity": {
+      "unit": 23.79,
+      "standing": 47.34
+    },
+    "gas": {
+      "unit": 5.66,
+      "standing": 27.2
+    },
+    "typicalBill": 1641,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-02/16a-PDF-cap-tables.pdf"
+  },
+  {
+    "from": "2026-04-01",
+    "to": "2026-06-30",
+    "region": "_J",
+    "electricity": {
+      "unit": 24.02,
+      "standing": 51.85
+    },
+    "gas": {
+      "unit": 5.52,
+      "standing": 27.3
+    },
+    "typicalBill": 1641,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-02/16a-PDF-cap-tables.pdf"
+  },
+  {
+    "from": "2026-04-01",
+    "to": "2026-06-30",
+    "region": "_K",
+    "electricity": {
+      "unit": 23.72,
+      "standing": 55.11
+    },
+    "gas": {
+      "unit": 5.56,
+      "standing": 27.95
+    },
+    "typicalBill": 1641,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-02/16a-PDF-cap-tables.pdf"
+  },
+  {
+    "from": "2026-04-01",
+    "to": "2026-06-30",
+    "region": "_L",
+    "electricity": {
+      "unit": 23.78,
+      "standing": 55.15
+    },
+    "gas": {
+      "unit": 5.61,
+      "standing": 27.35
+    },
+    "typicalBill": 1641,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-02/16a-PDF-cap-tables.pdf"
+  },
+  {
+    "from": "2026-04-01",
+    "to": "2026-06-30",
+    "region": "_M",
+    "electricity": {
+      "unit": 22.71,
+      "standing": 61.33
+    },
+    "gas": {
+      "unit": 5.41,
+      "standing": 27.79
+    },
+    "typicalBill": 1641,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-02/16a-PDF-cap-tables.pdf"
+  },
+  {
+    "from": "2026-04-01",
+    "to": "2026-06-30",
+    "region": "_N",
+    "electricity": {
+      "unit": 23.23,
+      "standing": 61.14
+    },
+    "gas": {
+      "unit": 5.38,
+      "standing": 27.9
+    },
+    "typicalBill": 1641,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-02/16a-PDF-cap-tables.pdf"
+  },
+  {
+    "from": "2026-04-01",
+    "to": "2026-06-30",
+    "region": "_P",
+    "electricity": {
+      "unit": 23.83,
+      "standing": 54.82
+    },
+    "gas": {
+      "unit": 5.38,
+      "standing": 27.88
+    },
+    "typicalBill": 1641,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-02/16a-PDF-cap-tables.pdf"
+  },
+  {
+    "from": "2026-07-01",
+    "to": "2026-09-30",
+    "region": "_A",
+    "electricity": {
+      "unit": 25.13,
+      "standing": 51.38
+    },
+    "gas": {
+      "unit": 6.91,
+      "standing": 27.34
+    },
+    "typicalBill": 1663,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-05/Energy-price-cap-levels-1-July-to-30-September-2026.pdf"
+  },
+  {
+    "from": "2026-07-01",
+    "to": "2026-09-30",
+    "region": "_B",
+    "electricity": {
+      "unit": 23.9,
+      "standing": 51.05
+    },
+    "gas": {
+      "unit": 6.85,
+      "standing": 27.41
+    },
+    "typicalBill": 1663,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-05/Energy-price-cap-levels-1-July-to-30-September-2026.pdf"
+  },
+  {
+    "from": "2026-07-01",
+    "to": "2026-09-30",
+    "region": "_C",
+    "electricity": {
+      "unit": 25.09,
+      "standing": 42.65
+    },
+    "gas": {
+      "unit": 7.14,
+      "standing": 28.12
+    },
+    "typicalBill": 1663,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-05/Energy-price-cap-levels-1-July-to-30-September-2026.pdf"
+  },
+  {
+    "from": "2026-07-01",
+    "to": "2026-09-30",
+    "region": "_D",
+    "electricity": {
+      "unit": 26.34,
+      "standing": 67.39
+    },
+    "gas": {
+      "unit": 6.93,
+      "standing": 28.02
+    },
+    "typicalBill": 1663,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-05/Energy-price-cap-levels-1-July-to-30-September-2026.pdf"
+  },
+  {
+    "from": "2026-07-01",
+    "to": "2026-09-30",
+    "region": "_E",
+    "electricity": {
+      "unit": 24.13,
+      "standing": 56.87
+    },
+    "gas": {
+      "unit": 6.93,
+      "standing": 27.68
+    },
+    "typicalBill": 1663,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-05/Energy-price-cap-levels-1-July-to-30-September-2026.pdf"
+  },
+  {
+    "from": "2026-07-01",
+    "to": "2026-09-30",
+    "region": "_F",
+    "electricity": {
+      "unit": 24.02,
+      "standing": 61.23
+    },
+    "gas": {
+      "unit": 6.93,
+      "standing": 27.76
+    },
+    "typicalBill": 1663,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-05/Energy-price-cap-levels-1-July-to-30-September-2026.pdf"
+  },
+  {
+    "from": "2026-07-01",
+    "to": "2026-09-30",
+    "region": "_G",
+    "electricity": {
+      "unit": 24.88,
+      "standing": 45.34
+    },
+    "gas": {
+      "unit": 6.89,
+      "standing": 27.78
+    },
+    "typicalBill": 1663,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-05/Energy-price-cap-levels-1-July-to-30-September-2026.pdf"
+  },
+  {
+    "from": "2026-07-01",
+    "to": "2026-09-30",
+    "region": "_H",
+    "electricity": {
+      "unit": 25.16,
+      "standing": 47.33
+    },
+    "gas": {
+      "unit": 7.17,
+      "standing": 27.17
+    },
+    "typicalBill": 1663,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-05/Energy-price-cap-levels-1-July-to-30-September-2026.pdf"
+  },
+  {
+    "from": "2026-07-01",
+    "to": "2026-09-30",
+    "region": "_J",
+    "electricity": {
+      "unit": 25.4,
+      "standing": 51.85
+    },
+    "gas": {
+      "unit": 7.04,
+      "standing": 27.27
+    },
+    "typicalBill": 1663,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-05/Energy-price-cap-levels-1-July-to-30-September-2026.pdf"
+  },
+  {
+    "from": "2026-07-01",
+    "to": "2026-09-30",
+    "region": "_K",
+    "electricity": {
+      "unit": 25.08,
+      "standing": 55.09
+    },
+    "gas": {
+      "unit": 7.07,
+      "standing": 27.91
+    },
+    "typicalBill": 1663,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-05/Energy-price-cap-levels-1-July-to-30-September-2026.pdf"
+  },
+  {
+    "from": "2026-07-01",
+    "to": "2026-09-30",
+    "region": "_L",
+    "electricity": {
+      "unit": 25.13,
+      "standing": 55.13
+    },
+    "gas": {
+      "unit": 7.12,
+      "standing": 27.31
+    },
+    "typicalBill": 1663,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-05/Energy-price-cap-levels-1-July-to-30-September-2026.pdf"
+  },
+  {
+    "from": "2026-07-01",
+    "to": "2026-09-30",
+    "region": "_M",
+    "electricity": {
+      "unit": 24.1,
+      "standing": 61.31
+    },
+    "gas": {
+      "unit": 6.92,
+      "standing": 27.73
+    },
+    "typicalBill": 1663,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-05/Energy-price-cap-levels-1-July-to-30-September-2026.pdf"
+  },
+  {
+    "from": "2026-07-01",
+    "to": "2026-09-30",
+    "region": "_N",
+    "electricity": {
+      "unit": 24.62,
+      "standing": 61.12
+    },
+    "gas": {
+      "unit": 6.89,
+      "standing": 27.85
+    },
+    "typicalBill": 1663,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-05/Energy-price-cap-levels-1-July-to-30-September-2026.pdf"
+  },
+  {
+    "from": "2026-07-01",
+    "to": "2026-09-30",
+    "region": "_P",
+    "electricity": {
+      "unit": 25.16,
+      "standing": 54.81
+    },
+    "gas": {
+      "unit": 6.89,
+      "standing": 27.83
+    },
+    "typicalBill": 1663,
+    "source": "https://www.ofgem.gov.uk/sites/default/files/2026-05/Energy-price-cap-levels-1-July-to-30-September-2026.pdf"
+  },
+  {
+    "from": "2026-10-01",
+    "to": "2026-12-31",
+    "region": "_A",
+    "electricity": {
+      "unit": 26.61,
+      "standing": 51.84
+    },
+    "gas": {
+      "unit": 7.53,
+      "standing": 27.94
+    },
+    "typicalBill": 1723,
+    "source": "https://www.ofgem.gov.uk/your-energy-supply/your-energy-bill/energy-price-cap-unit-rates-and-standing-charges"
+  },
+  {
+    "from": "2026-10-01",
+    "to": "2026-12-31",
+    "region": "_B",
+    "electricity": {
+      "unit": 25.36,
+      "standing": 51.45
+    },
+    "gas": {
+      "unit": 7.45,
+      "standing": 28.01
+    },
+    "typicalBill": 1723,
+    "source": "https://www.ofgem.gov.uk/your-energy-supply/your-energy-bill/energy-price-cap-unit-rates-and-standing-charges"
+  },
+  {
+    "from": "2026-10-01",
+    "to": "2026-12-31",
+    "region": "_C",
+    "electricity": {
+      "unit": 26.6,
+      "standing": 42.92
+    },
+    "gas": {
+      "unit": 7.76,
+      "standing": 28.76
+    },
+    "typicalBill": 1723,
+    "source": "https://www.ofgem.gov.uk/your-energy-supply/your-energy-bill/energy-price-cap-unit-rates-and-standing-charges"
+  },
+  {
+    "from": "2026-10-01",
+    "to": "2026-12-31",
+    "region": "_D",
+    "electricity": {
+      "unit": 27.86,
+      "standing": 67.66
+    },
+    "gas": {
+      "unit": 7.53,
+      "standing": 28.65
+    },
+    "typicalBill": 1723,
+    "source": "https://www.ofgem.gov.uk/your-energy-supply/your-energy-bill/energy-price-cap-unit-rates-and-standing-charges"
+  },
+  {
+    "from": "2026-10-01",
+    "to": "2026-12-31",
+    "region": "_E",
+    "electricity": {
+      "unit": 25.6,
+      "standing": 57.23
+    },
+    "gas": {
+      "unit": 7.52,
+      "standing": 28.3
+    },
+    "typicalBill": 1723,
+    "source": "https://www.ofgem.gov.uk/your-energy-supply/your-energy-bill/energy-price-cap-unit-rates-and-standing-charges"
+  },
+  {
+    "from": "2026-10-01",
+    "to": "2026-12-31",
+    "region": "_F",
+    "electricity": {
+      "unit": 25.46,
+      "standing": 61.58
+    },
+    "gas": {
+      "unit": 7.54,
+      "standing": 28.37
+    },
+    "typicalBill": 1723,
+    "source": "https://www.ofgem.gov.uk/your-energy-supply/your-energy-bill/energy-price-cap-unit-rates-and-standing-charges"
+  },
+  {
+    "from": "2026-10-01",
+    "to": "2026-12-31",
+    "region": "_G",
+    "electricity": {
+      "unit": 26.49,
+      "standing": 45.68
+    },
+    "gas": {
+      "unit": 7.49,
+      "standing": 28.39
+    },
+    "typicalBill": 1723,
+    "source": "https://www.ofgem.gov.uk/your-energy-supply/your-energy-bill/energy-price-cap-unit-rates-and-standing-charges"
+  },
+  {
+    "from": "2026-10-01",
+    "to": "2026-12-31",
+    "region": "_H",
+    "electricity": {
+      "unit": 26.47,
+      "standing": 47.81
+    },
+    "gas": {
+      "unit": 7.78,
+      "standing": 27.77
+    },
+    "typicalBill": 1723,
+    "source": "https://www.ofgem.gov.uk/your-energy-supply/your-energy-bill/energy-price-cap-unit-rates-and-standing-charges"
+  },
+  {
+    "from": "2026-10-01",
+    "to": "2026-12-31",
+    "region": "_J",
+    "electricity": {
+      "unit": 26.88,
+      "standing": 52.32
+    },
+    "gas": {
+      "unit": 7.67,
+      "standing": 27.87
+    },
+    "typicalBill": 1723,
+    "source": "https://www.ofgem.gov.uk/your-energy-supply/your-energy-bill/energy-price-cap-unit-rates-and-standing-charges"
+  },
+  {
+    "from": "2026-10-01",
+    "to": "2026-12-31",
+    "region": "_K",
+    "electricity": {
+      "unit": 26.55,
+      "standing": 55.41
+    },
+    "gas": {
+      "unit": 7.7,
+      "standing": 28.53
+    },
+    "typicalBill": 1723,
+    "source": "https://www.ofgem.gov.uk/your-energy-supply/your-energy-bill/energy-price-cap-unit-rates-and-standing-charges"
+  },
+  {
+    "from": "2026-10-01",
+    "to": "2026-12-31",
+    "region": "_L",
+    "electricity": {
+      "unit": 26.58,
+      "standing": 55.58
+    },
+    "gas": {
+      "unit": 7.73,
+      "standing": 27.91
+    },
+    "typicalBill": 1723,
+    "source": "https://www.ofgem.gov.uk/your-energy-supply/your-energy-bill/energy-price-cap-unit-rates-and-standing-charges"
+  },
+  {
+    "from": "2026-10-01",
+    "to": "2026-12-31",
+    "region": "_M",
+    "electricity": {
+      "unit": 25.6,
+      "standing": 61.67
+    },
+    "gas": {
+      "unit": 7.52,
+      "standing": 28.35
+    },
+    "typicalBill": 1723,
+    "source": "https://www.ofgem.gov.uk/your-energy-supply/your-energy-bill/energy-price-cap-unit-rates-and-standing-charges"
+  },
+  {
+    "from": "2026-10-01",
+    "to": "2026-12-31",
+    "region": "_N",
+    "electricity": {
+      "unit": 26.11,
+      "standing": 61.41
+    },
+    "gas": {
+      "unit": 7.5,
+      "standing": 28.47
+    },
+    "typicalBill": 1723,
+    "source": "https://www.ofgem.gov.uk/your-energy-supply/your-energy-bill/energy-price-cap-unit-rates-and-standing-charges"
+  },
+  {
+    "from": "2026-10-01",
+    "to": "2026-12-31",
+    "region": "_P",
+    "electricity": {
+      "unit": 26.35,
+      "standing": 55.14
+    },
+    "gas": {
+      "unit": 7.5,
+      "standing": 28.45
+    },
+    "typicalBill": 1723,
+    "source": "https://www.ofgem.gov.uk/your-energy-supply/your-energy-bill/energy-price-cap-unit-rates-and-standing-charges"
+  }
+]

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { addDays, addMonths, dayRange, ukDay } from '../src/days.js';
+import { addDays, addMonths, dayRange, ukDay, ukMidnight } from '../src/days.js';
 
 test('ukDay dates an instant by its UK-local calendar day at BST and GMT boundaries', () => {
   assert.equal(ukDay('2026-09-30T23:00:00Z'), '2026-10-01'); // BST: 00:00 local
@@ -38,4 +38,14 @@ test('addMonths clamps to the end of a shorter month', () => {
 test('dayRange is half-open', () => {
   assert.deepEqual(dayRange('2026-10-24', '2026-10-27'), ['2026-10-24', '2026-10-25', '2026-10-26']);
   assert.deepEqual(dayRange('2026-10-24', '2026-10-24'), []);
+});
+
+test('ukMidnight is 23:00Z the day before in BST and 00:00Z in GMT', () => {
+  const iso = (day) => new Date(ukMidnight(day)).toISOString();
+  assert.equal(iso('2026-10-01'), '2026-09-30T23:00:00.000Z');
+  assert.equal(iso('2026-01-01'), '2026-01-01T00:00:00.000Z');
+  assert.equal(iso('2026-03-29'), '2026-03-29T00:00:00.000Z'); // clocks change at 01:00Z; midnight still GMT
+  assert.equal(iso('2026-03-30'), '2026-03-29T23:00:00.000Z');
+  assert.equal(iso('2026-10-25'), '2026-10-24T23:00:00.000Z'); // BST ends at 01:00Z; midnight still BST
+  assert.equal(iso('2026-10-26'), '2026-10-26T00:00:00.000Z');
 });

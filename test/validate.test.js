@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { test } from 'node:test';
@@ -19,6 +19,20 @@ const DD = 'DIRECT_DEBIT';
 const row = (from, to = '', pm = DD) => `${from},${to},${pm},1,1.05`;
 const csv = (...rows) => `${[HEADER, ...rows].join('\n')}\n`;
 const GOOD_CSV = csv(row('2025-01-01T00:00:00Z', '2026-01-01T00:00:00Z'), row('2026-01-01T00:00:00Z'));
+
+const CAP_ROW = (region, from, to) => ({
+  from,
+  to,
+  region,
+  electricity: { unit: 27.5, standing: 50.1 },
+  gas: { unit: 7.1, standing: 30.2 },
+  typicalBill: 1700,
+  source: 'https://example.test/cap.pdf',
+});
+const CAP = ['_C', '_G'].flatMap((r) => [
+  CAP_ROW(r, '2026-07-01', '2026-09-30'),
+  CAP_ROW(r, '2026-10-01', '2026-12-31'),
+]);
 
 const tariffCode = (code, region) => `E-1R-${code}-${region.slice(1)}`;
 
@@ -54,6 +68,7 @@ function setup() {
     cleanup: () => rmSync(root, { recursive: true, force: true }),
   };
   t.config(CONFIG);
+  t.write(join(root, 'cap.json'), JSON.stringify(CAP));
   for (const code of ['OE-FIX-12M-26-01-01', 'VAR-22-11-01']) {
     t.product(detailOf(code));
     for (const r of ['_C', '_G']) for (const rel of ['standing_charges', 'standard_unit_rates']) t.rates(code, r, rel);
@@ -77,7 +92,7 @@ const has = (list, text) => list.some((m) => m.includes(text));
 
 test('a valid tree passes with no failures and no warnings', () => {
   const r = corrupted(() => {});
-  assert.deepEqual(r, { failures: [], warnings: [] });
+  assert.deepEqual(r, { failures: [], warnings: [], capThrough: '2026-12-31' });
 });
 
 test('missing data/ is a failure naming the fix', () => {
@@ -87,7 +102,13 @@ test('missing data/ is a failure naming the fix', () => {
 });
 
 test('an unknown series is rejected (the seam for PLAN §4.3)', () => {
-  assert.deepEqual(KNOWN_SERIES, ['stepped']);
+  assert.deepEqual(
+    KNOWN_SERIES,
+    readdirSync(join(import.meta.dirname, '../src/series'))
+      .map((n) => n.replace(/\.js$/, ''))
+      .sort(),
+  );
+  assert.ok(KNOWN_SERIES.includes('stepped'));
   const r = corrupted((t) =>
     t.config({ ...CONFIG, families: [{ ...FAMILY('oe-fix-12m', '^OE-FIX-12M-'), series: 'time-of-use' }] }),
   );
@@ -251,6 +272,8 @@ test('the command prints prefixed lines and exits 1 on a failure', async () => {
     mkdirSync(join(t.root, 'src'));
     writeFileSync(join(t.root, 'package.json'), '{"type":"module"}');
     for (const n of ['validate.js', 'csv.js', 'families.js', 'days.js']) copy(n);
+    mkdirSync(join(t.root, 'src', 'series'));
+    copy('series/stepped.js');
     t.rates('AGILE-24-01-01', '_C', 'standing_charges');
     const r = spawnSync('node', [join(t.root, 'src', 'validate.js')], { encoding: 'utf8' });
     assert.equal(r.status, 1);
@@ -259,4 +282,64 @@ test('the command prints prefixed lines and exits 1 on a failure', async () => {
   } finally {
     t.cleanup();
   }
+});
+
+/** Validates a corrupted copy of the cap fixture. */
+const capRun = (edit) =>
+  corrupted((t) => t.write(join(t.root, 'cap.json'), JSON.stringify(edit(structuredClone(CAP)))));
+
+test('cap.json: a missing or non-array file fails', () => {
+  assert.ok(has(corrupted((t) => rmSync(join(t.root, 'cap.json'))).failures, 'cap.json: unreadable'));
+  assert.ok(has(capRun(() => ({})).failures, 'cap.json: not an array'));
+});
+
+test('cap.json: a region not in families.json fails', () => {
+  const r = capRun((rows) => rows.map((x, i) => (i === 0 ? { ...x, region: '_Z' } : x)));
+  assert.ok(has(r.failures, 'region "_Z" is not in families.json'), r.failures.join('\n'));
+});
+
+test('cap.json: wrong types and missing fields fail', () => {
+  for (const [what, edit] of [
+    ['electricity.unit', (x) => ({ ...x, electricity: { ...x.electricity, unit: '27.5' } })],
+    ['gas.standing', (x) => ({ ...x, gas: { unit: 7.1 } })],
+    ['typicalBill', (x) => ({ ...x, typicalBill: null })],
+    ['source', (x) => ({ ...x, source: undefined })],
+    ['from', (x) => ({ ...x, from: '2026-7-1' })],
+    ['to', (x) => ({ ...x, to: 20261231 })],
+    ['to', (x) => ({ ...x, to: '2026-02-30' })],
+  ]) {
+    const r = capRun((rows) => rows.map((x, i) => (i === 0 ? edit(x) : x)));
+    assert.ok(has(r.failures, `cap.json[0]: ${what} `), `${what}: ${r.failures}`);
+  }
+});
+
+test('cap.json: from after to fails', () => {
+  const r = capRun((rows) => rows.map((x, i) => (i === 0 ? { ...x, from: '2026-10-01', to: '2026-09-30' } : x)));
+  assert.ok(has(r.failures, 'from 2026-10-01 is after to 2026-09-30'), r.failures.join('\n'));
+});
+
+test('cap.json: overlapping periods in a region fail', () => {
+  const r = capRun((rows) => rows.map((x, i) => (i === 0 ? { ...x, to: '2026-10-01' } : x)));
+  assert.ok(
+    has(r.failures, 'region _C periods 2026-07-01..2026-10-01 and 2026-10-01..2026-12-31 overlap'),
+    r.failures.join('\n'),
+  );
+});
+
+test('cap.json: a region missing a period warns but passes, and a gap warns', () => {
+  const missing = capRun((rows) => rows.filter((x) => !(x.region === '_G' && x.from === '2026-10-01')));
+  assert.deepEqual(missing.failures, []);
+  assert.deepEqual(missing.warnings, ['cap.json: region _G has no cap after 2026-09-30 (others run to 2026-12-31)']);
+  assert.equal(missing.capThrough, '2026-12-31');
+  const none = capRun((rows) => rows.filter((x) => x.region !== '_G'));
+  assert.deepEqual(none.warnings, ['cap.json: region _G has no cap rows']);
+  const gap = capRun((rows) =>
+    rows.map((x) => (x.region === '_G' && x.from === '2026-10-01' ? { ...x, from: '2026-10-05' } : x)),
+  );
+  assert.deepEqual(gap.failures, []);
+  assert.deepEqual(gap.warnings, ['cap.json: region _G has no cap between 2026-09-30 and 2026-10-05']);
+});
+
+test('cap.json: capThrough is the latest period end', () => {
+  assert.equal(capRun((rows) => rows.filter((x) => x.to === '2026-09-30')).capThrough, '2026-09-30');
 });
