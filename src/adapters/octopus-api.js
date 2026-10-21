@@ -1,14 +1,25 @@
-import { RETRY, retry } from '../net.js';
+import { RETRY, retry, sleep, spaced } from '../net.js';
+
+const RATE_LIMITED = Symbol('rate limited');
 
 const BASE = 'https://api.octopus.energy/v1';
 
-/** GETs one URL as JSON through the shared retry policy; a non-2xx response throws (and is retried). */
+/** GETs one URL as JSON through the shared network policy; a non-2xx response throws (and is retried). */
 async function getJson(url, { fetch = globalThis.fetch, retryOpts = RETRY } = {}) {
-  return retry(async () => {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`${url} -> HTTP ${res.status}`);
-    return res.json();
-  }, retryOpts);
+  const waits = [...(retryOpts.rateLimitDelays ?? [])];
+  for (;;) {
+    const body = await retry(async () => {
+      await spaced(retryOpts.intervalMs);
+      const res = await fetch(url);
+      if (res.status === 429 && waits.length) return RATE_LIMITED;
+      if (!res.ok) throw new Error(`${url} -> HTTP ${res.status}`);
+      return res.json();
+    }, retryOpts);
+    if (body !== RATE_LIMITED) return body;
+    const ms = waits.shift();
+    console.error(`rate limited; waiting ${ms / 1000} s before ${url}`);
+    await sleep(ms);
+  }
 }
 
 /** Follows `next` from `url`, returning every page's body in order. */

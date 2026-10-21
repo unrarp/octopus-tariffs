@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { pool, RETRY, retry } from '../src/net.js';
+import { pool, RETRY, retry, spaced } from '../src/net.js';
 
 const opts = { attempts: 3, delays: [1, 1] };
 
@@ -81,4 +81,25 @@ test('pool frees the slot when a fn throws synchronously', async () => {
   const good = run(async () => 'fine');
   await assert.rejects(bad, /sync/);
   assert.equal(await good, 'fine');
+});
+
+test('spaced keeps the gap after the event loop stalls, instead of releasing a burst', async () => {
+  const starts = [];
+  const jobs = [1, 2, 3, 4].map(async () => {
+    await spaced(50);
+    starts.push(performance.now());
+  });
+  await new Promise((r) => setTimeout(r, 5));
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 200); // block the loop past every reserved slot
+  await Promise.all(jobs);
+  const gaps = starts.slice(1).map((t, i) => t - starts[i]);
+  assert.ok(
+    gaps.every((g) => g >= 45),
+    `gaps ${gaps}`,
+  );
+});
+
+test('RETRY spaces requests 250 ms apart and waits 1, 2, 5, 5, 10 min on a 429', () => {
+  assert.equal(RETRY.intervalMs, 250);
+  assert.deepEqual(RETRY.rateLimitDelays, [60_000, 120_000, 300_000, 300_000, 600_000]);
 });

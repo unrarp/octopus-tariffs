@@ -95,6 +95,46 @@ test('a non-OK response throws after retries', async () => {
   assert.equal(n, 3);
 });
 
+test('an HTTP 429 waits out rateLimitDelays and then succeeds, or throws once they run out', async () => {
+  const d = { code: 'X' };
+  let calls = 0;
+  const fetch = async () =>
+    ++calls <= 2 ? { ok: false, status: 429 } : { ok: true, status: 200, json: async () => d };
+  const limited = { attempts: 1, delays: [0], rateLimitDelays: [0, 0] };
+  assert.deepEqual(await productDetail('X', { fetch, retryOpts: limited }), d);
+  assert.equal(calls, 3);
+  calls = -10;
+  await assert.rejects(productDetail('X', { fetch, retryOpts: limited }), /HTTP 429/);
+});
+
+test('a body that fails to read after HTTP 200 is retried', async () => {
+  let calls = 0;
+  const fetch = async () => ({
+    ok: true,
+    status: 200,
+    json: async () => {
+      if (++calls < 2) throw new Error('terminated');
+      return { code: 'X' };
+    },
+  });
+  assert.deepEqual(await productDetail('X', { fetch, retryOpts }), { code: 'X' });
+});
+
+test('request starts are spaced intervalMs apart across concurrent calls', async () => {
+  const starts = [];
+  const fetch = async () => {
+    starts.push(Date.now());
+    return { ok: true, status: 200, json: async () => ({}) };
+  };
+  const spacedOpts = { ...retryOpts, intervalMs: 40 };
+  await Promise.all([1, 2, 3, 4].map(() => productDetail('X', { fetch, retryOpts: spacedOpts })));
+  const gaps = starts.slice(1).map((t, i) => t - starts[i]);
+  assert.ok(
+    gaps.every((g) => g >= 35),
+    `gaps ${gaps}`,
+  );
+});
+
 test('detail fixture: tariff maps keyed region then payment key, links rels present', () => {
   const d = fx('detail-oe-fix-18m-26-09-11');
   const t = d.single_register_electricity_tariffs._C.direct_debit_monthly;
