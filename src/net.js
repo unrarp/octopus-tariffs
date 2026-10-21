@@ -12,3 +12,26 @@ export async function retry(fn, { attempts, delays }) {
     }
   }
 }
+
+/** Returns `run(fn)` that runs at most `limit` async fns at once, queueing the rest; results and errors propagate. */
+export function pool(limit) {
+  let active = 0;
+  const queue = [];
+  const next = () => {
+    if (active >= limit || !queue.length) return;
+    active++;
+    const { fn, resolve, reject } = queue.shift();
+    Promise.resolve()
+      .then(fn)
+      .then(resolve, reject)
+      .finally(() => {
+        active--;
+        next();
+      });
+  };
+  return (fn) =>
+    new Promise((resolve, reject) => {
+      queue.push({ fn, resolve, reject });
+      next();
+    });
+}

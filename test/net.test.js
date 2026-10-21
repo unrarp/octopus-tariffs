@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { RETRY, retry } from '../src/net.js';
+import { pool, RETRY, retry } from '../src/net.js';
 
 const opts = { attempts: 3, delays: [1, 1] };
 
@@ -45,4 +45,40 @@ test('the retry policy waits 2 s, then 5 s, before giving up after three tries',
   assert.equal(await after(4999), 2);
   assert.equal(await after(1), 3);
   assert.match((await done).message, /down/);
+});
+
+test('pool never runs more than `limit` fns at once and returns each result', async () => {
+  const run = pool(3);
+  let inFlight = 0;
+  let peak = 0;
+  const task = (i) =>
+    run(async () => {
+      peak = Math.max(peak, ++inFlight);
+      await new Promise((r) => setTimeout(r, 5));
+      inFlight--;
+      return i * 2;
+    });
+  const out = await Promise.all([...Array(10).keys()].map(task));
+  assert.deepEqual(out, [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]);
+  assert.equal(peak, 3);
+});
+
+test('pool propagates an error and keeps serving the queue', async () => {
+  const run = pool(1);
+  const bad = run(async () => {
+    throw new Error('boom');
+  });
+  const good = run(async () => 'fine');
+  await assert.rejects(bad, /boom/);
+  assert.equal(await good, 'fine');
+});
+
+test('pool frees the slot when a fn throws synchronously', async () => {
+  const run = pool(1);
+  const bad = run(() => {
+    throw new Error('sync');
+  });
+  const good = run(async () => 'fine');
+  await assert.rejects(bad, /sync/);
+  assert.equal(await good, 'fine');
 });
