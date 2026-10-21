@@ -1,0 +1,35 @@
+{
+ "count": 24,
+ "next": null,
+ "previous": null,
+ "results": [
+  {
+   "value_exc_vat": 41.3869,
+   "value_inc_vat": 41.3869,
+   "valid_from": "2026-09-30T23:00:00Z",
+   "valid_to": null,
+   "payment_method": "DIRECT_DEBIT"
+  },
+  {
+   "value_exc_vat": 48.3178,
+   "value_inc_vat": 48.3178,
+   "valid_from": "2026-09-30T23:00:00Z",
+   "valid_to": null,
+   "payment_method": "NON_DIRECT_DEBIT"
+  },
+  {
+   "value_exc_vat": 39.5209,
+   "value_inc_vat": 41.496945,
+   "valid_from": "2026-06-30T23:00:00Z",
+   "valid_to": "2026-09-30T23:00:00Z",
+   "payment_method": "DIRECT_DEBIT"
+  },
+  {
+   "value_exc_vat": 46.385,
+   "value_inc_vat": 48.70425,
+   "valid_from": "2026-06-30T23:00:00Z",
+   "valid_to": "2026-09-30T23:00:00Z",
+   "payment_method": "NON_DIRECT_DEBIT"
+  }
+ ]
+}

@@ -1,0 +1,127 @@
+{
+ "count": 7,
+ "next": "https://api.octopus.energy/v1/products/?page=2&page_size=5",
+ "previous": null,
+ "results": [
+  {
+   "code": "AGILE-24-10-01",
+   "direction": "IMPORT",
+   "full_name": "Agile Octopus October 2024 v1",
+   "display_name": "Agile Octopus",
+   "description": "With Agile Octopus, you get access to half-hourly energy prices, tied to wholesale prices and updated daily.  The unit rate is capped at 100p/kWh (including VAT).",
+   "is_variable": true,
+   "is_green": true,
+   "is_tracker": false,
+   "is_prepay": false,
+   "is_business": false,
+   "is_restricted": false,
+   "term": 12,
+   "available_from": "2024-10-01T00:00:00+01:00",
+   "available_to": null,
+   "links": [
+    {
+     "href": "https://api.octopus.energy/v1/products/AGILE-24-10-01/",
+     "method": "GET",
+     "rel": "self"
+    }
+   ],
+   "brand": "OCTOPUS_ENERGY"
+  },
+  {
+   "code": "AGILE-OUTGOING-19-05-13",
+   "direction": "EXPORT",
+   "full_name": "Agile Outgoing Octopus May 2019",
+   "display_name": "Agile Outgoing Octopus",
+   "description": "Outgoing Octopus Agile rate pays you for all your exported energy based on the day-ahead wholesale rate.",
+   "is_variable": true,
+   "is_green": true,
+   "is_tracker": false,
+   "is_prepay": false,
+   "is_business": false,
+   "is_restricted": false,
+   "term": 12,
+   "available_from": "2018-01-01T00:00:00Z",
+   "available_to": null,
+   "links": [
+    {
+     "href": "https://api.octopus.energy/v1/products/AGILE-OUTGOING-19-05-13/",
+     "method": "GET",
+     "rel": "self"
+    }
+   ],
+   "brand": "OCTOPUS_ENERGY"
+  },
+  {
+   "code": "COOP-FIX-12M-26-10-19",
+   "direction": "IMPORT",
+   "full_name": "Co-op 12M Fixed October 2026 v6",
+   "display_name": "Co-op 12M Fixed",
+   "description": "This fixed tariff locks in your unit rates and standing charges for 12 months.  This tariff has a \u00a350 early exit fee per fuel.",
+   "is_variable": false,
+   "is_green": false,
+   "is_tracker": false,
+   "is_prepay": false,
+   "is_business": false,
+   "is_restricted": false,
+   "term": 12,
+   "available_from": "2026-10-19T15:00:00+01:00",
+   "available_to": null,
+   "links": [
+    {
+     "href": "https://api.octopus.energy/v1/products/COOP-FIX-12M-26-10-19/",
+     "method": "GET",
+     "rel": "self"
+    }
+   ],
+   "brand": "COOP_ENERGY"
+  },
+  {
+   "code": "COOP-FIX-18M-26-10-17",
+   "direction": "IMPORT",
+   "full_name": "Co-op 18M Fixed October 2026 v5",
+   "display_name": "Co-op 18M Fixed",
+   "description": "This fixed tariff locks in your unit rates and standing charges for 18 months.  This tariff has a \u00a375 early exit fee per fuel.",
+   "is_variable": false,
+   "is_green": false,
+   "is_tracker": false,
+   "is_prepay": false,
+   "is_business": false,
+   "is_restricted": false,
+   "term": 18,
+   "available_from": "2026-10-17T00:00:00+01:00",
+   "available_to": null,
+   "links": [
+    {
+     "href": "https://api.octopus.energy/v1/products/COOP-FIX-18M-26-10-17/",
+     "method": "GET",
+     "rel": "self"
+    }
+   ],
+   "brand": "COOP_ENERGY"
+  },
+  {
+   "code": "COOP-FIX-6M-26-10-19",
+   "direction": "IMPORT",
+   "full_name": "Co-op 6M Winter Fix October 2026 v1",
+   "display_name": "Co-op 6M Winter Fix",
+   "description": "This fixed tariff locks in your unit rates and standing charges for 6 months through the winter.",
+   "is_variable": false,
+   "is_green": false,
+   "is_tracker": false,
+   "is_prepay": false,
+   "is_business": false,
+   "is_restricted": false,
+   "term": 6,
+   "available_from": "2026-10-19T15:00:00+01:00",
+   "available_to": null,
+   "links": [
+    {
+     "href": "https://api.octopus.energy/v1/products/COOP-FIX-6M-26-10-19/",
+     "method": "GET",
+     "rel": "self"
+    }
+   ],
+   "brand": "COOP_ENERGY"
+  }
+ ]
+}
