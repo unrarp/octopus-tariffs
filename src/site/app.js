@@ -20,7 +20,7 @@ const WINDOWS = ['6', '12', '24', 'all']; // months back from the right edge, sm
 const REGION_KEY = 'octopus-tariffs:region';
 const USAGE_KEY = 'octopus-tariffs:usage';
 const MINE_KEY = 'octopus-tariffs:mine';
-/** The comparison's reference version when the viewer has picked no tariff (PLAN.md section 1, Comparison). */
+/** The comparison's reference version when the viewer has picked no tariff. */
 const REF_VERSION = 'OE-FIX-18M-26-09-11';
 const HINT =
   "Estimates, not bills. Your usage follows a typical home's seasonal pattern; standing charge and VAT included; direct debit. Each tariff is costed at its own rates from the date, on sale then or not. Exit fees, service and brand ignored.";
@@ -468,7 +468,7 @@ async function main() {
   });
   window.__charts = charts; // test hook read by test/browser.spec.js
 
-  // ---- my tariff and the comparison (PLAN.md section 1, You row and Comparison) ----
+  // ---- my tariff and the comparison ----
   const versionInfo = new Map(); // code -> {family, version, colour}
   meta.families.forEach((f, i) => {
     for (const v of f.versions) versionInfo.set(v.code, { family: f, version: v, colour: pair(PALETTE[i]) });

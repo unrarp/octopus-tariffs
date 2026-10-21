@@ -409,7 +409,7 @@ test('link check: no href, src, fetch or import starts with /', async ({ page })
   expect(hits.map((f) => relative(out, f))).toEqual([]);
 });
 
-// ---- the comparison (PLAN.md Step 3.2): expected £ figures come from the same lib on the same built files ----
+// ---- the comparison: expected £ figures come from the same lib on the same built files ----
 const CUTOFF = '2026-10-21'; // the fixture's generatedAt day: comparisons run up to it
 const FAMILY = {
   'OE-FIX-12M': ['oe-fix-12m', 'fixed'],

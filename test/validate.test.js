@@ -103,7 +103,7 @@ test('missing data/ is a failure naming the fix', () => {
   assert.match(r.failures[0], /data\/products is missing: run npm run collect/);
 });
 
-test('an unknown series is rejected (the seam for PLAN §4.3)', () => {
+test('an unknown series is rejected (the seam for new series modules)', () => {
   assert.deepEqual(
     KNOWN_SERIES,
     readdirSync(join(import.meta.dirname, '../src/series'))

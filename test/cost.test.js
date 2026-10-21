@@ -7,7 +7,7 @@ test('annualCost is (unit x kWh + standing x 365) / 100 in pounds', () => {
   assert.equal(annualCost({ unit: 0, standingCharge: 0 }, 1000), 0);
 });
 
-test('annualCost at TDCV: 2,500 kWh electricity and 9,500 kWh gas on the PLAN.md section 2 sample values (OE-FIX-18M-26-09-11, region C)', () => {
+test('annualCost at TDCV: 2,500 kWh electricity and 9,500 kWh gas on live sample values (OE-FIX-18M-26-09-11, region C)', () => {
   assert.equal(Math.round(annualCost({ unit: 25.7963, standingCharge: 39.5209 }, 2500) * 100) / 100, 789.16);
   assert.equal(Math.round(annualCost({ unit: 8.450085, standingCharge: 29.38383 }, 9500) * 100) / 100, 910.01);
 });

@@ -13,7 +13,7 @@ function pick(rows, ms, paymentMethod, availableFrom) {
   return found?.value_exc_vat ?? null;
 }
 
-/** One {day, unit, standingCharge} per UK day in [from, to): the exc-VAT row in force at that day's UK midnight, plus VAT (PLAN.md §4.2). */
+/** One {day, unit, standingCharge} per UK day in [from, to): the exc-VAT row in force at that day's UK midnight, plus VAT. */
 export function daily({ unitRows, standingRows }, { from, to, paymentMethod, fuel, availableFrom }) {
   return dayRange(from, to).map((day) => {
     const ms = ukMidnight(day);

@@ -1,4 +1,8 @@
-/** Each fuel's VAT schedule (PLAN.md §1): the rate in force from each start day, oldest first; the first applies to all earlier days. */
+/**
+ * Each fuel's VAT schedule: the rate in force from each start day, oldest first; the first applies to all earlier days.
+ * Display prices derive from this, never the API's value_inc_vat: the API prices an open row (valid_to null) at today's
+ * VAT rather than its period's, and a closed row spanning a VAT change at one of the two rates (seen 2026-10-21).
+ */
 const SCHEDULE = {
   electricity: [
     { from: '0000-01-01', rate: 0.05 },

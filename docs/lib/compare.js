@@ -1,7 +1,7 @@
-import { annualCost } from './cost.js?v=a4979f20';
-import { dailyKwh } from './profile.js?v=968a845e';
+import { annualCost } from './cost.js?v=c82eec7e';
+import { dailyKwh } from './profile.js?v=fa445f25';
 
-/** Earliest comparison start: before this the Energy Price Guarantee applied (PLAN.md section 1). */
+/** Earliest comparison start: before this the Energy Price Guarantee applied. */
 export const MIN_START = '2023-07-01';
 
 const DAY_MS = 86400000;

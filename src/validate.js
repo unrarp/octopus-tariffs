@@ -6,7 +6,7 @@ import { addDays, ukDay } from './days.js';
 import { endpointsOf, MAPS } from './families.js';
 import { vat, vatPeriodsBetween } from './vat.js';
 
-/** The series modules that exist (PLAN.md §4.3), read from src/series/: adding a series means adding its module there. */
+/** The series modules that exist, read from src/series/: adding a series means adding its module there. */
 export const KNOWN_SERIES = readdirSync(join(dirname(fileURLToPath(import.meta.url)), 'series'))
   .filter((n) => n.endsWith('.js'))
   .map((n) => n.slice(0, -'.js'.length))
@@ -15,7 +15,7 @@ export const KNOWN_SERIES = readdirSync(join(dirname(fileURLToPath(import.meta.u
 const KEBAB = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const FORBIDDEN_KEYS = ['links', 'tariffs_active_at'];
 
-/** Pushes failure messages for an invalid family config (PLAN.md §3), plus the compiled matchers of the valid ones. */
+/** Pushes failure messages for an invalid family config, plus the compiled matchers of the valid ones. */
 function checkConfig(config, failures) {
   const matchers = [];
   const ids = new Set();
@@ -81,7 +81,7 @@ function checkRows(rows, label, failures) {
   }
 }
 
-/** Failure messages for closed rows whose derived inc VAT differs from the API's, skipping rows that span a VAT change (PLAN.md section 1, VAT). */
+/** Failure messages for closed rows whose derived inc VAT differs from the API's, skipping rows that span a VAT change. */
 function checkVat(rows, label, fuel, availableFrom, failures) {
   for (const r of rows) {
     if (r.valid_to == null) continue;
@@ -106,7 +106,7 @@ const isDay = (v) =>
   typeof v === 'string' && DAY.test(v) && new Date(`${v}T00:00:00Z`).toISOString().slice(0, 10) === v;
 const isNum = (v) => typeof v === 'number' && Number.isFinite(v);
 
-/** Pushes failures for a cap.json row of the wrong shape (PLAN.md §1 Price cap); returns whether the row is well formed. */
+/** Pushes failures for a cap.json row of the wrong shape; returns whether the row is well formed. */
 function checkCapRow(r, i, regionKeys, failures) {
   const at = `cap.json[${i}]`;
   const before = failures.length;
@@ -180,7 +180,7 @@ function checkSeries(file, label, fuels, codes, first, last, failures) {
   }
 }
 
-/** Failures for the build output under docsRoot when docs/data/families.json exists (PLAN.md section 4.4); `capFrom` is the first cap period's start, or null. */
+/** Failures for the build output under docsRoot when docs/data/families.json exists; `capFrom` is the first cap period's start, or null. */
 function checkBuild(docsRoot, config, capFrom, failures) {
   const path = join(docsRoot, 'data', 'families.json');
   if (!existsSync(path)) return;
@@ -217,7 +217,7 @@ function checkBuild(docsRoot, config, capFrom, failures) {
   }
 }
 
-/** Validates families.json, cap.json and the data tree (PLAN.md §3, §4.1), and the build output when present; returns {failures, warnings, capThrough} (capThrough: the latest cap period's last day, for the build to compare with generatedAt). */
+/** Validates families.json, cap.json and the data tree, and the build output when present; returns {failures, warnings, capThrough} (capThrough: the latest cap period's last day, for the build to compare with generatedAt). */
 export function validate({ root, dataRoot = join(root, 'data'), docsRoot = join(root, 'docs') }) {
   const failures = [];
   const warnings = [];

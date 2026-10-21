@@ -113,7 +113,7 @@ function capFile(caps, region, from, end) {
 
 const cell = (v) => (v === null ? '' : String(v));
 
-/** The per-family CSV of the daily series the chart draws (PLAN.md section 4.5). */
+/** The per-family CSV of the daily series the chart draws. */
 function csvOf(file) {
   const lines = [
     'day,electricity_version,electricity_unit_rate,electricity_standing_charge,gas_version,gas_unit_rate,gas_standing_charge',
@@ -125,7 +125,7 @@ function csvOf(file) {
   return `${lines.join('\n')}\n`;
 }
 
-/** Copies and hash-stamps the site assets from `site` into `out` (PLAN.md section 4.4); absent files are skipped. */
+/** Copies and hash-stamps the site assets from `site` into `out`; absent files are skipped. */
 function buildSite({ site, out }) {
   rmSync(join(out, 'lib'), { recursive: true, force: true });
   const copy = (f) => {
@@ -166,7 +166,7 @@ function buildSite({ site, out }) {
 }
 
 /**
- * Builds docs/data/** and the site assets from `root` (families.json, cap.json, data/) into `out` (PLAN.md section 4).
+ * Builds docs/data/** and the site assets from `root` (families.json, cap.json, data/) into `out`.
  * `site` holds index.html, app.js, app.css and lib/ (default: this repo's src/site). Returns {generatedAt, capThrough}.
  */
 export async function build({

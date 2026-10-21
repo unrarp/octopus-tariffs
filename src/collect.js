@@ -55,7 +55,7 @@ function merge(path, api) {
 }
 
 /**
- * Collects product files and rate CSVs into dataRoot (see PLAN.md §4.1). Returns and logs the summary counts.
+ * Collects product files and rate CSVs into dataRoot. Returns and logs the summary counts.
  * Throws after in-flight work finishes when any request failed; a rerun resumes.
  */
 export async function collect({
