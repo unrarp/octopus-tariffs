@@ -42,7 +42,10 @@ function endpoint(detail, { region, map, paymentKey, tariff }, rel) {
 /** Every rate endpoint of the detail's tariffs in the given regions (an object keyed by region, or an array of keys). */
 export function endpointsOf(detail, regions) {
   const keys = Array.isArray(regions) ? regions : Object.keys(regions);
-  return [...tariffsOf(detail, keys)].flatMap((t) => relsOf(t.tariff).map((rel) => endpoint(detail, t, rel)));
+  const all = [...tariffsOf(detail, keys)].flatMap((t) => relsOf(t.tariff).map((rel) => endpoint(detail, t, rel)));
+  // A tariff can sit under two payment keys (seen: FIX-12M-MUGM-18-12-01); its endpoints are still one file each.
+  const seen = new Set();
+  return all.filter((e) => !seen.has(`${e.tariffCode}/${e.rel}`) && seen.add(`${e.tariffCode}/${e.rel}`));
 }
 
 /** Throws, naming the tariff, unless every tariff's derived rels and hrefs equal its live `links` exactly. */

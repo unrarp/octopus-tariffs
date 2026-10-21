@@ -133,3 +133,14 @@ test('inTerm for a variable product is on sale only', () => {
   assert.equal(inTerm(v('2026-10-21T00:00:00+01:00'), '2026-10-21'), true);
   assert.equal(inTerm(v('2026-10-20T00:00:00+01:00'), '2026-10-21'), false);
 });
+
+test('a tariff listed under two payment keys yields each endpoint once', () => {
+  const d = detail();
+  const map = d.single_register_electricity_tariffs._C;
+  map.varying = structuredClone(map.direct_debit_monthly);
+  const eps = endpointsOf(d, ['_C']).filter((e) => e.map === 'single_register_electricity_tariffs');
+  assert.deepEqual(
+    eps.map((e) => e.rel),
+    ['standing_charges', 'standard_unit_rates'],
+  );
+});
