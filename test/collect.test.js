@@ -9,7 +9,10 @@ const BASE = 'https://api.octopus.energy/v1';
 const NOW = '2026-10-21T06:00:00.000Z';
 const retryOpts = { attempts: 2, delays: [0] };
 const FAMILIES = {
-  log: { brands: ['OCTOPUS_ENERGY'], skipRateHistory: ['^AGILE'] },
+  log: {
+    brands: ['OCTOPUS_ENERGY'],
+    match: ['^OE-FIX-18M-', '^OE-FIX-12M-', '^OE-FIX-6M-', '^VAR-', '^GO-', '^COSY-', '^INTELLI-', '^IOG-'],
+  },
   regions: { _C: 'London' },
 };
 
@@ -299,16 +302,16 @@ test('a valid_to fill-in rewrites the right row in a two-method file', async () 
   }
 });
 
-test('an Agile code gets a product file but no rate files and no rate requests', async () => {
+test('a code outside log.match gets no product or rate files and no requests', async () => {
   const world = newWorld();
   const A = 'AGILE-24-10-01';
   addProduct(world, A);
   const t = setup();
   try {
     await t.run(world);
-    assert.deepEqual(files(join(t.dataRoot, 'products')), [`${A}.json`]);
+    assert.equal(existsSync(join(t.dataRoot, 'products')), false);
     assert.equal(existsSync(join(t.dataRoot, 'rates')), false);
-    assert.equal(onlyCalls(world, 'page_size=1500').length, 0);
+    assert.equal(onlyCalls(world, A).length, 0);
   } finally {
     t.cleanup();
   }

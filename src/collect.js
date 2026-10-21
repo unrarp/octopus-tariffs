@@ -4,7 +4,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { listProducts, productDetail, rateRows } from './adapters/octopus-api.js';
 import { appendCsv, readCsv, rewriteRow } from './csv.js';
 import { ukDay } from './days.js';
-import { checkLinks, endpointsOf, inTerm } from './families.js';
+import { checkLinks, endpointsOf, inLog, inTerm } from './families.js';
 import { pool } from './net.js';
 
 const IN_FLIGHT = 8;
@@ -70,12 +70,11 @@ export async function collect({
   const opts = { fetch, retryOpts };
   const today = ukDay(now);
   const regionKeys = Object.keys(config.regions);
-  const skipRates = config.log.skipRateHistory.map((p) => new RegExp(p));
   const productPath = (code) => join(dataRoot, 'products', `${code}.json`);
 
   const listed = (await Promise.all([listProducts(opts), listProducts({ ...opts, historical: true })])).flat();
   const byCode = new Map();
-  for (const p of listed) if (config.log.brands.includes(p.brand)) byCode.set(p.code, p);
+  for (const p of listed) if (inLog(p, config.log)) byCode.set(p.code, p);
   const products = [...byCode.values()];
 
   const run = pool(IN_FLIGHT);
@@ -123,10 +122,8 @@ export async function collect({
   );
   if (failure) throw failure;
 
-  const endpointsFor = (product) => {
-    if (skipRates.some((re) => re.test(product.code))) return [];
-    return endpointsOf(JSON.parse(readFileSync(productPath(product.code), 'utf8')), regionKeys);
-  };
+  const endpointsFor = (product) =>
+    endpointsOf(JSON.parse(readFileSync(productPath(product.code), 'utf8')), regionKeys);
   // Every endpoint goes through the one pool, so products with few endpoints still keep IN_FLIGHT requests busy.
   const endpoints = products.flatMap((p) => endpointsFor(p).map((ep) => ({ ep, live: fetched.has(p.code) })));
   let done = 0;

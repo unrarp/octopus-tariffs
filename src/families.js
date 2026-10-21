@@ -9,6 +9,11 @@ export const MAPS = {
   single_register_gas_tariffs: 'gas',
 };
 
+/** Whether `log` (families.json `log`) logs the product: a listed brand and a code matching one of `log.match`. */
+export function inLog({ code, brand }, log) {
+  return log.brands.includes(brand) && log.match.some((p) => new RegExp(p).test(code));
+}
+
 /** The first family whose `match` regex matches the product code, else null. */
 export function familyOf(code, families) {
   return families.find((f) => new RegExp(f.match).test(code)) ?? null;

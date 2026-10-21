@@ -26,6 +26,10 @@ function checkConfig(config, failures) {
       failures.push(`family ${f.id}: match ${f.match} is not a string`);
       continue;
     }
+    // Listed verbatim so coverage is checkable: collect logs only log.match, so a family outside it would never fill.
+    if (!config.log?.match?.includes(f.match)) {
+      failures.push(`family ${f.id}: match ${JSON.stringify(f.match)} is not in log.match`);
+    }
     if (!KNOWN_SERIES.includes(f.series)) {
       failures.push(`family ${f.id}: unknown series ${JSON.stringify(f.series)} (known: ${KNOWN_SERIES.join(', ')})`);
     }
@@ -239,7 +243,7 @@ export function validate({ root, dataRoot = join(root, 'data'), docsRoot = join(
     failures.push(`${productsDir} is missing: run npm run collect to backfill data/ first`);
     return { failures, warnings, capThrough };
   }
-  const skipRates = config.log.skipRateHistory.map((p) => new RegExp(p));
+  const loggedTariffs = new Set();
   const sold = new Set(); // `${familyId}|${region}` for every family × region with a stored tariff
 
   for (const file of readdirSync(productsDir).filter((n) => n.endsWith('.json'))) {
@@ -254,14 +258,18 @@ export function validate({ root, dataRoot = join(root, 'data'), docsRoot = join(
     const bad = forbiddenKey(detail);
     if (bad) failures.push(`products/${file}: forbidden key ${bad}`);
 
+    if (!config.log.match.some((p) => new RegExp(p).test(code))) {
+      failures.push(`products/${file}: code matches no log.match pattern`);
+      continue;
+    }
     const owners = matchers.filter((m) => m.re.test(code)).map((m) => m.id);
     if (owners.length > 1) failures.push(`product ${code} is matched by more than one family: ${owners.join(', ')}`);
 
     const endpoints = endpointsOf(detail, regionKeys);
     for (const id of owners) for (const ep of endpoints) sold.add(`${id}|${ep.region}`);
 
-    if (skipRates.some((re) => re.test(code))) continue;
     for (const ep of endpoints) {
+      loggedTariffs.add(ep.tariffCode);
       const label = `rates/${ep.tariffCode}/${ep.rel}.csv`;
       let rows;
       try {
@@ -276,13 +284,10 @@ export function validate({ root, dataRoot = join(root, 'data'), docsRoot = join(
     }
   }
 
-  // Judged from the directory names, so a tariff that has since left its product's detail is still caught.
+  // Judged from the directory names, so a tariff that has since left its product's detail is an orphan too.
   const ratesDir = join(dataRoot, 'rates');
   for (const tariff of existsSync(ratesDir) ? readdirSync(ratesDir) : []) {
-    const code = tariff.replace(/^[EG]-\dR-/, '').replace(/-[A-Z]$/, '');
-    if (skipRates.some((re) => re.test(code))) {
-      failures.push(`product ${code} skips rate history but rates/${tariff} exists`);
-    }
+    if (!loggedTariffs.has(tariff)) failures.push(`rates/${tariff} belongs to no stored product`);
   }
 
   for (const f of config.families ?? []) {

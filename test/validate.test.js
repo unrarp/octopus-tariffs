@@ -7,7 +7,10 @@ import { KNOWN_SERIES, validate } from '../src/validate.js';
 
 const FAMILY = (id, match) => ({ id, label: id, kind: 'fixed', match, series: 'stepped', fuels: ['electricity'] });
 const CONFIG = {
-  log: { brands: ['OCTOPUS_ENERGY'], skipRateHistory: ['^AGILE'] },
+  log: {
+    brands: ['OCTOPUS_ENERGY'],
+    match: ['^OE-FIX-18M-', '^OE-FIX-12M-', '^OE-FIX-6M-', '^VAR-', '^GO-', '^COSY-', '^INTELLI-', '^IOG-'],
+  },
   regions: { _C: 'London', _G: 'North West' },
   defaultRegion: '_C',
   paymentMethod: 'DIRECT_DEBIT',
@@ -47,7 +50,7 @@ function detailOf(code, regions = ['_C', '_G']) {
   };
 }
 
-/** Writes a valid small tree: two rendered products and an Agile product with no rates. */
+/** Writes a valid small tree: two rendered products. */
 function setup() {
   const root = mkdtempSync(join(tmpdir(), 'validate-'));
   const dataRoot = join(root, 'data');
@@ -73,7 +76,6 @@ function setup() {
     t.product(detailOf(code));
     for (const r of ['_C', '_G']) for (const rel of ['standing_charges', 'standard_unit_rates']) t.rates(code, r, rel);
   }
-  t.product(detailOf('AGILE-24-01-01', ['_C']));
   return t;
 }
 
@@ -135,20 +137,23 @@ test('a missing CSV for an endpoint of a logged product fails', () => {
   assert.ok(has(r.failures, 'rates/E-1R-VAR-22-11-01-G/standing_charges.csv: missing'), r.failures.join('\n'));
 });
 
-test('a CSV under rates/ for a skipRateHistory product fails', () => {
-  const r = corrupted((t) => t.rates('AGILE-24-01-01', '_C', 'standing_charges'));
-  assert.ok(
-    has(r.failures, 'AGILE-24-01-01 skips rate history but rates/E-1R-AGILE-24-01-01-C exists'),
-    r.failures.join('\n'),
-  );
+test('a product file whose code matches no log.match pattern fails', () => {
+  const r = corrupted((t) => t.product(detailOf('AGILE-24-01-01', ['_C'])));
+  assert.ok(has(r.failures, 'products/AGILE-24-01-01.json: code matches no log.match pattern'), r.failures.join('\n'));
 });
 
-test('a rates/ directory of a skipRateHistory product fails even when its tariff left the detail', () => {
-  const r = corrupted((t) => t.rates('AGILE-24-01-01', '_P', 'standing_charges'));
-  assert.ok(
-    has(r.failures, 'AGILE-24-01-01 skips rate history but rates/E-1R-AGILE-24-01-01-P exists'),
-    r.failures.join('\n'),
-  );
+test('a rates/ directory of no stored product fails, also when its tariff left the detail', () => {
+  const r = corrupted((t) => {
+    t.rates('AGILE-24-01-01', '_C', 'standing_charges');
+    t.rates('VAR-22-11-01', '_P', 'standing_charges'); // VAR-22-11-01 is stored but has no _P tariff
+  });
+  assert.ok(has(r.failures, 'rates/E-1R-AGILE-24-01-01-C belongs to no stored product'), r.failures.join('\n'));
+  assert.ok(has(r.failures, 'rates/E-1R-VAR-22-11-01-P belongs to no stored product'), r.failures.join('\n'));
+});
+
+test('a rendered family whose match is not listed in log.match fails', () => {
+  const r = corrupted((t) => t.config({ ...CONFIG, families: [...CONFIG.families, FAMILY('agile', '^AGILE-')] }));
+  assert.ok(has(r.failures, 'family agile: match "^AGILE-" is not in log.match'), r.failures.join('\n'));
 });
 
 test('a family with no match string or a repeated id fails', () => {
@@ -277,7 +282,7 @@ test('the command prints prefixed lines and exits 1 on a failure', async () => {
     t.rates('AGILE-24-01-01', '_C', 'standing_charges');
     const r = spawnSync('node', [join(t.root, 'src', 'validate.js')], { encoding: 'utf8' });
     assert.equal(r.status, 1);
-    assert.match(r.stdout, /^fail: product AGILE-24-01-01 skips rate history/m);
+    assert.match(r.stdout, /^fail: rates\/E-1R-AGILE-24-01-01-C belongs to no stored product/m);
     assert.match(r.stdout, /check:data: 1 failures, 0 warnings\n$/);
   } finally {
     t.cleanup();
@@ -406,16 +411,16 @@ test('VAT: a null valid_from reads as the product available_from', () => {
 
 test('VAT: products outside every rendered family are not checked', () => {
   const r = corrupted((t) => {
-    t.product(detailOf('BUSINESS-24-01-01'));
+    t.product(detailOf('GO-24-01-01'));
     t.rates(
-      'BUSINESS-24-01-01',
+      'GO-24-01-01',
       '_C',
       'standing_charges',
       csv(closed('2025-01-01T00:00:00Z', '2026-01-01T00:00:00Z', 1, 1.2)),
     );
-    t.rates('BUSINESS-24-01-01', '_C', 'standard_unit_rates');
-    t.rates('BUSINESS-24-01-01', '_G', 'standing_charges');
-    t.rates('BUSINESS-24-01-01', '_G', 'standard_unit_rates');
+    t.rates('GO-24-01-01', '_C', 'standard_unit_rates');
+    t.rates('GO-24-01-01', '_G', 'standing_charges');
+    t.rates('GO-24-01-01', '_G', 'standard_unit_rates');
   });
   assert.deepEqual(r.failures, []);
 });

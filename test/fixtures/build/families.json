@@ -1,5 +1,5 @@
 {
-  "log": { "brands": ["OCTOPUS_ENERGY"], "skipRateHistory": ["^AGILE"] },
+  "log": { "brands": ["OCTOPUS_ENERGY"], "match": ["^OE-FIX-18M-", "^OE-FIX-12M-", "^OE-FIX-6M-", "^VAR-", "^GO-", "^COSY-", "^INTELLI-", "^IOG-"] },
   "regions": { "_C": "London", "_G": "North West" },
   "defaultRegion": "_C",
   "paymentMethod": "DIRECT_DEBIT",
