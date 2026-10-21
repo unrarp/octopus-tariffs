@@ -1,0 +1,54 @@
+{
+  "available_from": "2025-09-30T23:00:00Z",
+  "available_to": "2025-12-01T00:00:00Z",
+  "brand": "OCTOPUS_ENERGY",
+  "code": "OE-FIX-12M-25-10-01",
+  "fetchedAt": "2026-10-21T06:00:00.000Z",
+  "full_name": "Octopus 12M Fixed October 2025 v1",
+  "is_variable": false,
+  "single_register_electricity_tariffs": {
+    "_C": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-25-10-01-C",
+        "exit_fees_exc_vat": 7500,
+        "exit_fees_inc_vat": 7500,
+        "exit_fees_type": "FLAT",
+        "standard_unit_rate_exc_vat": 19.5,
+        "standing_charge_exc_vat": 40
+      }
+    },
+    "_G": {
+      "direct_debit_monthly": {
+        "code": "E-1R-OE-FIX-12M-25-10-01-G",
+        "exit_fees_exc_vat": 7500,
+        "exit_fees_inc_vat": 7500,
+        "exit_fees_type": "FLAT",
+        "standard_unit_rate_exc_vat": 20.5,
+        "standing_charge_exc_vat": 40.5
+      }
+    }
+  },
+  "single_register_gas_tariffs": {
+    "_C": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-12M-25-10-01-C",
+        "exit_fees_exc_vat": 7500,
+        "exit_fees_inc_vat": 7500,
+        "exit_fees_type": "FLAT",
+        "standard_unit_rate_exc_vat": 6.8,
+        "standing_charge_exc_vat": 29
+      }
+    },
+    "_G": {
+      "direct_debit_monthly": {
+        "code": "G-1R-OE-FIX-12M-25-10-01-G",
+        "exit_fees_exc_vat": 7500,
+        "exit_fees_inc_vat": 7500,
+        "exit_fees_type": "FLAT",
+        "standard_unit_rate_exc_vat": 7.1,
+        "standing_charge_exc_vat": 29.3
+      }
+    }
+  },
+  "term": 12
+}

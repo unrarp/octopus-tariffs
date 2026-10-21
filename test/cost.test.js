@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { annualCost } from '../src/site/lib/cost.js';
+import { annualCost, TDCV } from '../src/site/lib/cost.js';
 
 test('annualCost is (unit x kWh + standing x 365) / 100 in pounds', () => {
   assert.equal(annualCost({ unit: 10, standingCharge: 20 }, 1000), (10 * 1000 + 20 * 365) / 100);
@@ -16,4 +16,8 @@ test('annualCost is null when the unit, standing charge or kWh is null', () => {
   assert.equal(annualCost({ unit: null, standingCharge: 40 }, 2500), null);
   assert.equal(annualCost({ unit: 25, standingCharge: null }, 2500), null);
   assert.equal(annualCost({ unit: 25, standingCharge: 40 }, null), null);
+});
+
+test('TDCV is the revised Ofgem pair, 2,500 kWh electricity and 9,500 kWh gas', () => {
+  assert.deepEqual(TDCV, { electricity: 2500, gas: 9500 });
 });

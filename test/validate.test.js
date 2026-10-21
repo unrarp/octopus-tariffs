@@ -271,7 +271,7 @@ test('the command prints prefixed lines and exits 1 on a failure', async () => {
     const copy = (name) => writeFileSync(join(t.root, 'src', name), readFileSync(join(src, name)));
     mkdirSync(join(t.root, 'src'));
     writeFileSync(join(t.root, 'package.json'), '{"type":"module"}');
-    for (const n of ['validate.js', 'csv.js', 'families.js', 'days.js']) copy(n);
+    for (const n of ['validate.js', 'csv.js', 'families.js', 'days.js', 'vat.js']) copy(n);
     mkdirSync(join(t.root, 'src', 'series'));
     copy('series/stepped.js');
     t.rates('AGILE-24-01-01', '_C', 'standing_charges');
@@ -342,4 +342,98 @@ test('cap.json: a region missing a period warns but passes, and a gap warns', ()
 
 test('cap.json: capThrough is the latest period end', () => {
   assert.equal(capRun((rows) => rows.filter((x) => x.to === '2026-09-30')).capThrough, '2026-09-30');
+});
+
+const tampered =
+  (code, region, rel, ...rows) =>
+  (t) =>
+    t.rates(code, region, rel, csv(...rows));
+const closed = (from, to, exc, inc, pm = DD) => `${from},${to},${pm},${exc},${inc}`;
+
+test('VAT: a closed row of a rendered family whose inc VAT is not exc x (1 + VAT) fails', () => {
+  const r = corrupted(
+    tampered(
+      'VAR-22-11-01',
+      '_C',
+      'standard_unit_rates',
+      closed('2025-01-01T00:00:00Z', '2026-01-01T00:00:00Z', 1, 1.2),
+    ),
+  );
+  assert.ok(
+    has(r.failures, 'rates/E-1R-VAR-22-11-01-C/standard_unit_rates.csv: row 2025-01-01'),
+    r.failures.join('\n'),
+  );
+  assert.equal(r.failures.length, 1);
+});
+
+test('VAT: the check follows the schedule, so a row wholly after 2026-10-01 must carry 0 % electricity VAT', () => {
+  const wrong = closed('2026-10-02T00:00:00Z', '2026-11-01T00:00:00Z', 1, 1.05);
+  const right = closed('2026-10-02T00:00:00Z', '2026-11-01T00:00:00Z', 1, 1);
+  assert.equal(corrupted(tampered('VAR-22-11-01', '_C', 'standing_charges', wrong)).failures.length, 1);
+  assert.equal(corrupted(tampered('VAR-22-11-01', '_C', 'standing_charges', right)).failures.length, 0);
+});
+
+test('VAT: a closed row spanning the 2026-10-01 step is skipped, priced at either rate', () => {
+  for (const inc of [1, 1.05]) {
+    const r = corrupted(
+      tampered(
+        'VAR-22-11-01',
+        '_C',
+        'standard_unit_rates',
+        closed('2026-09-01T00:00:00Z', '2026-11-01T00:00:00Z', 1, inc),
+      ),
+    );
+    assert.deepEqual(r.failures, []);
+  }
+});
+
+test('VAT: a row ending at 23:00Z on 2026-09-30 (UK 2026-10-01) is inside the 5 % period, not spanning', () => {
+  const r = corrupted(
+    tampered('VAR-22-11-01', '_C', 'standard_unit_rates', closed('2026-06-30T23:00:00Z', '2026-09-30T23:00:00Z', 1, 1)),
+  );
+  assert.equal(r.failures.length, 1);
+});
+
+test('VAT: a null valid_from reads as the product available_from', () => {
+  const edit = (availableFrom, inc) => (t) => {
+    t.product({ ...detailOf('VAR-22-11-01'), available_from: availableFrom });
+    t.rates('VAR-22-11-01', '_C', 'standard_unit_rates', csv(closed('', '2026-11-01T00:00:00Z', 1, inc)));
+  };
+  assert.deepEqual(corrupted(edit('2026-10-05T00:00:00+01:00', 1)).failures, []); // inside 0 %: correct
+  assert.equal(corrupted(edit('2026-10-05T00:00:00+01:00', 1.05)).failures.length, 1);
+  assert.deepEqual(corrupted(edit('2026-09-01T00:00:00+01:00', 1)).failures, []); // spans the step: skipped
+});
+
+test('VAT: products outside every rendered family are not checked', () => {
+  const r = corrupted((t) => {
+    t.product(detailOf('BUSINESS-24-01-01'));
+    t.rates(
+      'BUSINESS-24-01-01',
+      '_C',
+      'standing_charges',
+      csv(closed('2025-01-01T00:00:00Z', '2026-01-01T00:00:00Z', 1, 1.2)),
+    );
+    t.rates('BUSINESS-24-01-01', '_C', 'standard_unit_rates');
+    t.rates('BUSINESS-24-01-01', '_G', 'standing_charges');
+    t.rates('BUSINESS-24-01-01', '_G', 'standard_unit_rates');
+  });
+  assert.deepEqual(r.failures, []);
+});
+
+test('VAT: a gas row is checked against the gas schedule, 5 % on both sides of 2026-10-01', () => {
+  const edit = (inc) => (t) => {
+    const detail = detailOf('VAR-22-11-01');
+    detail.single_register_gas_tariffs = {
+      _C: { direct_debit_monthly: { code: 'G-1R-VAR-22-11-01-C', standard_unit_rate_exc_vat: 1 } },
+    };
+    t.product(detail);
+    for (const rel of ['standing_charges', 'standard_unit_rates']) {
+      t.write(
+        join(t.dataRoot, 'rates', 'G-1R-VAR-22-11-01-C', `${rel}.csv`),
+        csv(closed('2026-10-02T00:00:00Z', '2026-11-01T00:00:00Z', 1, inc)),
+      );
+    }
+  };
+  assert.deepEqual(corrupted(edit(1.05)).failures, []);
+  assert.equal(corrupted(edit(1)).failures.length, 2);
 });

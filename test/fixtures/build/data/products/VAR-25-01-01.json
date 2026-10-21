@@ -1,0 +1,54 @@
+{
+  "available_from": "2025-01-01T00:00:00Z",
+  "available_to": "2026-02-01T00:00:00Z",
+  "brand": "OCTOPUS_ENERGY",
+  "code": "VAR-25-01-01",
+  "fetchedAt": "2026-10-21T06:00:00.000Z",
+  "full_name": "Flexible Octopus January 2025 v1",
+  "is_variable": true,
+  "single_register_electricity_tariffs": {
+    "_C": {
+      "direct_debit_monthly": {
+        "code": "E-1R-VAR-25-01-01-C",
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "FLAT",
+        "standard_unit_rate_exc_vat": 30,
+        "standing_charge_exc_vat": 53
+      }
+    },
+    "_G": {
+      "direct_debit_monthly": {
+        "code": "E-1R-VAR-25-01-01-G",
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "FLAT",
+        "standard_unit_rate_exc_vat": 31,
+        "standing_charge_exc_vat": 53.5
+      }
+    }
+  },
+  "single_register_gas_tariffs": {
+    "_C": {
+      "direct_debit_monthly": {
+        "code": "G-1R-VAR-25-01-01-C",
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "FLAT",
+        "standard_unit_rate_exc_vat": 8.9,
+        "standing_charge_exc_vat": 30
+      }
+    },
+    "_G": {
+      "direct_debit_monthly": {
+        "code": "G-1R-VAR-25-01-01-G",
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "exit_fees_type": "FLAT",
+        "standard_unit_rate_exc_vat": 9.2,
+        "standing_charge_exc_vat": 30.4
+      }
+    }
+  },
+  "term": null
+}

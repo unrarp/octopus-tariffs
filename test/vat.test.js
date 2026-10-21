@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { vat, vatPeriodsBetween } from '../src/vat.js';
+import { incVat, vat, vatPeriodsBetween } from '../src/vat.js';
 
 test('electricity VAT is 5% to 2026-09-30, 0% from 2026-10-01 to 2027-03-31, 5% from 2027-04-01', () => {
   assert.equal(vat('electricity', '2023-07-01'), 0.05);
@@ -28,4 +28,11 @@ test('vatPeriodsBetween lists the periods overlapping [from, to)', () => {
   assert.deepEqual(vatPeriodsBetween('electricity', '2027-04-01', '2028-01-01'), ['2027-04-01']);
   assert.equal(vatPeriodsBetween('electricity', '2025-01-01', '2028-01-01').length, 3);
   assert.equal(vatPeriodsBetween('gas', '2025-01-01', '2028-01-01').length, 1);
+});
+
+test("incVat adds the day's VAT and rounds to 4 dp; null stays null", () => {
+  assert.equal(incVat(39.5209, 'electricity', '2026-09-30'), 41.4969);
+  assert.equal(incVat(39.5209, 'electricity', '2026-10-01'), 39.5209);
+  assert.equal(incVat(8.450085, 'gas', '2026-10-01'), 8.8726);
+  assert.equal(incVat(null, 'gas', '2026-10-01'), null);
 });

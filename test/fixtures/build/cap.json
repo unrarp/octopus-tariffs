@@ -1,0 +1,47 @@
+[
+  {
+    "from": "2026-07-01",
+    "to": "2026-09-30",
+    "region": "_C",
+    "electricity": {
+      "unit": 24.5,
+      "standing": 48.0
+    },
+    "gas": {
+      "unit": 5.8,
+      "standing": 28.0
+    },
+    "typicalBill": 1650,
+    "source": "https://www.ofgem.gov.uk/example-fixture-cap.pdf"
+  },
+  {
+    "from": "2026-07-01",
+    "to": "2026-09-30",
+    "region": "_G",
+    "electricity": {
+      "unit": 24.5,
+      "standing": 48.0
+    },
+    "gas": {
+      "unit": 5.8,
+      "standing": 28.0
+    },
+    "typicalBill": 1650,
+    "source": "https://www.ofgem.gov.uk/example-fixture-cap.pdf"
+  },
+  {
+    "from": "2026-10-01",
+    "to": "2026-12-31",
+    "region": "_C",
+    "electricity": {
+      "unit": 26.0,
+      "standing": 49.0
+    },
+    "gas": {
+      "unit": 6.1,
+      "standing": 28.5
+    },
+    "typicalBill": 1700,
+    "source": "https://www.ofgem.gov.uk/example-fixture-cap.pdf"
+  }
+]

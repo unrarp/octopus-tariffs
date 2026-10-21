@@ -1,7 +1,8 @@
 import { addMonths, ukDay } from './days.js';
 
 const BASE = 'https://api.octopus.energy/v1';
-const MAPS = {
+/** Tariff map key -> fuel; the one table every module reads. */
+export const MAPS = {
   single_register_electricity_tariffs: 'electricity',
   dual_register_electricity_tariffs: 'electricity',
   four_rate_ev_electricity_tariffs: 'electricity',

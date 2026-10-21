@@ -1,5 +1,5 @@
 import { dayRange, ukMidnight } from '../days.js';
-import { vat } from '../vat.js';
+import { incVat } from '../vat.js';
 
 /** The value_exc_vat of the row covering instant `ms`, among rows of `paymentMethod` or null; null when none does. */
 function pick(rows, ms, paymentMethod, availableFrom) {
@@ -11,11 +11,6 @@ function pick(rows, ms, paymentMethod, availableFrom) {
     if (start <= ms && ms < end) found = r;
   }
   return found?.value_exc_vat ?? null;
-}
-
-/** `exc` with VAT for `fuel` on `day`, rounded to 4 dp; null stays null. */
-function incVat(exc, fuel, day) {
-  return exc === null ? null : Math.round(exc * (1 + vat(fuel, day)) * 1e4) / 1e4;
 }
 
 /** One {day, unit, standingCharge} per UK day in [from, to): the exc-VAT row in force at that day's UK midnight, plus VAT (PLAN.md §4.2). */

@@ -27,3 +27,8 @@ export function vatPeriodsBetween(fuel, fromDay, toDay) {
     .filter((p, i) => p.from < toDay && (i + 1 === periods.length || periods[i + 1].from > fromDay))
     .map((p) => p.from);
 }
+
+/** `exc` with VAT for `fuel` on `day`, rounded to 4 dp; null stays null. */
+export function incVat(exc, fuel, day) {
+  return exc === null ? null : Math.round(exc * (1 + vat(fuel, day)) * 1e4) / 1e4;
+}

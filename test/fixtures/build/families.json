@@ -1,0 +1,11 @@
+{
+  "log": { "brands": ["OCTOPUS_ENERGY"], "skipRateHistory": ["^AGILE"] },
+  "regions": { "_C": "London", "_G": "North West" },
+  "defaultRegion": "_C",
+  "paymentMethod": "DIRECT_DEBIT",
+  "families": [
+    { "id": "oe-fix-12m", "label": "12M Fixed", "kind": "fixed", "match": "^OE-FIX-12M-", "series": "stepped", "fuels": ["electricity", "gas"] },
+    { "id": "oe-fix-6m", "label": "6M Winter Fix", "kind": "fixed", "match": "^OE-FIX-6M-", "series": "stepped", "fuels": ["electricity", "gas"] },
+    { "id": "flexible", "label": "Flexible Octopus", "kind": "variable", "match": "^VAR-", "series": "stepped", "fuels": ["electricity", "gas"] }
+  ]
+}

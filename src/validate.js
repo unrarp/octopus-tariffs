@@ -2,8 +2,9 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { readCsv } from './csv.js';
-import { addDays } from './days.js';
-import { endpointsOf } from './families.js';
+import { addDays, ukDay } from './days.js';
+import { endpointsOf, MAPS } from './families.js';
+import { vat, vatPeriodsBetween } from './vat.js';
 
 /** The series modules that exist (PLAN.md §4.3), read from src/series/: adding a series means adding its module there. */
 export const KNOWN_SERIES = readdirSync(join(dirname(fileURLToPath(import.meta.url)), 'series'))
@@ -76,6 +77,25 @@ function checkRows(rows, label, failures) {
   }
 }
 
+/** Failure messages for closed rows whose derived inc VAT differs from the API's, skipping rows that span a VAT change (PLAN.md section 1, VAT). */
+function checkVat(rows, label, fuel, availableFrom, failures) {
+  for (const r of rows) {
+    if (r.valid_to == null) continue;
+    const from = r.valid_from ?? availableFrom;
+    if (!from) continue;
+    const fromDay = ukDay(from);
+    const toDay = addDays(ukDay(new Date(Date.parse(r.valid_to) - 1).toISOString()), 1);
+    if (vatPeriodsBetween(fuel, fromDay, toDay).length !== 1) continue;
+    const rate = vat(fuel, fromDay);
+    const want = r.value_exc_vat * (1 + rate);
+    if (!(Math.abs(want - r.value_inc_vat) <= 1e-4)) {
+      failures.push(
+        `${label}: row ${r.valid_from ?? '(null)'}..${r.valid_to} value_inc_vat ${r.value_inc_vat} is not value_exc_vat ${r.value_exc_vat} x (1 + ${rate}) = ${want}: VAT schedule in vat.js may be stale`,
+      );
+    }
+  }
+}
+
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
 // Round-trips through Date so an impossible day such as 2026-02-30 (which Date.parse rolls into March) fails.
 const isDay = (v) =>
@@ -132,16 +152,85 @@ export function checkCap(rows, regionKeys, failures, warnings) {
   return latest;
 }
 
-/** Validates families.json, cap.json and the data tree (PLAN.md §3, §4.1); returns {failures, warnings, capThrough} (capThrough: the latest cap period's last day, for the build to compare with generatedAt). */
-export function validate({ root, dataRoot = join(root, 'data') }) {
+/** Failures for one built series file: one point per consecutive day from `first` (when known) ending at `last`, every version null or in `codes`. */
+function checkSeries(file, label, fuels, codes, first, last, failures) {
+  for (const fuel of fuels) {
+    const days = file[fuel]?.days;
+    if (!Array.isArray(days) || days.length === 0) {
+      failures.push(`${label}: ${fuel}.days is missing or empty`);
+      continue;
+    }
+    if (first && days[0].day !== first) failures.push(`${label}: ${fuel} days start ${days[0].day}, want ${first}`);
+    for (let i = 1; i < days.length; i++) {
+      const want = addDays(days[i - 1].day, 1);
+      if (days[i].day === want) continue;
+      const what = days[i].day === days[i - 1].day ? 'repeats' : 'skips to';
+      failures.push(`${label}: ${fuel} day ${days[i - 1].day} is followed by ${days[i].day} (${what}), want ${want}`);
+      break;
+    }
+    if (days.at(-1).day !== last)
+      failures.push(`${label}: ${fuel} days end ${days.at(-1).day}, want ${last} (generatedAt)`);
+    const unknown = days.find((d) => d.version !== null && !codes.has(d.version));
+    if (unknown)
+      failures.push(`${label}: ${fuel} day ${unknown.day} has version ${unknown.version}, not a listed version`);
+  }
+}
+
+/** Failures for the build output under docsRoot when docs/data/families.json exists (PLAN.md section 4.4); `capFrom` is the first cap period's start, or null. */
+function checkBuild(docsRoot, config, capFrom, failures) {
+  const path = join(docsRoot, 'data', 'families.json');
+  if (!existsSync(path)) return;
+  const built = JSON.parse(readFileSync(path, 'utf8'));
+  const last = ukDay(built.generatedAt);
+  const targets = [];
+  for (const f of config.families ?? []) {
+    const b = built.families.find((x) => x.id === f.id);
+    if (!b) {
+      failures.push(`docs/data/families.json: family ${f.id} is missing`);
+      continue;
+    }
+    if (JSON.stringify(b.fuels) !== JSON.stringify(f.fuels)) {
+      failures.push(
+        `docs/data/families.json: family ${f.id}: fuels ${JSON.stringify(b.fuels)} differ from families.json ${JSON.stringify(f.fuels)}`,
+      );
+    }
+    targets.push({ id: f.id, fuels: f.fuels, versions: b.versions, first: b.versions[0]?.availableFrom ?? null });
+  }
+  targets.push({ id: 'cap', fuels: ['electricity', 'gas'], versions: [], first: capFrom });
+  for (const region of Object.keys(config.regions)) {
+    if (!(region in built.regions)) failures.push(`docs/data/families.json: region ${region} is missing`);
+    for (const family of targets) {
+      const label = `docs/data/${region}/${family.id}.json`;
+      let file;
+      try {
+        file = JSON.parse(readFileSync(join(docsRoot, 'data', region, `${family.id}.json`), 'utf8'));
+      } catch (e) {
+        failures.push(e.code === 'ENOENT' ? `${label}: missing` : `${label}: unreadable: ${e.message}`);
+        continue;
+      }
+      checkSeries(file, label, family.fuels, new Set(family.versions.map((v) => v.code)), family.first, last, failures);
+    }
+  }
+}
+
+/** Validates families.json, cap.json and the data tree (PLAN.md §3, §4.1), and the build output when present; returns {failures, warnings, capThrough} (capThrough: the latest cap period's last day, for the build to compare with generatedAt). */
+export function validate({ root, dataRoot = join(root, 'data'), docsRoot = join(root, 'docs') }) {
   const failures = [];
   const warnings = [];
   const config = JSON.parse(readFileSync(join(root, 'families.json'), 'utf8'));
   const matchers = checkConfig(config, failures);
   const regionKeys = Object.keys(config.regions);
   let capThrough = null;
+  let capFrom = null;
   try {
-    capThrough = checkCap(JSON.parse(readFileSync(join(root, 'cap.json'), 'utf8')), regionKeys, failures, warnings);
+    const caps = JSON.parse(readFileSync(join(root, 'cap.json'), 'utf8'));
+    capThrough = checkCap(caps, regionKeys, failures, warnings);
+    capFrom = Array.isArray(caps)
+      ? (caps
+          .map((r) => r?.from)
+          .filter(isDay)
+          .sort()[0] ?? null)
+      : null;
   } catch (e) {
     failures.push(`cap.json: unreadable: ${e.message}`);
   }
@@ -183,6 +272,7 @@ export function validate({ root, dataRoot = join(root, 'data') }) {
       }
       if (rows.length === 0) warnings.push(`${label}: no rows`);
       checkRows(rows, label, failures);
+      if (owners.length) checkVat(rows, label, MAPS[ep.map], detail.available_from, failures);
     }
   }
 
@@ -200,6 +290,7 @@ export function validate({ root, dataRoot = join(root, 'data') }) {
       if (!sold.has(`${f.id}|${region}`)) warnings.push(`family ${f.id} has no stored tariff in region ${region}`);
     }
   }
+  checkBuild(docsRoot, config, capFrom, failures);
   return { failures, warnings, capThrough };
 }
 
