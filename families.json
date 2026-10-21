@@ -1,7 +1,7 @@
 {
   "log": {
     "brands": ["OCTOPUS_ENERGY"],
-    "match": ["^OE-FIX-18M-", "^OE-FIX-12M-", "^OE-FIX-6M-", "^VAR-", "^GO-", "^COSY-", "^INTELLI-", "^IOG-"]
+    "match": ["^OE-FIX-18M-", "^OE-FIX-12M-", "^OE-FIX-6M-", "^VAR-"]
   },
   "regions": {
     "_A": "East England",
