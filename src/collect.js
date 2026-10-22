@@ -90,9 +90,13 @@ export async function collect({
     });
 
   const stats = { products: 0, updated: 0, rows: 0, skipped: 0, empty: 0 };
-  const fetched = new Set(); // codes whose detail was fetched this run: their rate endpoints are refetched too
-  // A retiring product's file is written only after its rates are refetched, so a failed run leaves the retirement
-  // unrecorded and the next run redoes it rather than skipping the product's open rows for good.
+  const fetched = new Set();
+  // Codes whose detail is new or changed this run: their rate endpoints are refetched. A detail carries today's rates
+  // for every region, so an unchanged one means no row took effect since the last run, and the ~100 history endpoints
+  // of each in-term product stay unread (a daily refresh is ~75 requests, not ~7,000). Skipping endpoints whose stored
+  // rows are all closed would skip nothing: the API leaves most rows open for good (7,196 of 7,266 in-term CSVs).
+  // A changed product's file is written only after its rates are refetched, so a failed run leaves the change
+  // unrecorded and the next run redoes it rather than skipping the product's new or closed rows for good.
   const deferred = [];
 
   await Promise.all(
@@ -105,17 +109,14 @@ export async function collect({
           return;
         const detail = await productDetail(product.code, opts);
         checkLinks(detail);
-        fetched.add(product.code);
         const body = strip(detail);
         const { fetchedAt: _, ...old } = stored ?? {};
         if (stored && serialise(old) === serialise(body)) return;
+        fetched.add(product.code);
         const write = () => writeText(path, serialise(strip({ ...body, fetchedAt: now })));
         if (!stored) {
           write();
           stats.products++;
-        } else if (inTerm(product, today)) {
-          write();
-          stats.updated++;
         } else deferred.push(write);
       }),
     ),

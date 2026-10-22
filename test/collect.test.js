@@ -186,7 +186,7 @@ test('product files drop links and tariffs_active_at, add fetchedAt, sort keys, 
   }
 });
 
-test('a second run with a fresh tariffs_active_at writes nothing and skips retired tariffs', async () => {
+test('a second run with a fresh tariffs_active_at writes nothing and refetches no rates', async () => {
   const { world, F, V, R } = standardWorld();
   const t = setup();
   try {
@@ -195,10 +195,12 @@ test('a second run with a fresh tariffs_active_at writes nothing and skips retir
     for (const d of Object.values(world.details)) d.tariffs_active_at = '2026-10-21T05:00:00Z';
     world.calls.length = 0;
     const s = await t.run(world, '2026-10-22T06:00:00.000Z');
-    assert.deepEqual([s.products, s.updated, s.rows, s.skipped], [0, 0, 0, 2]);
+    assert.deepEqual([s.products, s.updated, s.rows, s.skipped], [0, 0, 0, 6]);
     assert.equal(read(join(t.dataRoot, 'products', `${F}.json`)), before);
     assert.equal(onlyCalls(world, R).length, 0);
-    assert.equal(onlyCalls(world, V).length, 3);
+    // An unchanged detail carries today's rates for every region, so the rate history is not refetched.
+    assert.equal(onlyCalls(world, V).length, 1);
+    assert.equal(onlyCalls(world, F).length, 1);
   } finally {
     t.cleanup();
   }
@@ -250,13 +252,14 @@ test('retirement rewrites exactly one product file, closes its open rows, and a 
   }
 });
 
-test('a fixed product gaining a second row appends it after the stored one', async () => {
+test('a fixed product gaining a second row appends it after the stored one, once the detail shows the new rate', async () => {
   const { world, urls, F } = standardWorld();
   const t = setup();
   try {
     await t.run(world);
     const href = urls.F.standard_unit_rates;
     world.rates[href] = [rate('2025-01-01T00:00:00Z'), rate('2026-04-01T00:00:00Z', null, null, 2)];
+    world.details[F].single_register_electricity_tariffs._C.direct_debit_monthly.standard_unit_rate_exc_vat = 2;
     const s = await t.run(world, '2026-10-22T06:00:00.000Z');
     assert.equal(s.rows, 1);
     const lines = read(join(t.dataRoot, 'rates', `E-1R-${F}-C`, 'standard_unit_rates.csv'))
@@ -287,6 +290,7 @@ test('a valid_to fill-in rewrites the right row in a two-method file', async () 
       rate('2025-01-01T00:00:00Z', null, 'NON_DIRECT_DEBIT'),
       rate('2025-07-01T00:00:00Z', null, 'DIRECT_DEBIT', 3),
     ];
+    world.details[V].single_register_electricity_tariffs._C.direct_debit_monthly.standard_unit_rate_exc_vat = 3;
     const s = await t.run(world, '2026-10-22T06:00:00.000Z');
     assert.equal(s.rows, 1);
     const lines = read(join(t.dataRoot, 'rates', `E-1R-${V}-C`, 'standard_unit_rates.csv'))
@@ -360,7 +364,7 @@ test('a retired product whose CSV is missing gets it fetched, and an empty endpo
     const s = await t.run(world, '2026-10-22T06:00:00.000Z');
     assert.equal(s.rows, 1);
     assert.equal(s.empty, 1);
-    assert.equal(s.skipped, 0);
+    assert.equal(s.skipped, 4); // the in-term and on-sale products' endpoints, their details unchanged
     assert.equal(read(csv).trim().split('\n').length, 2);
     assert.equal(
       read(join(t.dataRoot, 'rates', `E-1R-${R}-C`, 'standing_charges.csv'))
@@ -399,6 +403,33 @@ test('a failing request throws after in-flight work finishes, and a rerun resume
     const s = await t.run(world);
     assert.equal(s.products, 0);
     assert.ok(existsSync(join(t.dataRoot, 'rates', `E-1R-${V}-C`, 'standing_charges.csv')));
+  } finally {
+    t.cleanup();
+  }
+});
+
+test('an in-term rate change whose refetch fails is redone on the next run', async () => {
+  const { world, urls, F } = standardWorld();
+  const t = setup();
+  try {
+    await t.run(world);
+    world.rates[urls.F.standard_unit_rates] = [
+      rate('2025-01-01T00:00:00Z'),
+      rate('2026-04-01T00:00:00Z', null, null, 2),
+    ];
+    world.details[F].single_register_electricity_tariffs._C.direct_debit_monthly.standard_unit_rate_exc_vat = 2;
+    world.failOn = `${F}-C/standard-unit-rates`;
+    await assert.rejects(t.run(world, '2026-10-22T06:00:00.000Z'), /HTTP 500/);
+    world.failOn = null;
+    const s = await t.run(world, '2026-10-23T06:00:00.000Z');
+    assert.equal(s.rows, 1);
+    assert.equal(s.updated, 1);
+    const csv = read(join(t.dataRoot, 'rates', `E-1R-${F}-C`, 'standard_unit_rates.csv'))
+      .trim()
+      .split('\n');
+    assert.equal(csv.at(-1), '2026-04-01T00:00:00Z,,,2,2');
+    const body = JSON.parse(read(join(t.dataRoot, 'products', `${F}.json`)));
+    assert.equal(body.single_register_electricity_tariffs._C.direct_debit_monthly.standard_unit_rate_exc_vat, 2);
   } finally {
     t.cleanup();
   }

@@ -48,7 +48,10 @@ products + rates + families.json + cap.json + src/vat.js
   product whose code matches `log.match` in `families.json`, and stores each
   product's detail and the full history of each rate endpoint it lists, for
   every region. Fixed products are collected too: a fixed rate can still step
-  when a levy or VAT change passes through. `data/` and `docs/` (except
+  when a levy or VAT change passes through. A run refetches the detail of
+  every product on sale or in term, and its rate histories only when that
+  detail changed: the detail carries today's rates for every region, so an
+  unchanged one means no row took effect. `data/` and `docs/` (except
   `docs/vendor/`) are machine-written; never edit them by hand.
 - **Build** derives everything else: family membership, sale windows, daily
   series, the comparison data. Nothing derived is stored in `data/`.
@@ -68,7 +71,8 @@ products + rates + families.json + cap.json + src/vat.js
   roughly 1,500 requests in three minutes at 8 in flight. `src/net.js` spaces
   request starts 250 ms apart (about 4 a second) and waits out a 429 with
   1, 2, 5, 5 and 10 minute backoffs. A full backfill takes over an hour; a
-  daily refresh a few minutes.
+  daily refresh under a minute on a quiet day, a few minutes when a product's
+  rates changed.
 
 ## Adding a tariff family
 
@@ -92,7 +96,10 @@ script collects, builds, runs `npm run check:core`, and if anything under
 `data/` or `docs/` differs commits both and pushes `HEAD:master`. A
 non-fast-forward push fails the run and the next run redoes it. Every
 successful run, including an unchanged one, pings `$HEALTHCHECK_URL`; any error
-pings `$HEALTHCHECK_URL/fail`.
+pings `$HEALTHCHECK_URL/fail`. The routine's cloud environment sets
+`HEALTHCHECK_URL` (a routine cannot carry variables) and allows
+`api.octopus.energy` and `hc-ping.com` on its network; the session runs the
+script as one command that is killed after 40 minutes.
 
 `node src/routine.js --probe` pings `$HEALTHCHECK_URL/start` (it fails when the
 URL is unset), makes one API request, commits a `.routine-probe` timestamp to

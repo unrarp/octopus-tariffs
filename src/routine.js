@@ -12,8 +12,12 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const push = (run) => run('git', ['push', 'origin', 'HEAD:master']);
 const PROBE_PRODUCT = 'VAR-22-11-01';
 
-/** The data commit's subject from collect's counts: new product files, rewritten ones, appended rate rows. */
+/**
+ * The data commit's subject from collect's counts: new product files, rewritten ones, appended rate rows. The built
+ * series gain a day on every run, so a day with no collected change still commits, as a refresh.
+ */
 export function commitMessage({ products, updated, rows }) {
+  if (!products && !updated && !rows) return 'data: daily refresh';
   return `data: +${products} products, ${updated} updated, +${rows} rows`;
 }
 
@@ -57,6 +61,8 @@ export async function main(argv, deps = {}) {
       return 0;
     }
 
+    // The routine session runs this script as one Bash command: 10 minutes in the foreground, then up to 30 more in
+    // the background before it is killed, so a run must finish inside 40 minutes (the first run took 30).
     const stats = await collectAll();
     await buildSite();
     try {

@@ -70,7 +70,7 @@ const logs = (t) => {
 
 test('commitMessage counts new products, updated products and rows', () => {
   assert.equal(commitMessage({ products: 3, updated: 1, rows: 120 }), 'data: +3 products, 1 updated, +120 rows');
-  assert.equal(commitMessage({ products: 0, updated: 0, rows: 0 }), 'data: +0 products, 0 updated, +0 rows');
+  assert.equal(commitMessage({ products: 0, updated: 0, rows: 0 }), 'data: daily refresh');
 });
 
 test('unchanged: prints RESULT unchanged, makes no commit, pings', async (t) => {
