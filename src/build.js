@@ -68,7 +68,9 @@ function fuelFile({ family, versions, windows, region, fuel, dataRoot, daily, pa
     const read = (rel) => readCsv(join(dataRoot, 'rates', tariff.code, `${rel}.csv`));
     const rows = { unitRows: read('standard_unit_rates'), standingRows: read('standing_charges') };
     const emitted = windows[i].to > SINCE && windows[i].to > windows[i].from;
-    const termEnd = family.kind === 'fixed' && v.term !== null ? addMonths(v.availableFrom, v.term) : end;
+    // a fixed version's own days run to the end of the term of its last sign-up (the sale window's end), so a customer
+    // who joined late is priced from stored rows, VAT of the day applied, not from an extended last row
+    const termEnd = family.kind === 'fixed' && v.term !== null ? addMonths(windows[i].to, v.term) : end;
     const ownEnd = termEnd < end ? termEnd : end;
     const to = emitted && ownEnd > windows[i].to ? ownEnd : windows[i].to;
     const days = daily(rows, { from: v.availableFrom, to, paymentMethod, fuel, availableFrom: v.availableFrom });

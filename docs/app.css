@@ -11,13 +11,12 @@
   --link: light-dark(#1c5cab, #86b6ef);
   --good: light-dark(#008300, #5bbf5b);
   --bad: light-dark(#c4321f, #ef7b6a);
-  /* canvas only: gridlines, axis, the cap line and cap-change verticals, the not-yet-collected hatch, the tooltip */
+  /* canvas only: gridlines, axis, the cap line and cap-change verticals, the tooltip */
   --grid: light-dark(#e1e0d9, #2c2c2a);
   --axis: light-dark(#c3c2b7, #383835);
   --tick: light-dark(#6b6a65, #898781);
   --cap: light-dark(#898781, #898781);
   --marker: light-dark(rgba(82, 81, 78, 0.55), rgba(195, 194, 183, 0.45));
-  --hatch: light-dark(rgba(0, 0, 0, 0.16), rgba(255, 255, 255, 0.22));
   --tip-bg: light-dark(rgba(252, 252, 251, 0.97), rgba(26, 26, 25, 0.97));
   --tip-line: light-dark(#e1e0d9, #383835);
 }
@@ -180,6 +179,9 @@ h1 {
   gap: 8px;
   min-width: 0;
 }
+.legend .chips {
+  display: contents; /* the chips and the legend keys flow in one wrapping row */
+}
 .chip {
   display: inline-flex;
   align-items: center;
@@ -223,18 +225,6 @@ h1 {
   font-size: 13px;
   color: var(--muted);
 }
-.sw.hatch {
-  display: inline-block;
-  width: 14px;
-  height: 12px;
-  background: repeating-linear-gradient(135deg, light-dark(#9a9893, #6b6a65) 0 1px, transparent 1px 4px);
-  border: 1px solid var(--grid);
-}
-.sw.mine {
-  width: 16px;
-  height: 0;
-  border-top: 3px solid var(--text);
-}
 .sw.marker {
   width: 0;
   height: 12px;
@@ -262,7 +252,7 @@ h1 {
   gap: 10px;
 }
 .panel-chart {
-  height: 230px;
+  height: 260px;
 }
 .panel-chart h3 {
   position: absolute;
@@ -303,7 +293,7 @@ a.term {
   margin: 0 0 4px;
 }
 
-/* The comparison: picked chips, the add select and the date in one row; one bar per tariff on one scale. */
+/* The comparison: picked chips, the add select and the date in one row; the running-cost chart, then a total per pick. */
 .compare {
   margin-top: 22px;
   padding: 14px 16px;
@@ -315,6 +305,12 @@ a.term {
   font-size: 16px;
   margin: 0 0 10px;
 }
+.compare-picked {
+  margin-top: 8px;
+}
+.compare-row input:disabled {
+  opacity: 0.5;
+} /* the from date, off in "if I switch" */
 .compare-row select {
   padding: 5px 8px;
   border: 1px solid var(--border);
@@ -332,40 +328,40 @@ a.term {
   font-size: 16px;
   margin: 14px 0 8px;
 }
-.bars {
-  display: grid;
-  grid-template-columns: minmax(0, max-content) minmax(80px, 1fr) max-content;
-  gap: 6px 14px;
-  align-items: center;
+.compare-chart {
+  height: 300px;
+  margin: 10px 0;
 }
-.bars .name {
+.totals {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+}
+.totals li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 10px;
+  padding: 3px 0;
+}
+.totals .name {
   min-width: 0;
   overflow-wrap: anywhere;
 }
-.bars .type,
-.bars .delta,
-.bars .unranked {
+.totals .type,
+.totals .delta,
+.totals .unranked {
   color: var(--muted);
 }
-.bars .delta.down {
+.totals .delta.down {
   color: var(--good);
 }
-.bars .delta.up {
+.totals .delta.up {
   color: var(--bad);
 }
-.bars .you-tag {
+.totals .you-tag {
   font-weight: 600;
-}
-.bars .unranked {
-  grid-column: 2 / -1;
-}
-.bar {
-  height: 14px;
-  background: var(--c);
-  border-radius: 0 4px 4px 0;
-} /* square at the baseline, rounded at the data end */
-.bars .total {
-  white-space: nowrap;
 }
 
 /* The help dialog: a panel over the page, a full-height sheet on a phone. */
@@ -436,12 +432,6 @@ a.term {
     flex-direction: column;
     align-items: stretch;
   }
-  .bars {
-    grid-template-columns: minmax(0, 1fr) auto;
-  }
-  .bar {
-    display: none;
-  } /* on a phone the totals carry the comparison */
   .field {
     display: grid;
     grid-template-columns: 5.5em minmax(0, 1fr) 3.5em;
@@ -464,6 +454,9 @@ a.term {
   }
   .annual-chart {
     height: 280px;
+  }
+  .compare-chart {
+    height: 240px;
   }
   .help {
     width: 100%;

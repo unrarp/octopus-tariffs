@@ -17,10 +17,18 @@ serves `docs/`.
   electricity only.
 - **Your tariff** ("I'm on", since a date): a thick "You" line on every chart at
   the rates it charges you over its fixed term.
-- **Compare tariffs**: any number of tariffs costed from a date, cheapest first,
-  anchored on your tariff (else Flexible): every other total shows a signed
-  difference from it, and an ended fix is costed over its term only. Today's
-  rates are compared the same way, with Flexible once your fix has ended.
+- **Chips** are the legend: each toggles its line on every chart, yours
+  included, and hovering one emphasises its line. Each y axis starts at zero.
+  Tooltips name the version on sale that day, with units, and hovering a day on
+  one rates panel shows that day on all four.
+- **Compare tariffs**: a running-cost chart of the tariffs you pick, from a
+  date: solid to today at the rates each would have charged, then dashed for
+  the next 12 months as if today's rates stayed the same. A fixed tariff rolls
+  on to Flexible at its term end. "£ paid" draws each running total; "vs yours"
+  draws the difference from your tariff (else Flexible); "if I switch" starts
+  each line at your exit fee on a switch date and adds what that tariff would
+  cost against staying put, so it pays back where it crosses £0. Under the
+  chart, each pick's total so far and in a year, or its payback day.
 - Definitions live in the (i) dialog, linked from each term; there are no
   inline hints.
 - A region select (remembered, else geolocated, else London) and a window

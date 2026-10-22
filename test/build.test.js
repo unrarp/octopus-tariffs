@@ -124,7 +124,17 @@ test('a fixed version keeps its own series: the mid-term step lands on its day, 
   const v = electricity.versions[F1];
   assert.equal(v.exitFee, 75, 'exit_fees_inc_vat 7500 pence is 75 pounds');
   assert.equal(v.days[0].day, '2025-10-01');
-  assert.equal(v.days.at(-1).day, '2026-09-30', 'launch + 12 months is the first day after the term');
+  assert.equal(
+    v.days.at(-1).day,
+    '2026-10-21',
+    'on sale to 2025-12-01, so the last sign-up runs to 2026-12-01: capped at generatedAt',
+  );
+  const six = readJson(out, '_C', 'oe-fix-6m.json').electricity.versions['OE-FIX-6M-25-10-01'];
+  assert.equal(
+    six.days.at(-1).day,
+    '2026-09-30',
+    'on sale to 2026-03-31 + 6 months: the first day after the last term',
+  );
   assert.equal(at(v.days, '2026-03-30').unit, 23.1); // 22 x 1.05
   assert.equal(at(v.days, '2026-03-31').unit, 20.475); // 19.5 x 1.05
   assert.equal(at(electricity.days, '2026-03-30').unit, null, 'F1 is off sale by then: the family line is null');

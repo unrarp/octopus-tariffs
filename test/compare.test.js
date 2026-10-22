@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { before, test } from 'node:test';
 import { build } from '../src/build.js';
-import { annualAt, capSeries, costSince, versionSeries } from '../src/site/lib/compare.js';
+import { annualAt, capSeries, costSince, dailyCosts, versionSeries } from '../src/site/lib/compare.js';
 import { annualCost } from '../src/site/lib/cost.js';
 import { dailyKwh } from '../src/site/lib/profile.js';
 
@@ -40,6 +40,50 @@ test('built fixed version costed from before it was on sale charges its first-ro
   const triples = dayList('2026-05-01', 11).map((d) => [d, own[0].unit, own[0].standingCharge]);
   triples[10] = [own[1].day, own[1].unit, own[1].standingCharge];
   near(r.cost, expected('electricity', 2500, triples));
+});
+
+test('built fixed version costed past its stored days keeps its last rate: a what-if sign-up after its sale window', () => {
+  const fuel = file('_C', 'oe-fix-6m').electricity;
+  const code = 'OE-FIX-6M-25-10-01';
+  const own = fuel.versions[code].days;
+  const last = own.at(-1);
+  assert.equal(last.day, '2026-09-30');
+  const r = costSince(versionSeries('fixed', fuel, code), '2026-09-29', '2026-10-05', 'electricity', 2500);
+  assert.deepEqual(r.unpriced, []);
+  const triples = dayList('2026-09-29', 6).map((d) => [d, last.unit, last.standingCharge]);
+  triples[0] = [own.at(-2).day, own.at(-2).unit, own.at(-2).standingCharge];
+  near(r.cost, expected('electricity', 2500, triples));
+});
+
+test('dailyCosts on built data sums to costSince over the span, and prices days after ratesThrough at its rate', () => {
+  const cutoff = '2026-10-21';
+  for (const [name, kind, code, fuel, kwh, from] of [
+    ['oe-fix-12m', 'fixed', 'OE-FIX-12M-26-05-10', 'electricity', 2500, '2026-05-01'],
+    ['flexible', 'variable', 'VAR-25-12-15', 'gas', 9500, '2025-12-10'],
+  ]) {
+    const s = versionSeries(kind, file('_C', name)[fuel], code);
+    const days = dailyCosts(s, from, '2027-01-10', fuel, kwh, cutoff);
+    assert.equal(days.length, dayList(from, 1000).indexOf('2027-01-10'));
+    const upTo = dayList(from, 1000).indexOf(cutoff);
+    near(
+      days.slice(0, upTo).reduce((a, b) => a + b, 0),
+      costSince(s, from, cutoff, fuel, kwh).cost,
+      code,
+    );
+    const r = file('_C', name)[fuel].versions[code].days.find((x) => x.day === cutoff);
+    near(days[upTo + 40], (dailyKwh(fuel, kwh, '2026-11-30') * r.unit + r.standingCharge) / 100, `${code} 30 Nov`);
+  }
+});
+
+test('dailyCosts: an unpriced day is null; a null kWh makes every day null', () => {
+  const s = { kind: 'variable', own: flat('2026-01-04', 4, 20, 40), family: flat('2026-01-01', 1, 30, 50) };
+  const d = dailyCosts(s, '2026-01-01', '2026-01-10', 'electricity', 2500, '2026-01-07');
+  assert.deepEqual(
+    d.map((x) => x === null),
+    [false, true, true, false, false, false, false, false, false],
+  );
+  near(d[8], (dailyKwh('electricity', 2500, '2026-01-09') * 20 + 40) / 100); // after ratesThrough: its rate
+  assert.deepEqual(dailyCosts(s, '2026-01-04', '2026-01-06', 'gas', null, '2026-01-07'), [null, null]);
 });
 
 test('built Flexible version costed from before its launch charges the previously on-sale version via the family series', () => {

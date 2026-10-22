@@ -5,13 +5,12 @@ import { extname, join, normalize, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { expect, test } from '@playwright/test';
 import { build } from '../src/build.js';
-import { annualAt, capSeries, costSince, versionSeries } from '../src/site/lib/compare.js';
+import { annualAt, capSeries, costSince, dailyCosts, versionSeries } from '../src/site/lib/compare.js';
 import { annualCost } from '../src/site/lib/cost.js';
 
 const ROOT = fileURLToPath(new URL('./fixtures/build', import.meta.url));
 const BUILT = new Date('2026-10-21T06:00:00.000Z'); // the fixture's collection time, the build's generatedAt
-const NOW = Date.parse('2026-10-21T12:00:00.000Z'); // the viewer's clock: same day, so nothing is hatched
-const DAY = 86_400_000;
+const NOW = Date.parse('2026-10-21T12:00:00.000Z'); // the viewer's clock: the build's day
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json' };
 const PREFIX = '/octopus-tariffs/';
 const IPINFO = 'https://ipinfo.io/json';
@@ -97,6 +96,9 @@ for (const [name, viewport] of [
       await expect(page.locator('#footer')).toHaveText(
         'Data: Octopus Energy public API · London · direct debit · prices inc VAT · updated 21 Oct 2026.',
       );
+      await page.selectOption('#mine', 'OE-FIX-12M-26-01-15'); // my tariff adds its line last
+      const withMine = await page.evaluate(() => __charts['electricity-unit'].data.datasets.map((d) => d.label));
+      expect(withMine).toEqual([...lines, MINE]);
       expect(errors).toEqual([]);
     });
 
@@ -201,15 +203,42 @@ test('dashed cap-change verticals are drawn at every cap change in range, on eve
     .toEqual(CHARTS.map(() => ['2026-10-01']));
 });
 
-test('a chip hides its line on every chart and shows it again', async ({ page }) => {
+test('a chip hides its line on every chart and shows it again, the You chip included', async ({ page }) => {
   await open(page);
-  const visible = () => page.evaluate((ids) => ids.map((id) => __charts[id].isDatasetVisible(3)), CHARTS); // dataset 3: Flexible
-  expect(await visible()).toEqual([true, true, true, true, true]);
-  await page.click('.chip[data-line="flexible"]');
-  await expect(page.locator('.chip[data-line="flexible"]')).toHaveAttribute('aria-pressed', 'false');
-  expect(await visible()).toEqual([false, false, false, false, false]);
-  await page.click('.chip[data-line="flexible"]');
-  expect(await visible()).toEqual([true, true, true, true, true]);
+  await page.selectOption('#mine', 'OE-FIX-12M-26-01-15');
+  // dataset 3: Flexible, dataset 4: mine
+  for (const [line, k] of [
+    ['flexible', 3],
+    ['mine', 4],
+  ]) {
+    const visible = () => page.evaluate(([ids, k]) => ids.map((id) => __charts[id].isDatasetVisible(k)), [CHARTS, k]);
+    expect(await visible()).toEqual([true, true, true, true, true]);
+    await page.click(`#chips .chip[data-line="${line}"]`);
+    await expect(page.locator(`#chips .chip[data-line="${line}"]`)).toHaveAttribute('aria-pressed', 'false');
+    expect(await visible()).toEqual([false, false, false, false, false]);
+    await page.click(`#chips .chip[data-line="${line}"]`);
+    expect(await visible()).toEqual([true, true, true, true, true]);
+  }
+});
+
+test('hovering a chip emphasises its line on every chart: the others fade to 30% and revert on leave', async ({
+  page,
+}) => {
+  await open(page);
+  const styles = () =>
+    page.evaluate(
+      (ids) => ids.map((id) => __charts[id].data.datasets.map((d) => [d.lineId, d.borderColor, d.borderWidth])),
+      CHARTS,
+    );
+  const before = await styles();
+  for (const chart of before) for (const [, colour] of chart) expect(colour).toMatch(/^rgb\(/);
+  await page.hover('#chips .chip[data-line="flexible"]');
+  const faded = (c) => c.replace('rgb(', 'rgba(').replace(')', ', 0.3)');
+  expect(await styles()).toEqual(
+    before.map((chart) => chart.map(([id, c, w]) => (id === 'flexible' ? [id, c, w + 1] : [id, faded(c), w]))),
+  );
+  await page.mouse.move(0, 0);
+  expect(await styles()).toEqual(before);
 });
 
 test('an off-sale gap breaks a line: 12M Fixed is drawn on either side of its March–May gap and not inside it', async ({
@@ -240,16 +269,44 @@ test('#<productCode> opens that version’s tooltip on its first day on sale; #Y
   page,
 }) => {
   await open(page, '#OE-FIX-12M-26-05-10');
-  expect(await tip(page)).toEqual({ opacity: 1, title: ['10 May 2026'], body: ['12M Fixed – 29.4'] });
+  expect(await tip(page)).toEqual({
+    opacity: 1,
+    title: ['10 May 2026'],
+    body: ['12M May 2026 v1 · 29.4 p/kWh'],
+  });
   await page.evaluate(() => {
     location.hash = '#2026-08-01';
   });
   await expect.poll(async () => (await tip(page)).title).toEqual(['1 Aug 2026']);
   expect((await tip(page)).body).toEqual([
-    'Ofgem price cap, London – 25.7',
-    '12M Fixed – 29.4',
-    'Flexible Octopus – 27.8',
+    'Ofgem price cap · 25.7 p/kWh',
+    '12M May 2026 v1 · 29.4 p/kWh',
+    'Flexible Octopus December 2025 v2 · 27.8 p/kWh',
   ]);
+});
+
+test('hovering a day on one rates panel shows that day’s tooltip on all four; moving out clears them', async ({
+  page,
+}) => {
+  await open(page);
+  await frames(page);
+  const at = await page.evaluate(() => {
+    const c = __charts['gas-unit'];
+    const box = c.canvas.getBoundingClientRect();
+    return {
+      x: box.left + c.scales.x.getPixelForValue(Date.parse('2026-08-01T12:00:00Z')),
+      y: box.top + (c.chartArea.top + c.chartArea.bottom) / 2,
+    };
+  });
+  const tips = () =>
+    page.evaluate(
+      (ids) => ids.map((id) => [__charts[id].tooltip.getActiveElements().length > 0, __charts[id].tooltip.title]),
+      CHARTS.slice(0, 4),
+    );
+  await page.mouse.move(at.x, at.y);
+  await expect.poll(tips).toEqual(CHARTS.slice(0, 4).map(() => [true, ['1 Aug 2026']]));
+  await page.mouse.move(0, 0);
+  await expect.poll(async () => (await tips()).map(([on]) => on)).toEqual([false, false, false, false]);
 });
 
 test('a day deep link before the current window widens the window to the smallest that holds it', async ({ page }) => {
@@ -365,22 +422,12 @@ test('usage is remembered: a reload restores it', async ({ page }) => {
   await expect(page.locator('#t-gas-unit')).toContainText('no gas supply');
 });
 
-test('"Not yet collected" hatches the days after generatedAt up to the viewer’s today', async ({ page }) => {
-  await open(page, '', { at: NOW + 4 * DAY });
-  const { width, perDay } = await page.evaluate(() => {
-    const c = __charts['electricity-unit'];
-    return { width: c.$hatch.width, perDay: c.scales.x.getPixelForValue(86_400_000) - c.scales.x.getPixelForValue(0) };
-  });
-  expect(Math.abs(width - 4 * perDay)).toBeLessThan(1);
-  await expect(page.locator('#legend-hatch')).toBeVisible();
-});
-
 test('the (i) dialog lists every definition; a term link opens it at its entry', async ({ page }) => {
   await open(page);
   await page.click('#info');
   await expect(page.locator('#help')).toBeVisible();
-  await expect(page.locator('#fn-cap')).toContainText("Ofgem's default tariff cap");
-  await expect(page.locator('#fn-tdcv')).toContainText('revised on 1 July 2026');
+  await expect(page.locator('#fn-cap')).toContainText("Ofgem's cap on standard variable tariffs");
+  await expect(page.locator('#fn-tdcv')).toContainText('revised 1 July 2026');
   await page.click('#help-close');
   await page.click('#legend-cap a.term[href="#fn-cap"]');
   await expect(page.locator('#fn-cap')).toHaveClass('current');
@@ -426,20 +473,41 @@ const yearNow = (code, kwh = usage()) =>
   Object.entries(kwh).reduce((sum, [fuel, k]) => sum + annualAt(seriesOf(code, fuel), CUTOFF, k), 0);
 const gbp = (v) => `£${Math.round(v).toLocaleString('en-GB')}`;
 const picked = (page) => page.locator('#picked .chip').evaluateAll((cs) => cs.map((c) => c.dataset.key));
-/** The ranked bars in page order: [key, total text]. */
+const END = '2027-10-21'; // 12 months after the cutoff: the comparison chart's right edge
+const FLEX = 'VAR-25-12-15'; // the Flexible version on sale at the cutoff
+/**
+ * £ per day of `code` over [from, END) at the viewer's fuels, as the comparison prices it: a fixed pick's own rates
+ * until `termEnd`, then the Flexible version on sale now; every day after the cutoff at the cutoff's rates.
+ */
+const dailyOf = (code, from, { kwh = usage(), termEnd = END } = {}) => {
+  const split = termEnd > END ? END : termEnd;
+  return Object.entries(kwh)
+    .map(([fuel, k]) => [
+      ...dailyCosts(seriesOf(code, fuel), from, split, fuel, k, CUTOFF),
+      ...dailyCosts(seriesOf(FLEX, fuel), split, END, fuel, k, CUTOFF),
+    ])
+    .reduce((a, b) => a.map((v, i) => v + b[i]));
+};
+const sum = (xs) => xs.reduce((a, b) => a + b, 0);
+const addDay = (day) => new Date(Date.parse(`${day}T00:00:00Z`) + 86_400_000).toISOString().slice(0, 10);
+/** The comparison chart's datasets: {key, part, dash, points: [[day, y]]}, a point's day being its x (the day's start). */
+const compareLines = (page) =>
+  page.evaluate(() =>
+    __charts.compare.data.datasets.map((d) => ({
+      key: d.lineId,
+      part: d.part,
+      dash: d.borderDash,
+      points: d.data.map((p) => [new Date(p.x).toISOString().slice(0, 10), p.y]),
+    })),
+  );
+/** The y of one dataset of `key` at the start of `day` (the running total of the days before it). */
+const at = (lines, key, part, day) =>
+  lines.find((l) => l.key === key && l.part === part).points.find(([d]) => d === day)[1];
+/** The totals rows in page order: [key, figures text]. */
 const totals = (page) =>
-  page.locator('#bars .total').evaluateAll((ts) => ts.map((t) => [t.dataset.key, t.querySelector('b').textContent]));
-/** The ranked bars' deltas in page order: [key, delta text, delta class] ('' and '' when a bar has none). */
-const deltas = (page) =>
   page
-    .locator('#bars .total')
-    .evaluateAll((ts) =>
-      ts.map((t) => [
-        t.dataset.key,
-        t.querySelector('.delta')?.textContent ?? '',
-        t.querySelector('.delta')?.className ?? '',
-      ]),
-    );
+    .locator('#totals li')
+    .evaluateAll((ls) => ls.map((l) => [l.dataset.key, l.querySelector('.figures').textContent]));
 /** "−£n" / "+£n" of `v` against `base`, as the page signs a delta. */
 const signed = (v, base) => `${v < base ? '−' : '+'}${gbp(Math.abs(v - base))}`;
 const setFrom = async (page, day) => {
@@ -447,24 +515,203 @@ const setFrom = async (page, day) => {
   await page.locator('#from').dispatchEvent('change');
 };
 
-test('the comparison runs from the default date to generatedAt’s day, cheapest first', async ({ page }) => {
-  await open(page);
-  // No tariff of mine: the comparison is anchored on the Flexible version on sale, then the latest launch, 12M May 2026; from yesterday.
+test('the comparison chart: each pick’s running £ from the date, solid to today, dashed for 12 months at today’s rates', async ({
+  page,
+}) => {
+  const errors = await open(page);
+  // No tariff of mine: anchored on the Flexible version on sale, then the latest launch, 12M May 2026; from yesterday.
   await expect(page.locator('#mine option').first()).toHaveText('no fixed contract (Flexible)');
-  expect(await picked(page)).toEqual(['VAR-25-12-15', 'OE-FIX-12M-26-05-10']);
+  const picks = [FLEX, 'OE-FIX-12M-26-05-10'];
+  expect(await picked(page)).toEqual(picks);
   await expect(page.locator('#from')).toHaveValue('2026-10-20');
-  await expect(page.locator('#lead')).toHaveText('From 20 Oct 2026 to today (1 day), cheapest first:');
-  const want = ['VAR-25-12-15', 'OE-FIX-12M-26-05-10']
-    .map((c) => [c, costFrom(c, '2026-10-20')])
-    .sort((a, b) => a[1] - b[1])
-    .map(([c, v]) => [c, `about ${gbp(v)}`]);
-  expect(await totals(page)).toEqual(want);
-  const [flex, fix] = [yearNow('VAR-25-12-15'), yearNow('OE-FIX-12M-26-05-10')];
-  await expect(page.locator('#forward')).toHaveText(
-    `At today's rates: Flexible Octopus December 2025 v2 (variable) (you) about ${gbp(flex)}/yr · ` +
-      `12M May 2026 v1 (fixed 12M) about ${gbp(fix)}/yr (${signed(fix, flex)}).`,
+  await expect(page.locator('#lead')).toHaveText(
+    "From 20 Oct 2026: solid, what each tariff would have charged so far; dashed, the next 12 months if today's rates stayed the same.",
   );
+  await expect(page.locator('#lead a.term')).toHaveAttribute('href', '#fn-compare');
+  const lines = await compareLines(page);
+  expect(lines.map((l) => [l.key, l.part, l.dash])).toEqual([
+    [FLEX, 'past', []],
+    [FLEX, 'future', [3, 3]],
+    ['OE-FIX-12M-26-05-10', 'past', []],
+    ['OE-FIX-12M-26-05-10', 'future', [3, 3]],
+  ]);
+  const want = {
+    [FLEX]: dailyOf(FLEX, '2026-10-20'),
+    'OE-FIX-12M-26-05-10': dailyOf('OE-FIX-12M-26-05-10', '2026-10-20', { termEnd: '2027-10-20' }),
+  };
+  for (const key of picks) {
+    const past = lines.find((l) => l.key === key && l.part === 'past').points.filter(([, y]) => y != null);
+    const future = lines.find((l) => l.key === key && l.part === 'future').points.filter(([, y]) => y != null);
+    expect(past[0]).toEqual(['2026-10-20', 0]);
+    expect(past.at(-1)[0]).toBe(CUTOFF);
+    expect(past.at(-1)[1]).toBeCloseTo(costFrom(key, '2026-10-20'), 2);
+    expect(future[0]).toEqual(past.at(-1));
+    expect(future.at(-1)[0]).toBe(END);
+    expect(future.at(-1)[1]).toBeCloseTo(sum(want[key]), 2);
+  }
+  expect(await totals(page)).toEqual(
+    picks.map((k) => [k, `so far ${gbp(costFrom(k, '2026-10-20'))} · in a year ${gbp(sum(want[k]))}`]),
+  );
+  await expect(page.locator('#totals li[data-key="VAR-25-12-15"] .you-tag')).toHaveText('you');
+  await expect(page.locator('#totals .you-tag')).toHaveCount(1);
   for (const id of ['#compare-hint', '#usage-hint', '#note', '.lede']) await expect(page.locator(id)).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
+test('vs yours: my tariff is flat at zero, every other pick its difference, signed in the totals; cheaper reads "−£n" in green', async ({
+  page,
+}) => {
+  await open(page);
+  await page.selectOption('#mine', 'OE-FIX-12M-26-05-10'); // since 10 May 2026, its term to 10 May 2027
+  await page.click('#cmode button[data-v="vs"]');
+  await expect(page.locator('#cmode button[data-v="vs"]')).toHaveAttribute('aria-pressed', 'true');
+  const from = '2026-05-10';
+  const [fix, flex] = ['OE-FIX-12M-26-05-10', FLEX].map((c) => costFrom(c, from));
+  expect(flex).toBeLessThan(fix - 1); // Flexible was cheaper, so mine is not the cheapest
+  const lines = await compareLines(page);
+  for (const l of lines.filter((x) => x.key === 'OE-FIX-12M-26-05-10'))
+    for (const [, y] of l.points) if (y != null) expect(y).toBe(0);
+  expect(at(lines, FLEX, 'past', CUTOFF)).toBeCloseTo(flex - fix, 2);
+  const [fixYear, flexYear] = [
+    sum(dailyOf('OE-FIX-12M-26-05-10', from, { termEnd: '2027-05-10' })),
+    sum(dailyOf(FLEX, from)),
+  ];
+  expect(at(lines, FLEX, 'future', END)).toBeCloseTo(flexYear - fixYear, 2);
+  expect(await totals(page)).toEqual([
+    ['OE-FIX-12M-26-05-10', `so far ${gbp(fix)} · in a year ${gbp(fixYear)}`],
+    [FLEX, `so far ${signed(flex, fix)} · in a year ${signed(flexYear, fixYear)}`],
+  ]);
+  expect(signed(flex, fix)).toMatch(/^−£/);
+  const [down, good] = await page.evaluate(() => {
+    const i = document.body.appendChild(document.createElement('i'));
+    i.style.color = 'var(--good)';
+    const c = getComputedStyle(i).color;
+    i.remove();
+    return [getComputedStyle(document.querySelector('#totals .delta.down')).color, c];
+  });
+  expect(down).toBe(good);
+  expect(await page.evaluate(() => __charts.compare.scales.y.min)).toBeLessThan(0);
+  await page.click('#cmode button[data-v="paid"]');
+  expect(await page.evaluate(() => __charts.compare.scales.y.min)).toBe(0);
+});
+
+test('a fixed term that has ended: the mine line says so, and its pick rolls on to Flexible at its term end', async ({
+  page,
+}) => {
+  await open(page);
+  await page.selectOption('#mine', 'OE-FIX-6M-25-10-01'); // since its launch, 1 Oct 2025: 6 months to 1 Apr 2026
+  await expect(page.locator('#mine-line')).toHaveText(
+    `Fixed term ended 31 Mar 2026 · you are now on Flexible Octopus · about ${gbp(yearNow(FLEX))}/yr.`,
+  );
+  await expect(page.locator('#mine-line a.term')).toHaveAttribute('href', '#fn-fixed');
+  expect(await picked(page)).toEqual(['OE-FIX-6M-25-10-01', FLEX]);
+  await expect(page.locator('#chips .chip[data-line="mine"] small')).toHaveText('ended 31 Mar 2026');
+  const lines = await compareLines(page);
+  const step = (day) =>
+    at(lines, 'OE-FIX-6M-25-10-01', 'past', addDay(day)) - at(lines, 'OE-FIX-6M-25-10-01', 'past', day);
+  const own = (code, day) =>
+    sum(Object.entries(usage()).map(([f, k]) => dailyCosts(seriesOf(code, f), day, addDay(day), f, k, CUTOFF)[0]));
+  expect(step('2026-03-31')).toBeCloseTo(own('OE-FIX-6M-25-10-01', '2026-03-31'), 6); // the last day of its term
+  for (const day of ['2026-04-01', '2026-08-01']) expect(step(day)).toBeCloseTo(own(FLEX, day), 6);
+  const soFar = costFrom('OE-FIX-6M-25-10-01', '2025-10-01', usage(), '2026-04-01') + costFrom(FLEX, '2026-04-01');
+  expect(at(lines, 'OE-FIX-6M-25-10-01', 'past', CUTOFF)).toBeCloseTo(soFar, 2);
+  // the term-end marker: a 6px point on its line at 1 Apr 2026, none elsewhere
+  const radii = await page.evaluate(() => {
+    const c = __charts.compare;
+    const k = c.data.datasets.findIndex((d) => d.lineId === 'OE-FIX-6M-25-10-01' && d.part === 'past');
+    return c
+      .getDatasetMeta(k)
+      .data.flatMap((p, i) => (p.options.radius ? [[c.data.datasets[k].data[i].x, p.options.radius]] : []));
+  });
+  expect(radii).toEqual([[Date.parse('2026-04-01T00:00:00Z'), 3]]);
+  // the You line runs over the term only
+  const days = await daysOf(page, 'electricity-unit', 'You: 6M Winter Fix October 2025 v1');
+  const on = days.filter(([, y]) => y != null).map(([d]) => d);
+  expect([on[0], on.at(-1)]).toEqual(['2025-10-22', '2026-03-31']); // the 1-year window starts on 22 Oct 2025
+});
+
+test('the Ofgem price cap can be added; with no cap rates before 1 Jul 2026 it has no line and its row says so', async ({
+  page,
+}) => {
+  await open(page);
+  await setFrom(page, '2026-05-10');
+  await page.selectOption('#add', 'cap');
+  expect(await picked(page)).toEqual([FLEX, 'OE-FIX-12M-26-05-10', 'cap']);
+  expect((await compareLines(page)).filter((l) => l.key === 'cap')).toEqual([]);
+  await expect(page.locator('#totals li[data-key="cap"] .unranked')).toHaveText('no rates before 1 Jul 2026');
+  await expect(page.locator('#totals li[data-key="cap"] .name')).toHaveText('Ofgem price cap (cap level)');
+  await expect(page.locator('#totals li[data-key="cap"] .key.dash')).toHaveCount(1);
+  await setFrom(page, '2026-07-01'); // from the cap's first day it is priced and drawn, dashed as elsewhere
+  const lines = await compareLines(page);
+  expect(lines.filter((l) => l.key === 'cap').map((l) => l.dash)).toEqual([
+    [6, 4],
+    [3, 3],
+  ]);
+  const cap = costFrom('cap', '2026-07-01');
+  expect(at(lines, 'cap', 'past', CUTOFF)).toBeCloseTo(cap, 2);
+  await expect(page.locator('#totals li[data-key="cap"] .figures')).toHaveText(
+    `so far ${gbp(cap)} · in a year ${gbp(sum(dailyOf('cap', '2026-07-01')))}`,
+  );
+});
+
+test('an empty gas field removes gas from every figure: the running totals, today’s rates and the exit fee', async ({
+  page,
+}) => {
+  await open(page);
+  await page.selectOption('#mine', 'OE-FIX-12M-26-01-15');
+  await page.fill('#kwh-gas', '');
+  const elec = usage(false);
+  await expect(page.locator('#mine-line')).toHaveText(
+    `Fixed until 15 Jan 2027 · about ${gbp(yearNow('OE-FIX-12M-26-01-15', elec))}/yr · £75 to leave early.`,
+  );
+  const lines = await compareLines(page);
+  const want = {
+    'OE-FIX-12M-26-01-15': dailyOf('OE-FIX-12M-26-01-15', '2026-01-15', { kwh: elec, termEnd: '2027-01-15' }),
+    [FLEX]: dailyOf(FLEX, '2026-01-15', { kwh: elec }),
+  };
+  for (const [key, days] of Object.entries(want)) {
+    expect(at(lines, key, 'past', CUTOFF)).toBeCloseTo(costFrom(key, '2026-01-15', elec), 2);
+    expect(at(lines, key, 'future', END)).toBeCloseTo(sum(days), 2);
+  }
+  expect(await totals(page)).toEqual(
+    Object.entries(want).map(([k, days]) => [
+      k,
+      `so far ${gbp(costFrom(k, '2026-01-15', elec))} · in a year ${gbp(sum(days))}`,
+    ]),
+  );
+});
+
+test('one picked tariff draws its line alone, with no error text', async ({ page }) => {
+  const errors = await open(page);
+  await page.click(`#picked .chip[data-key="${FLEX}"]`);
+  expect(await picked(page)).toEqual(['OE-FIX-12M-26-05-10']);
+  expect((await compareLines(page)).map((l) => [l.key, l.part])).toEqual([
+    ['OE-FIX-12M-26-05-10', 'past'],
+    ['OE-FIX-12M-26-05-10', 'future'],
+  ]);
+  await expect(page.locator('#lead')).toContainText('From 20 Oct 2026: solid');
+  await expect(page.locator('#totals li')).toHaveCount(1);
+  expect(errors).toEqual([]);
+});
+
+test('adding and removing tariffs redraws the chart and the totals, in pick order', async ({ page }) => {
+  await open(page);
+  await setFrom(page, '2026-05-10');
+  await page.selectOption('#add', 'OE-FIX-12M-26-01-15');
+  await page.selectOption('#add', 'VAR-25-01-01');
+  const picks = [FLEX, 'OE-FIX-12M-26-05-10', 'OE-FIX-12M-26-01-15', 'VAR-25-01-01'];
+  expect(await picked(page)).toEqual(picks);
+  const check = async (keys) => {
+    const lines = await compareLines(page);
+    expect([...new Set(lines.map((l) => l.key))]).toEqual(keys);
+    const rows = await totals(page);
+    expect(rows.map(([k]) => k)).toEqual(keys);
+    for (const k of keys) expect(at(lines, k, 'past', CUTOFF)).toBeCloseTo(costFrom(k, '2026-05-10'), 2);
+    for (const [k, text] of rows) expect(text, k).toMatch(new RegExp(`^so far ${gbp(costFrom(k, '2026-05-10'))} · `));
+  };
+  await check(picks);
+  await page.click('#picked .chip[data-key="OE-FIX-12M-26-05-10"]');
+  await check([FLEX, 'OE-FIX-12M-26-01-15', 'VAR-25-01-01']);
 });
 
 test('choosing my tariff picks it first, sets the date to its since-date and draws the compare-from line', async ({
@@ -475,11 +722,11 @@ test('choosing my tariff picks it first, sets the date to its since-date and dra
   expect(await picked(page)).toEqual(['OE-FIX-12M-26-01-15', 'VAR-25-12-15']);
   await expect(page.locator('#from')).toHaveValue('2026-01-15');
   await expect(page.locator('#since')).toHaveValue('2026-01-15');
-  await expect(page.locator('#lead')).toContainText('From 15 Jan 2026 to today (279 days)');
+  await expect(page.locator('#lead')).toContainText('From 15 Jan 2026:');
   await expect(page.locator('#mine-line')).toHaveText(
     `Fixed until 15 Jan 2027 · about ${gbp(yearNow('OE-FIX-12M-26-01-15'))}/yr · £150 to leave early.`,
   );
-  await expect(page.locator('#bars .you-tag')).toHaveCount(1);
+  await expect(page.locator('#totals li[data-key="OE-FIX-12M-26-01-15"] .you-tag')).toHaveCount(1);
   await view(page, 'annual');
   await expect
     .poll(() =>
@@ -494,71 +741,6 @@ test('choosing my tariff picks it first, sets the date to its since-date and dra
   await expect(page.locator('#mine')).toHaveValue('OE-FIX-12M-26-01-15');
   await expect(page.locator('#from')).toHaveValue('2026-02-01');
   await expect(page.locator('#mine-line')).toContainText('Fixed until 1 Feb 2027');
-});
-
-test('an empty gas field removes gas from every figure: totals, today’s rates and the exit fee', async ({ page }) => {
-  await open(page);
-  await page.selectOption('#mine', 'OE-FIX-12M-26-01-15');
-  await page.fill('#kwh-gas', '');
-  const elec = usage(false);
-  await expect(page.locator('#mine-line')).toHaveText(
-    `Fixed until 15 Jan 2027 · about ${gbp(yearNow('OE-FIX-12M-26-01-15', elec))}/yr · £75 to leave early.`,
-  );
-  const want = ['OE-FIX-12M-26-01-15', 'VAR-25-12-15']
-    .map((c) => [c, costFrom(c, '2026-01-15', elec)])
-    .sort((a, b) => a[1] - b[1])
-    .map(([c, v]) => [c, `about ${gbp(v)}`]);
-  expect(await totals(page)).toEqual(want);
-  await expect(page.locator('#forward')).toContainText(
-    `Flexible Octopus December 2025 v2 (variable) about ${gbp(yearNow('VAR-25-12-15', elec))}/yr`,
-  );
-});
-
-test('fewer than two picked tariffs reads "Add at least two tariffs."', async ({ page }) => {
-  await open(page);
-  await page.click('#picked .chip[data-key="VAR-25-12-15"]');
-  expect(await picked(page)).toEqual(['OE-FIX-12M-26-05-10']);
-  await expect(page.locator('#lead')).toHaveText('Add at least two tariffs.');
-  await expect(page.locator('#bars > *')).toHaveCount(0);
-  await expect(page.locator('#forward')).toHaveText('');
-});
-
-test('the Ofgem price cap can be added; with no cap rates before 1 Jul 2026 it is listed unranked', async ({
-  page,
-}) => {
-  await open(page);
-  await setFrom(page, '2026-05-10');
-  await page.selectOption('#add', 'cap');
-  expect(await picked(page)).toEqual(['VAR-25-12-15', 'OE-FIX-12M-26-05-10', 'cap']);
-  await expect(page.locator('#bars .unranked[data-key="cap"]')).toHaveText('no rates before 1 Jul 2026');
-  await expect(page.locator('#bars .name').last()).toHaveText('Ofgem price cap (cap level)');
-  await expect(page.locator('#forward')).toContainText(`Ofgem price cap (cap level) about ${gbp(yearNow('cap'))}/yr`);
-  await setFrom(page, '2026-07-01'); // from the cap's first day it is priced and ranked
-  const [cap, flex] = ['cap', 'VAR-25-12-15'].map((c) => costFrom(c, '2026-07-01'));
-  await expect(page.locator('#bars .total[data-key="cap"]')).toHaveText(`about ${gbp(cap)} ${signed(cap, flex)}`);
-});
-
-test('adding and removing tariffs recomputes the bars and keeps them cheapest first', async ({ page }) => {
-  await open(page);
-  await setFrom(page, '2026-05-10');
-  const ranked = async () => {
-    const t = await totals(page);
-    const want = t.map(([c]) => [c, costFrom(c, '2026-05-10')]).sort((a, b) => a[1] - b[1]);
-    expect(t).toEqual(want.map(([c, v]) => [c, `about ${gbp(v)}`])); // every total right, in cheapest-first order
-    return t.map(([c]) => c);
-  };
-  expect(await ranked()).toHaveLength(2);
-  await page.selectOption('#add', 'OE-FIX-12M-26-01-15');
-  await page.selectOption('#add', 'VAR-25-01-01');
-  expect((await ranked()).sort()).toEqual([
-    'OE-FIX-12M-26-01-15',
-    'OE-FIX-12M-26-05-10',
-    'VAR-25-01-01',
-    'VAR-25-12-15',
-  ]);
-  await expect(page.locator('#bars .delta')).toHaveCount(3); // "±£n" against Flexible on all but Flexible itself
-  await page.click('#picked .chip[data-key="OE-FIX-12M-26-05-10"]');
-  expect((await ranked()).sort()).toEqual(['OE-FIX-12M-26-01-15', 'VAR-25-01-01', 'VAR-25-12-15']);
 });
 
 test('clicking a family line sets the comparison date to that version’s launch', async ({ page }) => {
@@ -580,14 +762,20 @@ test('clicking a family line sets the comparison date to that version’s launch
 
 test.describe('phone 390x844, four tariffs picked', () => {
   test.use({ viewport: { width: 390, height: 844 } });
-  test('no horizontal overflow; bars hidden, totals kept', async ({ page }) => {
+  test('no horizontal overflow; the chart and every totals row fit, nothing clipped', async ({ page }) => {
     await open(page);
     await page.selectOption('#add', 'cap');
     await page.selectOption('#add', 'OE-FIX-12M-26-01-15');
     expect(await picked(page)).toHaveLength(4);
     expect(await noOverflow(page)).toBe(true);
-    await expect(page.locator('#bars .bar').first()).toBeHidden();
-    await expect(page.locator('#bars .total').first()).toBeVisible();
+    await expect(page.locator('#c-compare')).toBeVisible();
+    await expect(page.locator('#totals li')).toHaveCount(4);
+    const clipped = await page
+      .locator('#totals li')
+      .evaluateAll((ls) => ls.filter((l) => l.scrollWidth > l.clientWidth).map((l) => l.dataset.key));
+    expect(clipped).toEqual([]);
+    const box = await page.locator('#compare').boundingBox();
+    expect(box.x + box.width).toBeLessThanOrEqual(390);
   });
 });
 
@@ -634,6 +822,27 @@ test('after a region fails to load, the tariff and comparison controls are off a
   expect(errors).toEqual([]);
 });
 
+test('a rate missing today leaves the projection blank, not £0, and marks every switch row on its own', async ({
+  page,
+}) => {
+  // London's Flexible with no rate on the cutoff day: a fix's roll-on and every projection have nothing to price
+  await page.route('**/data/_C/flexible.json', async (route) => {
+    const file = await (await route.fetch()).json();
+    for (const rows of [file.electricity.days, file.electricity.versions[FLEX].days])
+      for (const p of rows) if (p.day === CUTOFF) Object.assign(p, { unit: null, standingCharge: null });
+    await route.fulfill({ json: file });
+  });
+  await open(page);
+  await page.selectOption('#mine', MINE_FIX);
+  await expect(page.locator(`#totals li[data-key="${MINE_FIX}"] .figures`)).toHaveText(
+    /^so far £[\d,]+ · in a year –$/,
+  );
+  await page.click('#cmode button[data-v="switch"]');
+  await expect(page.locator('#totals li')).toHaveCount(2);
+  for (const key of [MINE_FIX, FLEX])
+    await expect(page.locator(`#totals li[data-key="${key}"] .unranked`)).toHaveText('no rates today');
+});
+
 test('unpriced days are named by where they sit: a gap inside the span, or no rates after the last priced day', async ({
   page,
 }) => {
@@ -648,14 +857,14 @@ test('unpriced days are named by where they sit: a gap inside the span, or no ra
   await page.selectOption('#add', 'cap');
   await page.fill('#from', '2026-07-01');
   await page.locator('#from').dispatchEvent('change');
-  await expect(page.locator('#bars .unranked[data-key="cap"]')).toHaveText('no rates 1 Aug 2026 – 31 Aug 2026');
+  await expect(page.locator('#totals li[data-key="cap"] .unranked')).toHaveText('no rates 1 Aug 2026 – 31 Aug 2026');
   // North West's cap stops after September (no row for the October period).
   await page.selectOption('#region', '_G');
   await expect(page.locator('#footer')).toContainText('· North West ·');
   await page.selectOption('#add', 'cap');
   await page.fill('#from', '2026-07-01');
   await page.locator('#from').dispatchEvent('change');
-  await expect(page.locator('#bars .unranked[data-key="cap"]')).toHaveText('no rates after 30 Sept 2026');
+  await expect(page.locator('#totals li[data-key="cap"] .unranked')).toHaveText('no rates after 30 Sept 2026');
 });
 
 for (const [name, viewport] of [
@@ -667,9 +876,11 @@ for (const [name, viewport] of [
     test('the date inputs show the whole date', async ({ page }) => {
       await open(page);
       await page.selectOption('#mine', 'OE-FIX-12M-26-01-15');
+      await page.click('#cmode button[data-v="switch"]'); // the switch date shows only in "if I switch"
+      expect(await noOverflow(page)).toBe(true);
       const clipped = await page.evaluate(() =>
         // narrower than its own intrinsic width (the whole date plus the calendar button) means clipped
-        ['since', 'from'].filter((id) => {
+        ['since', 'from', 'switch'].filter((id) => {
           const i = document.getElementById(id);
           const shown = i.getBoundingClientRect().width;
           const set = i.style.width;
@@ -739,13 +950,6 @@ test('a remembered tariff not sold in the region shows none, stays remembered, a
   expect((await picked(page))[0]).toBe('OE-FIX-12M-26-05-10');
 });
 
-test('a one-day span reads "(1 day)"', async ({ page }) => {
-  await open(page);
-  await page.fill('#from', '2026-10-20');
-  await page.locator('#from').dispatchEvent('change');
-  await expect(page.locator('#lead')).toHaveText('From 20 Oct 2026 to today (1 day), cheapest first:');
-});
-
 // ---- the comparison anchored on my tariff, and the line of my tariff on every chart ----
 const MINE = 'You: 12M January 2026 v1';
 /** [day, y] of one line of one chart, one per day; null when the chart has no such line. */
@@ -772,7 +976,7 @@ const mineWant = (code, chart, day) => {
   return ownRow(code, fuel, day)[field === 'unit' ? 'unit' : 'standingCharge'];
 };
 
-test('my tariff draws a "You" line on every chart at its own rates from its since-date, never a chip', async ({
+test('my tariff draws a "You" line on every chart at its own rates from its since-date, with its own chip', async ({
   page,
 }) => {
   await open(page);
@@ -792,7 +996,7 @@ test('my tariff draws a "You" line on every chart at its own rates from its sinc
     return { lineId: d.lineId, width: d.borderWidth, order: d.order, hidden: d.hidden };
   });
   expect(mine).toEqual({ lineId: 'mine', width: 3, order: -1, hidden: false });
-  await expect(page.locator('#chips .chip')).toHaveCount(4); // the cap and the three families, no chip for mine
+  await expect(page.locator('#chips .chip')).toHaveCount(5); // the cap, the three families, then mine
   // a later since-date starts the line there
   await page.fill('#since', '2026-02-01');
   await page.locator('#since').dispatchEvent('change');
@@ -800,84 +1004,20 @@ test('my tariff draws a "You" line on every chart at its own rates from its sinc
   expect(days.find(([, y]) => y != null)[0]).toBe('2026-02-01');
 });
 
-test('a fixed term that has ended: the mine line says so, the span ends with the term, today compares with Flexible', async ({
-  page,
-}) => {
-  await open(page);
-  await page.selectOption('#mine', 'OE-FIX-6M-25-10-01'); // since its launch, 1 Oct 2025: 6 months to 1 Apr 2026
-  await expect(page.locator('#mine-line')).toHaveText(
-    `Fixed term ended 31 Mar 2026 · you are now on Flexible Octopus · about ${gbp(yearNow('VAR-25-12-15'))}/yr.`,
-  );
-  await expect(page.locator('#mine-line a.term')).toHaveAttribute('href', '#fn-fixed');
-  expect(await picked(page)).toEqual(['OE-FIX-6M-25-10-01', 'VAR-25-12-15']);
-  await expect(page.locator('#lead')).toHaveText(
-    'From 1 Oct 2025 to 31 Mar 2026 (your term, 182 days), cheapest first:',
-  );
-  const [fix, flex] = ['OE-FIX-6M-25-10-01', 'VAR-25-12-15'].map((c) =>
-    costFrom(c, '2025-10-01', usage(), '2026-04-01'),
-  );
-  expect(Object.fromEntries(await totals(page))).toEqual({
-    'OE-FIX-6M-25-10-01': `about ${gbp(fix)}`,
-    'VAR-25-12-15': `about ${gbp(flex)}`,
-  });
-  await expect(page.locator('#bars .you-tag')).toHaveCount(1);
-  await expect(page.locator('#bars .name').filter({ has: page.locator('.you-tag') })).toContainText('6M Winter Fix');
-  expect(Object.fromEntries((await deltas(page)).map(([k, d]) => [k, d]))).toEqual({
-    'OE-FIX-6M-25-10-01': '',
-    'VAR-25-12-15': signed(flex, fix),
-  });
-  await expect(page.locator('#forward')).toHaveText(
-    "Your fix ended 31 Mar 2026; today's figures compare with Flexible Octopus. At today's rates: " +
-      `Flexible Octopus December 2025 v2 (variable) (you) about ${gbp(yearNow('VAR-25-12-15'))}/yr · ` +
-      '6M Winter Fix October 2025 v1 (fixed 6M) no rates today.',
-  );
-  // the You line runs over the term only
-  const days = await daysOf(page, 'electricity-unit', 'You: 6M Winter Fix October 2025 v1');
-  const on = days.filter(([, y]) => y != null).map(([d]) => d);
-  expect([on[0], on.at(-1)]).toEqual(['2025-10-22', '2026-03-31']); // the 1-year window starts on 22 Oct 2025
-});
-
-test('deltas are signed against my tariff, not the cheapest: a cheaper tariff reads "−£n" in green', async ({
-  page,
-}) => {
-  await open(page);
-  await page.selectOption('#mine', 'OE-FIX-12M-26-05-10');
-  const [fix, flex] = ['OE-FIX-12M-26-05-10', 'VAR-25-12-15'].map((c) => costFrom(c, '2026-05-10'));
-  expect(flex).toBeLessThan(fix - 1); // Flexible was cheaper, so mine is not the cheapest
-  expect(await deltas(page)).toEqual([
-    ['VAR-25-12-15', signed(flex, fix), 'delta down'],
-    ['OE-FIX-12M-26-05-10', '', ''],
-  ]);
-  expect(signed(flex, fix)).toMatch(/^−£/);
-  const [down, good] = await page.evaluate(() => {
-    const ink = (v) => {
-      const i = document.body.appendChild(document.createElement('i'));
-      i.style.color = v;
-      const c = getComputedStyle(i).color;
-      i.remove();
-      return c;
-    };
-    return [getComputedStyle(document.querySelector('#bars .delta.down')).color, ink('var(--good)')];
-  });
-  expect(down).toBe(good);
-  const [fixNow, flexNow] = [yearNow('OE-FIX-12M-26-05-10'), yearNow('VAR-25-12-15')];
-  await expect(page.locator('#forward')).toHaveText(
-    `At today's rates: 12M May 2026 v1 (fixed 12M) (you) about ${gbp(fixNow)}/yr · ` +
-      `Flexible Octopus December 2025 v2 (variable) about ${gbp(flexNow)}/yr (${signed(flexNow, fixNow)}).`,
-  );
-});
-
-test('the legend keys the price cap changes always, and my tariff once picked', async ({ page }) => {
+test('the legend keys the price cap changes always, and my tariff with a last chip once picked', async ({ page }) => {
   await open(page);
   await expect(page.locator('#legend-cap')).toBeVisible();
   await expect(page.locator('#legend-cap a.term')).toHaveText('price cap change');
   await expect(page.locator('#legend-cap a.term')).toHaveAttribute('href', '#fn-cap');
-  await expect(page.locator('#legend-mine')).toBeHidden();
+  const you = page.locator('#chips .chip[data-line="mine"]');
+  await expect(you).toHaveCount(0);
   await page.selectOption('#mine', 'OE-FIX-12M-26-01-15');
-  await expect(page.locator('#legend-mine')).toBeVisible();
-  await expect(page.locator('#legend-mine')).toHaveText(MINE);
+  await expect(page.locator('#chips .chip').last()).toHaveAttribute('data-line', 'mine');
+  await expect(you.locator('b')).toHaveText(MINE);
+  await expect(you.locator('small')).toHaveText(`about ${gbp(yearNow('OE-FIX-12M-26-01-15'))}/yr`);
+  await expect(you).toHaveAttribute('aria-pressed', 'true');
   await page.selectOption('#mine', '');
-  await expect(page.locator('#legend-mine')).toBeHidden();
+  await expect(you).toHaveCount(0);
 });
 
 test('the You line is drawn in the ink of the current scheme, redrawn when the scheme changes', async ({ page }) => {
@@ -894,4 +1034,234 @@ test('the You line is drawn in the ink of the current scheme, redrawn when the s
   expect(await colours()).toEqual(['rgb(11, 11, 11)', 'rgb(11, 11, 11)']);
   await page.emulateMedia({ colorScheme: 'dark' });
   await expect.poll(colours).toEqual(['rgb(240, 239, 236)', 'rgb(240, 239, 236)']);
+});
+
+// ---- if I switch: from the switch date, the exit fee plus each pick's cost against staying put ----
+const MINE_FIX = 'OE-FIX-12M-26-01-15'; // since its launch, 15 Jan 2026: term to 15 Jan 2027, £75 exit fee per fuel
+const fmtDay = (day) =>
+  new Date(Date.parse(`${day}T00:00:00Z`)).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+const addDaysTo = (day, n) => new Date(Date.parse(`${day}T00:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10);
+const switchMode = (page) => page.click('#cmode button[data-v="switch"]');
+const setSwitch = async (page, day) => {
+  await page.fill('#switch', day);
+  await page.locator('#switch').dispatchEvent('change');
+};
+/** The y of every point of `key`'s line in switch mode, one per day start from the switch date to END. */
+const switchYs = async (page, key) => {
+  const line = (await compareLines(page)).find((l) => l.key === key);
+  return line.points;
+};
+/** The totals text of a pick against staying put: paid back from the day the running £ is last above 0, and its year. */
+const switchText = (fee, move, stay, s) => {
+  const ys = [fee];
+  for (const [i, m] of move.entries()) ys.push(ys[i] + m - stay[i]);
+  const y = ys.at(-1);
+  if (Math.abs(y) < 1) return '£0 in a year';
+  const lastAbove = ys.findLastIndex((v) => v > 0);
+  if (lastAbove === ys.length - 1) return `doesn't pay back within a year · ${gbp(y)} behind`;
+  return `pays back ${fmtDay(addDaysTo(s, Math.max(lastAbove, 0)))} · ${gbp(-y)} ahead in a year`;
+};
+/** Each step of a line's points against the expected daily difference. */
+const expectSteps = (points, move, stay) => {
+  expect(points).toHaveLength(move.length + 1);
+  for (let i = 0; i < move.length; i++)
+    expect(points[i + 1][1] - points[i][1], points[i][0]).toBeCloseTo(move[i] - stay[i], 6);
+};
+
+test('if I switch: my tariff is flat at zero from the switch date; Flexible starts at the exit fee and adds its daily difference', async ({
+  page,
+}) => {
+  const errors = await open(page);
+  await page.selectOption('#mine', MINE_FIX);
+  await switchMode(page);
+  await expect(page.locator('#switch')).toHaveValue(CUTOFF);
+  const lines = await compareLines(page);
+  expect(lines.map((l) => [l.key, l.part, l.dash])).toEqual([
+    [MINE_FIX, 'future', [3, 3]],
+    [FLEX, 'future', [3, 3]],
+  ]);
+  const mine = lines[0].points;
+  expect([mine[0][0], mine.at(-1)[0]]).toEqual([CUTOFF, END]);
+  for (const [day, y] of mine) expect(y, day).toBe(0);
+  const stay = dailyOf(MINE_FIX, CUTOFF, { termEnd: '2027-01-15' });
+  const move = dailyOf(FLEX, CUTOFF);
+  const flex = lines[1].points;
+  expect(flex[0][0]).toBe(CUTOFF);
+  expect(flex[0][1]).toBeCloseTo(150, 2);
+  expectSteps(flex, move, stay);
+  expect(await page.evaluate(() => [__charts.compare.scales.x.min, __charts.compare.scales.x.max])).toEqual([
+    Date.parse(`${CUTOFF}T00:00:00Z`),
+    Date.parse(`${END}T00:00:00Z`),
+  ]);
+  expect(await totals(page)).toEqual([
+    [MINE_FIX, 'stay · exit fee £150 until 27 Nov 2026'],
+    [FLEX, switchText(150, move, stay, CUTOFF)],
+  ]);
+  expect(switchText(150, move, stay, CUTOFF)).toMatch(/^doesn't pay back within a year · £\d+ behind$/);
+  await expect(page.locator(`#totals li[data-key="${FLEX}"] .delta.up`)).toHaveCount(1);
+  await expect(page.locator(`#totals li[data-key="${MINE_FIX}"] .you-tag`)).toHaveText('you');
+  // the tooltip of the first day: the day as its title, mine as "you", Flexible signed
+  const tipped = await page.evaluate(() => {
+    const c = __charts.compare;
+    const active = c.data.datasets.map((_, datasetIndex) => ({ datasetIndex, index: 1 }));
+    c.tooltip.setActiveElements(active, { x: 0, y: 0 });
+    c.update('none');
+    return { title: c.tooltip.title, body: c.tooltip.body.flatMap((b) => b.lines) };
+  });
+  const first = 150 + move[0] - stay[0];
+  expect(tipped).toEqual({
+    title: [fmtDay(CUTOFF)],
+    body: [
+      '12M January 2026 v1 · you',
+      `Flexible Octopus December 2025 v2 · ${first < 0 ? '−' : '+'}${gbp(Math.abs(first))}`,
+    ],
+  });
+  // a dearer fix of mine: Flexible pays back once its savings cover the fee, and reads ahead in green
+  const dear = 'OE-FIX-12M-26-05-10'; // since 10 May 2026: term to 10 May 2027, fee-free from 22 Mar 2027
+  await page.selectOption('#mine', dear);
+  const [move2, stay2] = [dailyOf(FLEX, CUTOFF), dailyOf(dear, CUTOFF, { termEnd: '2027-05-10' })];
+  const text = switchText(150, move2, stay2, CUTOFF);
+  expect(text).toMatch(/^pays back \d+ \w+ 2027 · £\d+ ahead in a year$/);
+  expect(await totals(page)).toEqual([
+    [dear, 'stay · exit fee £150 until 22 Mar 2027'],
+    [FLEX, text],
+  ]);
+  await expect(page.locator(`#totals li[data-key="${FLEX}"] .delta.down`)).toHaveCount(1);
+  expect(errors).toEqual([]);
+});
+
+test('if I switch: no exit fee from 49 days before my term ends; a switch date before that pays it', async ({
+  page,
+}) => {
+  await open(page);
+  await page.selectOption('#mine', MINE_FIX);
+  await switchMode(page);
+  const row = page.locator(`#totals li[data-key="${MINE_FIX}"] .figures`);
+  for (const [day, fee] of [
+    ['2026-12-01', 0],
+    ['2026-11-27', 0], // 49 days before 15 Jan 2027: the first fee-free day
+    ['2026-11-26', 150],
+    ['2026-11-01', 150],
+  ]) {
+    await setSwitch(page, day);
+    await expect(row).toHaveText(fee ? 'stay · exit fee £150 until 27 Nov 2026' : 'stay · no exit fee');
+    const flex = await switchYs(page, FLEX);
+    expect(flex[0][0]).toBe(day);
+    expect(flex[0][1], day).toBeCloseTo(fee, 2);
+    expectSteps(flex, dailyOf(FLEX, day), dailyOf(MINE_FIX, day, { termEnd: '2027-01-15' }));
+  }
+  // a switch date after the cutoff draws a "switch" vertical; the line starts there, the x axis still at today
+  expect(await page.evaluate(() => __charts.compare.$switchAt)).toBe('2026-11-01');
+  expect(await page.evaluate(() => __charts.compare.scales.x.min)).toBe(Date.parse(`${CUTOFF}T00:00:00Z`));
+});
+
+test('if I switch with an empty gas field: the exit fee is the electricity one', async ({ page }) => {
+  await open(page);
+  await page.selectOption('#mine', MINE_FIX);
+  await page.fill('#kwh-gas', '');
+  await switchMode(page);
+  const elec = usage(false);
+  const flex = await switchYs(page, FLEX);
+  expect(flex[0][1]).toBeCloseTo(75, 2);
+  const [move, stay] = [
+    dailyOf(FLEX, CUTOFF, { kwh: elec }),
+    dailyOf(MINE_FIX, CUTOFF, { kwh: elec, termEnd: '2027-01-15' }),
+  ];
+  expectSteps(flex, move, stay);
+  expect(await totals(page)).toEqual([
+    [MINE_FIX, 'stay · exit fee £75 until 27 Nov 2026'],
+    [FLEX, switchText(75, move, stay, CUTOFF)],
+  ]);
+});
+
+test('if I switch with no tariff of mine: Flexible is the anchor with no exit fee, a fix its daily difference from 0', async ({
+  page,
+}) => {
+  await open(page);
+  await switchMode(page);
+  const fix = 'OE-FIX-12M-26-05-10';
+  expect(await picked(page)).toEqual([FLEX, fix]);
+  const lines = await compareLines(page);
+  for (const [, y] of lines.find((l) => l.key === FLEX).points) expect(y).toBe(0);
+  const points = lines.find((l) => l.key === fix).points;
+  expect(points[0]).toEqual([CUTOFF, 0]);
+  const [move, stay] = [dailyOf(fix, CUTOFF), dailyOf(FLEX, CUTOFF)];
+  expectSteps(points, move, stay);
+  expect(await totals(page)).toEqual([
+    [FLEX, 'stay · no exit fee'],
+    [fix, switchText(0, move, stay, CUTOFF)],
+  ]);
+});
+
+test('if I switch from a fixed term that has ended: no exit fee, and Flexible costs the same as staying', async ({
+  page,
+}) => {
+  await open(page);
+  await page.selectOption('#mine', 'OE-FIX-6M-25-10-01');
+  await switchMode(page);
+  await expect(page.locator('#totals li[data-key="OE-FIX-6M-25-10-01"] .figures')).toHaveText('stay · no exit fee');
+  const flex = await switchYs(page, FLEX);
+  expect(flex[0]).toEqual([CUTOFF, 0]);
+  for (const [day, y] of flex) expect(y, day).toBeCloseTo(0, 6);
+  await expect(page.locator(`#totals li[data-key="${FLEX}"] .figures`)).toHaveText('£0 in a year');
+});
+
+test('the if-I-switch controls: the switch date only in that mode, the from date off in it, its own lead', async ({
+  page,
+}) => {
+  await open(page);
+  await page.selectOption('#mine', MINE_FIX);
+  await expect(page.locator('#cmode button')).toHaveText(['£ paid', 'vs yours', 'if I switch']);
+  for (const mode of ['paid', 'vs']) {
+    await page.click(`#cmode button[data-v="${mode}"]`);
+    await expect(page.locator('#switch-field')).toBeHidden();
+    await expect(page.locator('#from')).toBeEnabled();
+  }
+  await switchMode(page);
+  await expect(page.locator('#cmode button[data-v="switch"]')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('#switch-field')).toBeVisible();
+  await expect(page.locator('#from')).toBeDisabled();
+  expect(await page.locator('#switch').evaluate((i) => [i.min, i.max])).toEqual([CUTOFF, '2027-10-20']);
+  await expect(page.locator('#lead')).toHaveText(
+    "If you switch on 21 Oct 2026: exit fee once, then the new tariff's rates; the line crosses £0 when it has paid back.",
+  );
+  await expect(page.locator('#lead a.term')).toHaveCount(2); // the mode and the exit fee, each at its definition
+  await expect(page.locator('#lead a.term').first()).toHaveAttribute('href', '#fn-switch');
+  await expect(page.locator('#lead a.term').last()).toHaveAttribute('href', '#fn-exitfee');
+  await expect(page.locator('#lead a.term').last()).toHaveText('exit fee');
+  await setSwitch(page, '2026-12-01');
+  await expect(page.locator('#lead b')).toHaveText('1 Dec 2026');
+  await page.click('#cmode button[data-v="vs"]');
+  await expect(page.locator('#switch-field')).toBeHidden();
+});
+
+test('back from if I switch to £ paid, the chart runs from the date again', async ({ page }) => {
+  await open(page);
+  await switchMode(page);
+  await page.click('#cmode button[data-v="paid"]');
+  await expect(page.locator('#from')).toBeEnabled();
+  await expect(page.locator('#lead')).toContainText('From 20 Oct 2026: solid');
+  const lines = await compareLines(page);
+  expect(lines.map((l) => [l.key, l.part])).toEqual([
+    [FLEX, 'past'],
+    [FLEX, 'future'],
+    ['OE-FIX-12M-26-05-10', 'past'],
+    ['OE-FIX-12M-26-05-10', 'future'],
+  ]);
+  for (const key of [FLEX, 'OE-FIX-12M-26-05-10']) {
+    expect(lines.find((l) => l.key === key && l.part === 'past').points[0]).toEqual(['2026-10-20', 0]);
+    expect(at(lines, key, 'past', CUTOFF)).toBeCloseTo(costFrom(key, '2026-10-20'), 2);
+  }
+  expect(await totals(page)).toEqual(
+    [FLEX, 'OE-FIX-12M-26-05-10'].map((k) => [
+      k,
+      `so far ${gbp(costFrom(k, '2026-10-20'))} · in a year ${gbp(sum(dailyOf(k, '2026-10-20', k === FLEX ? {} : { termEnd: '2027-10-20' })))}`,
+    ]),
+  );
+  expect(await page.evaluate(() => __charts.compare.scales.y.min)).toBe(0);
 });
