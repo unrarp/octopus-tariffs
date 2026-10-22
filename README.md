@@ -15,7 +15,14 @@ serves `docs/`.
   standing charges per family, with the Ofgem price cap drawn under them.
 - **Annual cost**: estimated £ per year or month at your usage, dual fuel or
   electricity only.
-- **Compare tariffs**: any number of tariffs costed from a date, cheapest first.
+- **Your tariff** ("I'm on", since a date): a thick "You" line on every chart at
+  the rates it charges you over its fixed term.
+- **Compare tariffs**: any number of tariffs costed from a date, cheapest first,
+  anchored on your tariff (else Flexible): every other total shows a signed
+  difference from it, and an ended fix is costed over its term only. Today's
+  rates are compared the same way, with Flexible once your fix has ended.
+- Definitions live in the (i) dialog, linked from each term; there are no
+  inline hints.
 - A region select (remembered, else geolocated, else London) and a window
   control (6 months, 1 year, 2 years, all).
 

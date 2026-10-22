@@ -9,6 +9,8 @@
   --text-2: light-dark(#52514e, #c3c2b7);
   --muted: light-dark(#6b6a65, #898781);
   --link: light-dark(#1c5cab, #86b6ef);
+  --good: light-dark(#008300, #5bbf5b);
+  --bad: light-dark(#c4321f, #ef7b6a);
   /* canvas only: gridlines, axis, the cap line and cap-change verticals, the not-yet-collected hatch, the tooltip */
   --grid: light-dark(#e1e0d9, #2c2c2a);
   --axis: light-dark(#c3c2b7, #383835);
@@ -62,10 +64,8 @@ h1 {
   font-size: 22px;
   margin: 0;
 }
-.lede {
-  color: var(--text-2);
-  margin: 4px 0 16px;
-  max-width: 72ch;
+.head {
+  margin-bottom: 16px;
 }
 .btn {
   background: var(--surface);
@@ -230,6 +230,16 @@ h1 {
   background: repeating-linear-gradient(135deg, light-dark(#9a9893, #6b6a65) 0 1px, transparent 1px 4px);
   border: 1px solid var(--grid);
 }
+.sw.mine {
+  width: 16px;
+  height: 0;
+  border-top: 3px solid var(--text);
+}
+.sw.marker {
+  width: 0;
+  height: 12px;
+  border-left: 1px dashed var(--marker);
+} /* the cap-change vertical, as the charts draw it */
 
 /* Charts: each canvas box includes its x-axis band, so nothing scrolls inside it. */
 .chart {
@@ -284,11 +294,6 @@ a.term {
   text-decoration-color: var(--muted);
   text-underline-offset: 3px;
 }
-.note {
-  font-size: 13px;
-  color: var(--muted);
-  margin: 8px 0 0;
-}
 .footer {
   margin-top: 24px;
   font-size: 13px;
@@ -341,6 +346,12 @@ a.term {
 .bars .delta,
 .bars .unranked {
   color: var(--muted);
+}
+.bars .delta.down {
+  color: var(--good);
+}
+.bars .delta.up {
+  color: var(--bad);
 }
 .bars .you-tag {
   font-weight: 600;

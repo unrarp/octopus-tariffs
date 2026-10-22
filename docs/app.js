@@ -20,10 +20,6 @@ const WINDOWS = ['6', '12', '24', 'all']; // months back from the right edge, sm
 const REGION_KEY = 'octopus-tariffs:region';
 const USAGE_KEY = 'octopus-tariffs:usage';
 const MINE_KEY = 'octopus-tariffs:mine';
-/** The comparison's reference version when the viewer has picked no tariff. */
-const REF_VERSION = 'OE-FIX-18M-26-09-11';
-const HINT =
-  "Estimates, not bills. Your usage follows a typical home's seasonal pattern; standing charge and VAT included; direct debit. Each tariff is costed at its own rates from the date, on sale then or not. Exit fees, service and brand ignored.";
 const PANELS = [
   { id: 'electricity-unit', fuel: 'electricity', field: 'unit', unit: 'p/kWh' },
   { id: 'electricity-standing', fuel: 'electricity', field: 'standingCharge', unit: 'p/day' },
@@ -135,7 +131,7 @@ async function main() {
     ],
     compare: [
       'Compare tariffs',
-      'Each picked tariff is costed day by day from the date to the last day collected, at the rates it would have charged, at your usage: a fixed version\'s own rates, its first rate reaching back to days before it was on sale; a variable version, and the price cap, at their own rates, a variable version taking the Flexible version on sale before its launch. A tariff with no rate on some day of the span is listed without a total. "If today\'s rates stayed the same" is a full year at the latest rates collected.',
+      "Each picked tariff is costed day by day from the date to the last day collected (to the end of your fixed term, if it has ended), at the rates it would have charged, at your usage: a fixed version's own rates, its first rate reaching back to days before it was on sale; a variable version, and the price cap, at their own rates, a variable version taking the Flexible version on sale before its launch. Every other total shows what it would have cost more (+) or less (−) than your tariff, or Flexible Octopus if you have no fixed contract. A tariff with no rate on some day of the span is listed without a total. \"At today's rates\" is a full year at the latest rates collected, compared with Flexible Octopus once your fixed term has ended. These are estimates, not bills: your usage follows a typical home's seasonal pattern, standing charge and VAT are included, prices are for direct debit, and exit fees are left out.",
     ],
     profile: [
       'Seasonal pattern',
@@ -182,6 +178,7 @@ async function main() {
     if (/^#fn-/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search);
   });
   $('hatch-term').replaceChildren(term('notyet', 'Not yet collected'));
+  $('cap-term').replaceChildren(term('cap', 'price cap change'));
 
   // ---- the You row: region and usage, remembered in this browser ----
   const stored = (() => {
@@ -194,11 +191,6 @@ async function main() {
   const kwh = stored ? { electricity: stored.electricity, gas: stored.gas } : { ...tdcv };
   $('kwh-electricity').value = kwh.electricity ?? '';
   $('kwh-gas').value = kwh.gas ?? '';
-  const showUsageHint = (edited) =>
-    $('usage-hint').replaceChildren(
-      ...(edited ? ['your usage'] : [term('tdcv', 'typical home (Ofgem)'), '; your bill shows your own kWh']),
-    );
-  showUsageHint(Boolean(stored));
   const fuels = () => (kwh.gas == null ? ['electricity'] : ['electricity', 'gas']);
 
   // region: the one selected; shown: the one whose lines are loaded (they differ while a fetch is in flight or failed)
@@ -255,16 +247,17 @@ async function main() {
     ];
   };
   const rate = (line, fuel, field, day) => line.byDay[fuel].get(day)?.[field] ?? null;
-  /** Estimated £ a year (or a month) on `day` for the fuels the viewer has; null if any of them has no rate. */
-  const cost = (line, day) => {
+  /** Estimated £ a year (or a month) from the rows `rowOf(fuel)` for the fuels the viewer has; null if any has no rate. */
+  const costOfRows = (rowOf) => {
     let total = 0;
     for (const fuel of fuels()) {
-      const c = annualCost(line.byDay[fuel].get(day) ?? { unit: null, standingCharge: null }, kwh[fuel]);
+      const c = annualCost(rowOf(fuel) ?? { unit: null, standingCharge: null }, kwh[fuel]);
       if (c == null) return null;
       total += c;
     }
     return perMonth() ? total / 12 : total;
   };
+  const cost = (line, day) => costOfRows((fuel) => line.byDay[fuel].get(day));
   const perLabel = () => (perMonth() ? '/month' : '/yr');
 
   // ---- the x range: the right edge is the end of the later of the data's last day and the viewer's today ----
@@ -435,24 +428,47 @@ async function main() {
     }
     return data;
   };
-  const datasetsFor = (value) =>
-    state.lines.map((line) => ({
-      label: line.label,
-      lineId: line.id,
-      data: series((day) => value(line, day)),
-      borderColor: css(line.colour),
-      backgroundColor: css(line.colour),
-      borderWidth: 2,
-      borderDash: line.dash ?? [],
-      borderJoinStyle: 'round',
-      borderCapStyle: 'round',
-      pointRadius: 0,
-      pointHoverRadius: 0,
-      pointStyle: 'line',
-      spanGaps: false,
-      order: line.id === 'cap' ? 1 : 0,
-      hidden: state.off.has(line.id),
-    }));
+  const dataset = (props) => ({
+    borderWidth: 2,
+    borderDash: [],
+    borderJoinStyle: 'round',
+    borderCapStyle: 'round',
+    pointRadius: 0,
+    pointHoverRadius: 0,
+    pointStyle: 'line',
+    spanGaps: false,
+    order: 0,
+    hidden: false,
+    ...props,
+  });
+  /** One dataset per line, then the line of my tariff on top (never a chip, never hidden) when I have picked one. */
+  const datasetsFor = (value, mineValue) => [
+    ...state.lines.map((line) =>
+      dataset({
+        label: line.label,
+        lineId: line.id,
+        data: series((day) => value(line, day)),
+        borderColor: css(line.colour),
+        backgroundColor: css(line.colour),
+        borderDash: line.dash ?? [],
+        order: line.id === 'cap' ? 1 : 0,
+        hidden: state.off.has(line.id),
+      }),
+    ),
+    ...(mineCode()
+      ? [
+          dataset({
+            label: `You: ${shortName(mineCode())}`,
+            lineId: 'mine',
+            data: series(mineValue),
+            borderColor: css('--text'),
+            backgroundColor: css('--text'),
+            borderWidth: 3,
+            order: -1,
+          }),
+        ]
+      : []),
+  ];
 
   const charts = {};
   for (const p of PANELS)
@@ -492,26 +508,54 @@ async function main() {
     const first = firstSince(mineCode());
     return clampDay(state.mine.since && state.mine.since >= first ? state.mine.since : first);
   };
-  /** Side A when the viewer has no tariff: the reference version if sold here, else the latest launched version. */
-  /** The reference version, skipping `skip`: OE-FIX-18M-26-09-11 if sold here, else the latest launched version. */
-  const refCode = (skip = []) =>
-    isOffered(REF_VERSION) && !skip.includes(REF_VERSION)
-      ? REF_VERSION
-      : (meta.families
-          .flatMap(offered)
-          .filter((c) => !skip.includes(c))
-          .sort((a, b) => launchOf(b).localeCompare(launchOf(a)))
-          .at(0) ?? null);
-  /** Picks that would be fewer than two (my tariff is the Flexible version itself) take the reference as the second. */
-  const atLeastTwo = (picks) => (picks.length < 2 ? [...picks, refCode(picks)].filter(Boolean) : picks);
+  const flexFamily = () => meta.families.find((x) => x.kind === 'variable');
+  /** The Flexible version on sale now: the newest one offered in the region. */
   const flexCode = () => {
-    const f = meta.families.find((x) => x.kind === 'variable');
+    const f = flexFamily();
     return f ? (offered(f)[0] ?? null) : null;
   };
+  /** The exclusive end of my fixed term, or null for a variable tariff or none. */
+  const termEnd = () => {
+    const code = mineCode();
+    if (!code) return null;
+    const { family, version } = versionInfo.get(code);
+    return family.kind === 'fixed' ? addMonths(mineSince(), version.term) : null;
+  };
+  const mineEnded = () => termEnd() != null && termEnd() <= cutoff();
+  /** The comparison over a span is anchored on my tariff, else on the Flexible version on sale now. */
+  const anchor = () => mineCode() ?? flexCode();
+  /** Today's figures are anchored on my tariff while its term runs, else on the Flexible version on sale now. */
+  const baseline = () => (mineCode() && !mineEnded() ? mineCode() : flexCode());
+  /** My tariff and Flexible; when that is one tariff, the newest launched version as the second. */
   const resetComparison = () => {
-    const a = mineCode() ?? refCode();
-    state.picked = atLeastTwo([...new Set([a, flexCode()].filter(Boolean))]);
-    state.from = mineCode() ? mineSince() : a ? clampDay(launchOf(a)) : yesterday();
+    const a = anchor();
+    const picks = [...new Set([a, flexCode()].filter(Boolean))];
+    if (picks.length < 2) {
+      const newest = meta.families
+        .flatMap(offered)
+        .filter((c) => c !== a)
+        .sort((x, y) => launchOf(y).localeCompare(launchOf(x)))
+        .at(0);
+      if (newest) picks.push(newest);
+    }
+    state.picked = picks;
+    state.from = mineCode() ? mineSince() : yesterday();
+  };
+  /** The span's exclusive end: the end of my fixed term if it comes first (and after the date), else the cutoff. */
+  const spanEnd = () => {
+    const e = termEnd();
+    return e != null && e < cutoff() && state.from < e ? e : cutoff();
+  };
+  /** The row my tariff charges on `day` for `fuel`, or null outside my term (a variable one: since-date to cutoff). */
+  const mineRow = (fuel, day) => {
+    const code = mineCode();
+    if (day < mineSince()) return null;
+    const { family } = versionInfo.get(code);
+    const line = lineOf(code);
+    if (family.kind !== 'fixed') return day <= cutoff() ? (line.byDay[fuel].get(day) ?? null) : null;
+    if (day >= termEnd()) return null;
+    const own = line.file[fuel].versions[code]?.days ?? [];
+    return own.find((p) => p.day === day) ?? own.at(-1) ?? null; // a fix signed after launch keeps its last rate
   };
   const typeOf = (key) => {
     if (key === 'cap') return 'cap level';
@@ -532,14 +576,14 @@ async function main() {
     const file = lineOf(key).file[fuel];
     return file.versions[key] ? versionSeries(versionInfo.get(key).family.kind, file, key) : null;
   };
-  /** Cost from state.from to the cutoff over the viewer's fuels: {cost, days, unpriced (sorted days)}. */
+  /** Cost from state.from to the span's end over the viewer's fuels: {cost, days, unpriced (sorted days)}. */
   const costOf = (key) => {
     let cost = 0;
     let days = 0;
     const unpriced = new Set();
     for (const fuel of fuels()) {
       const series = seriesFor(key, fuel);
-      const r = costSince(series ?? capSeries({ days: [] }), state.from, cutoff(), fuel, kwh[fuel]); // none: no rates at all
+      const r = costSince(series ?? capSeries({ days: [] }), state.from, spanEnd(), fuel, kwh[fuel]); // none: no rates at all
       cost += r.cost;
       days = r.days;
       for (const d of r.unpriced) unpriced.add(d);
@@ -567,7 +611,7 @@ async function main() {
     if (runs.length > 1) return 'no rates on some days';
     const [[a, b]] = runs;
     const atStart = a === state.from;
-    const atEnd = b === addDays(cutoff(), -1);
+    const atEnd = b === addDays(spanEnd(), -1);
     if (atStart && atEnd) return 'no rates in this span';
     if (atStart) return `no rates before ${fmtDate(addDays(b, 1))}`;
     if (atEnd) return `no rates after ${fmtDate(addDays(a, -1))}`;
@@ -586,7 +630,7 @@ async function main() {
     let near = null;
     chart.data.datasets.forEach((ds, k) => {
       const y = ds.data[2 * i].y;
-      if (ds.lineId === 'cap' || y == null || !chart.isDatasetVisible(k)) return;
+      if (ds.lineId === 'cap' || ds.lineId === 'mine' || y == null || !chart.isDatasetVisible(k)) return;
       const d = Math.abs(chart.scales.y.getPixelForValue(y) - e.y);
       if (d <= HIT && (!near || d < near.d)) near = { d, id: ds.lineId };
     });
@@ -610,7 +654,10 @@ async function main() {
       .filter(Boolean);
   const drawMine = () => {
     const code = mineCode();
-    $('mine').replaceChildren(el('option', { value: '', textContent: 'none' }), ...optgroups([]));
+    $('mine').replaceChildren(
+      el('option', { value: '', textContent: 'no fixed contract (Flexible)' }),
+      ...optgroups([]),
+    );
     $('mine').value = code ?? '';
     const since = $('since');
     since.disabled = !code;
@@ -622,6 +669,16 @@ async function main() {
     }
     Object.assign(since, { min: firstSince(code), max: yesterday(), value: mineSince() });
     const { family, version } = versionInfo.get(code);
+    if (mineEnded()) {
+      const a = annualNow(flexCode());
+      line.replaceChildren(
+        term('fixed', 'Fixed term ended'),
+        ` ${fmtDate(addDays(termEnd(), -1))} · you are now on ${flexFamily().label}`,
+        ...(a == null ? [] : [` · about ${pounds(a)}/yr`]),
+        '.',
+      );
+      return;
+    }
     const a = annualNow(code);
     const about = a == null ? [] : [` · about ${pounds(a)}/yr`];
     if (family.kind === 'fixed') {
@@ -668,14 +725,26 @@ async function main() {
     const rows = state.picked.map(costOf);
     const ranked = rows.filter((r) => !r.unpriced.length).sort((a, b) => a.cost - b.cost);
     const unranked = rows.filter((r) => r.unpriced.length);
-    const today = dayOf(Date.now()) <= cutoff() ? 'today' : fmtDate(cutoff());
+    const end = spanEnd();
+    const days = `${rows[0].days} ${rows[0].days === 1 ? 'day' : 'days'}`;
+    const to =
+      end < cutoff()
+        ? `${fmtDate(addDays(end, -1))} (your term, ${days})`
+        : `${dayOf(Date.now()) <= cutoff() ? 'today' : fmtDate(cutoff())} (${days})`;
     $('lead').replaceChildren(
       'From ',
       el('b', { textContent: fmtDate(state.from) }),
-      ` to ${today} (${rows[0].days} ${rows[0].days === 1 ? 'day' : 'days'}), `,
+      ` to ${to}, `,
       term('compare', 'cheapest first'),
       ':',
     );
+    /** "−£n" or "+£n" of `v` against `base`; null when either is missing or they are within £1. */
+    const signed = (v, base) => {
+      if (v == null || base == null || Math.abs(v - base) < 1) return null;
+      return `${v < base ? '−' : '+'}${pounds(Math.abs(v - base))}`;
+    };
+    const a = anchor();
+    const base = ranked.find((r) => r.key === a)?.cost ?? null;
     const top = Math.max(...ranked.map((r) => r.cost), 0);
     const label = (key) =>
       el(
@@ -683,11 +752,11 @@ async function main() {
         { className: 'name' },
         `${shortName(key)} `,
         el('span', { className: 'type', textContent: `(${typeOf(key)})` }),
-        ...(key === mineCode() ? [' ', el('span', { className: 'you-tag', textContent: 'you' })] : []),
+        ...(key === a ? [' ', el('span', { className: 'you-tag', textContent: 'you' })] : []),
       );
     $('bars').replaceChildren(
       ...ranked.flatMap((r) => {
-        const d = Math.round(r.cost - ranked[0].cost);
+        const d = r.key === a ? null : signed(r.cost, base);
         return [
           label(r.key),
           el('span', {
@@ -699,7 +768,7 @@ async function main() {
             'span',
             { className: 'total', dataset: { key: r.key } },
             el('b', { textContent: `about ${pounds(r.cost)}` }),
-            ...(d >= 1 ? [' ', el('span', { className: 'delta', textContent: `+${pounds(d)}` })] : []),
+            ...(d ? [' ', el('span', { className: `delta ${d[0] === '−' ? 'down' : 'up'}`, textContent: d })] : []),
           ),
         ];
       }),
@@ -708,12 +777,23 @@ async function main() {
         el('span', { className: 'unranked', textContent: unpricedText(r), dataset: { key: r.key } }),
       ]),
     );
-    $('forward').textContent = `If today's rates stayed the same: ${state.picked
+    const now = baseline();
+    const nowBase = state.picked.includes(now) ? annualNow(now) : null;
+    const ended = mineEnded()
+      ? `Your fix ended ${fmtDate(addDays(termEnd(), -1))}; today's figures compare with ${flexFamily().label}. `
+      : '';
+    $('forward').textContent = `${ended}At today's rates: ${[
+      ...state.picked.filter((k) => k === now),
+      ...state.picked.filter((k) => k !== now),
+    ]
       .map((key) => {
-        const a = annualNow(key);
-        return a == null ? `${named(key)} no rates today` : `${named(key)} about ${pounds(a)}/yr`;
+        const y = annualNow(key);
+        const name = key === now ? `${named(key)} (you)` : named(key);
+        if (y == null) return `${name} no rates today`;
+        const d = key === now ? null : signed(y, nowBase);
+        return `${name} about ${pounds(y)}/yr${d ? ` (${d})` : ''}`;
       })
-      .join(' · ')}. A variable tariff's rates move with the price cap.`;
+      .join(' · ')}.`;
   };
 
   // ---- drawing: every control and input calls draw(); everything is recomputed from the current state ----
@@ -751,22 +831,6 @@ async function main() {
       }),
     );
   };
-  const drawNote = () => {
-    const tail = ['Dashed lines: ', term('cap', 'price cap'), ' changes; Flexible tracks the cap.'];
-    $('note').replaceChildren(
-      ...(state.view === 'rates'
-        ? ['Rates ', term('vat', 'inc VAT'), ' ', term('signup', 'if you signed up that day'), '. ', ...tail]
-        : [
-            term('annual', `Estimated ${perMonth() ? 'monthly' : 'yearly'} cost`),
-            ' at your usage, ',
-            term('standing', 'standing charge'),
-            ' included, ',
-            term('signup', 'if you signed up that day'),
-            '. Estimates, not bills. ',
-            ...tail,
-          ]),
-    );
-  };
   const drawTitles = () => {
     const noGas = kwh.gas == null;
     for (const p of PANELS) {
@@ -785,20 +849,27 @@ async function main() {
     view = range();
     for (const p of PANELS) {
       const c = charts[p.id];
-      c.data.datasets = datasetsFor((line, day) => rate(line, p.fuel, p.field, day));
+      c.data.datasets = datasetsFor(
+        (line, day) => rate(line, p.fuel, p.field, day),
+        (day) => mineRow(p.fuel, day)?.[p.field] ?? null,
+      );
       Object.assign(c.options.scales.x, { min: ms(view.from), max: ms(view.to) });
       c.update('none');
     }
     const a = charts.annual;
-    a.data.datasets = datasetsFor((line, day) => cost(line, day));
+    a.data.datasets = datasetsFor(
+      (line, day) => cost(line, day),
+      (day) => costOfRows((fuel) => mineRow(fuel, day)),
+    );
     Object.assign(a.options.scales.x, { min: ms(view.from), max: ms(view.to) });
     a.update('none');
     drawChips();
-    drawNote();
     drawTitles();
     drawMine();
     drawCompare();
     $('legend-hatch').hidden = !(view.to > addDays(view.lastDay, 1));
+    $('legend-mine').hidden = !mineCode();
+    $('mine-key').textContent = mineCode() ? `You: ${shortName(mineCode())}` : '';
     drawFooter();
   }
   function drawFooter() {
@@ -853,22 +924,18 @@ async function main() {
     kwh.electricity = read($('kwh-electricity')) ?? 0;
     kwh.gas = read($('kwh-gas'));
     remember(USAGE_KEY, JSON.stringify(kwh));
-    showUsageHint(true);
     draw();
   };
   $('kwh-electricity').addEventListener('input', onUsage);
   $('kwh-gas').addEventListener('input', onUsage);
 
-  // Choosing my tariff makes it side A, in place of the previous one, and starts the comparison at its since-date.
+  // Choosing my tariff resets the comparison onto it: it and Flexible, from its since-date.
   $('mine').addEventListener('change', () => {
     if (!state.lines) return;
     const code = $('mine').value || null;
-    const before = mineCode() ?? refCode();
     state.mine = code ? { code, since: null } : null;
     saveMine();
-    const a = code ?? refCode();
-    state.picked = atLeastTwo([a, ...state.picked.filter((k) => k !== a && k !== before)].filter(Boolean));
-    if (a) state.from = code ? mineSince() : clampDay(launchOf(a));
+    resetComparison();
     draw();
   });
   $('since').addEventListener('change', () => {
@@ -889,8 +956,6 @@ async function main() {
     if (!state.lines) return;
     if ($('from').value) setFrom($('from').value);
   });
-  const [hintHead, hintTail] = HINT.split("typical home's seasonal pattern");
-  $('compare-hint').replaceChildren(hintHead, term('profile', "typical home's seasonal pattern"), hintTail);
 
   // ---- deep links: #<productCode> opens that version's tooltip on its first day on sale; #YYYY-MM-DD opens the day's ----
   const openTooltip = (day, lineId) => {
@@ -954,6 +1019,7 @@ async function main() {
       $('load-error').hidden = false;
       $('chips').replaceChildren();
       $('legend-hatch').hidden = true;
+      $('legend-mine').hidden = true;
       showView();
       drawFooter();
       return;
