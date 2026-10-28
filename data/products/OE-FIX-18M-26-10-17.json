@@ -1,6 +1,6 @@
 {
   "available_from": "2026-10-17T00:00:00+01:00",
-  "available_to": null,
+  "available_to": "2026-10-27T00:00:00Z",
   "brand": "OCTOPUS_ENERGY",
   "code": "OE-FIX-18M-26-10-17",
   "description": "This fixed tariff locks in your unit rates and standing charges for 18 months.  This tariff has a £75 early exit fee per fuel.",
@@ -259,7 +259,7 @@
       }
     }
   },
-  "fetchedAt": "2026-10-21T10:40:15.870Z",
+  "fetchedAt": "2026-10-28T07:09:13.071Z",
   "four_rate_ev_electricity_tariffs": {},
   "full_name": "Octopus 18M Fixed October 2026 v5",
   "is_business": false,
