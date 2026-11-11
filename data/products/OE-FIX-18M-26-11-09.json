@@ -1,5 +1,5 @@
 {
-  "available_from": "2026-11-09T00:00:00Z",
+  "available_from": "2026-11-09T17:30:00Z",
   "available_to": null,
   "brand": "OCTOPUS_ENERGY",
   "code": "OE-FIX-18M-26-11-09",
@@ -259,7 +259,7 @@
       }
     }
   },
-  "fetchedAt": "2026-11-10T07:02:42.203Z",
+  "fetchedAt": "2026-11-11T07:02:31.298Z",
   "four_rate_ev_electricity_tariffs": {},
   "full_name": "Octopus 18M Fixed November 2026 v2",
   "is_business": false,
