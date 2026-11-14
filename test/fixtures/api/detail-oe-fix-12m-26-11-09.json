@@ -1,0 +1,1605 @@
+{
+ "code": "OE-FIX-12M-26-11-09",
+ "full_name": "Octopus 12M Fixed November 2026 v2",
+ "display_name": "Octopus 12M Fixed",
+ "description": "This fixed tariff locks in your unit rates and standing charges for 12 months.  This tariff has a £50 early exit fee per fuel.",
+ "is_variable": false,
+ "is_green": false,
+ "is_tracker": false,
+ "is_prepay": false,
+ "is_business": false,
+ "is_restricted": false,
+ "term": 12,
+ "available_from": "2026-11-09T17:30:00Z",
+ "available_to": null,
+ "tariffs_active_at": "2026-11-13T17:11:50.652574Z",
+ "single_register_electricity_tariffs": {
+  "_A": {
+   "direct_debit_monthly": {
+    "code": "E-1R-OE-FIX-12M-26-11-09-A",
+    "standing_charge_exc_vat": 50.5464,
+    "standing_charge_inc_vat": 50.5464,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-A/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-A/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 29.478,
+    "standard_unit_rate_inc_vat": 29.478
+   }
+  },
+  "_B": {
+   "direct_debit_monthly": {
+    "code": "E-1R-OE-FIX-12M-26-11-09-B",
+    "standing_charge_exc_vat": 50.2041,
+    "standing_charge_inc_vat": 50.2041,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-B/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-B/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 28.223,
+    "standard_unit_rate_inc_vat": 28.223
+   }
+  },
+  "_C": {
+   "direct_debit_monthly": {
+    "code": "E-1R-OE-FIX-12M-26-11-09-C",
+    "standing_charge_exc_vat": 41.3869,
+    "standing_charge_inc_vat": 41.3869,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-C/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-C/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 28.9754,
+    "standard_unit_rate_inc_vat": 28.9754
+   }
+  },
+  "_D": {
+   "direct_debit_monthly": {
+    "code": "E-1R-OE-FIX-12M-26-11-09-D",
+    "standing_charge_exc_vat": 67.2708,
+    "standing_charge_inc_vat": 67.2708,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-D/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-D/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 30.8976,
+    "standard_unit_rate_inc_vat": 30.8976
+   }
+  },
+  "_E": {
+   "direct_debit_monthly": {
+    "code": "E-1R-OE-FIX-12M-26-11-09-E",
+    "standing_charge_exc_vat": 56.2712,
+    "standing_charge_inc_vat": 56.2712,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-E/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-E/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 28.5602,
+    "standard_unit_rate_inc_vat": 28.5602
+   }
+  },
+  "_F": {
+   "direct_debit_monthly": {
+    "code": "E-1R-OE-FIX-12M-26-11-09-F",
+    "standing_charge_exc_vat": 60.8011,
+    "standing_charge_inc_vat": 60.8011,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-F/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-F/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 28.521,
+    "standard_unit_rate_inc_vat": 28.521
+   }
+  },
+  "_G": {
+   "direct_debit_monthly": {
+    "code": "E-1R-OE-FIX-12M-26-11-09-G",
+    "standing_charge_exc_vat": 44.2119,
+    "standing_charge_inc_vat": 44.2119,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-G/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-G/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 30.1722,
+    "standard_unit_rate_inc_vat": 30.1722
+   }
+  },
+  "_H": {
+   "direct_debit_monthly": {
+    "code": "E-1R-OE-FIX-12M-26-11-09-H",
+    "standing_charge_exc_vat": 46.3033,
+    "standing_charge_inc_vat": 46.3033,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-H/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-H/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 29.4233,
+    "standard_unit_rate_inc_vat": 29.4233
+   }
+  },
+  "_J": {
+   "direct_debit_monthly": {
+    "code": "E-1R-OE-FIX-12M-26-11-09-J",
+    "standing_charge_exc_vat": 51.0499,
+    "standing_charge_inc_vat": 51.0499,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-J/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-J/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 29.8262,
+    "standard_unit_rate_inc_vat": 29.8262
+   }
+  },
+  "_K": {
+   "direct_debit_monthly": {
+    "code": "E-1R-OE-FIX-12M-26-11-09-K",
+    "standing_charge_exc_vat": 54.4444,
+    "standing_charge_inc_vat": 54.4444,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-K/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-K/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 29.7137,
+    "standard_unit_rate_inc_vat": 29.7137
+   }
+  },
+  "_L": {
+   "direct_debit_monthly": {
+    "code": "E-1R-OE-FIX-12M-26-11-09-L",
+    "standing_charge_exc_vat": 54.4933,
+    "standing_charge_inc_vat": 54.4933,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-L/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-L/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 30.0486,
+    "standard_unit_rate_inc_vat": 30.0486
+   }
+  },
+  "_M": {
+   "direct_debit_monthly": {
+    "code": "E-1R-OE-FIX-12M-26-11-09-M",
+    "standing_charge_exc_vat": 60.8903,
+    "standing_charge_inc_vat": 60.8903,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-M/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-M/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 28.559,
+    "standard_unit_rate_inc_vat": 28.559
+   }
+  },
+  "_N": {
+   "direct_debit_monthly": {
+    "code": "E-1R-OE-FIX-12M-26-11-09-N",
+    "standing_charge_exc_vat": 60.686,
+    "standing_charge_inc_vat": 60.686,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-N/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-N/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 29.2732,
+    "standard_unit_rate_inc_vat": 29.2732
+   }
+  },
+  "_P": {
+   "direct_debit_monthly": {
+    "code": "E-1R-OE-FIX-12M-26-11-09-P",
+    "standing_charge_exc_vat": 54.1481,
+    "standing_charge_inc_vat": 54.1481,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-P/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-1R-OE-FIX-12M-26-11-09-P/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 29.7934,
+    "standard_unit_rate_inc_vat": 29.7934
+   }
+  }
+ },
+ "dual_register_electricity_tariffs": {
+  "_A": {
+   "direct_debit_monthly": {
+    "code": "E-2R-OE-FIX-12M-26-11-09-A",
+    "standing_charge_exc_vat": 50.7536,
+    "standing_charge_inc_vat": 50.7536,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-A/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-A/day-unit-rates/",
+      "method": "GET",
+      "rel": "day_unit_rates"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-A/night-unit-rates/",
+      "method": "GET",
+      "rel": "night_unit_rates"
+     }
+    ],
+    "day_unit_rate_exc_vat": 36.2713,
+    "day_unit_rate_inc_vat": 36.2713,
+    "night_unit_rate_exc_vat": 15.2146,
+    "night_unit_rate_inc_vat": 15.2146
+   }
+  },
+  "_B": {
+   "direct_debit_monthly": {
+    "code": "E-2R-OE-FIX-12M-26-11-09-B",
+    "standing_charge_exc_vat": 49.6489,
+    "standing_charge_inc_vat": 49.6489,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-B/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-B/day-unit-rates/",
+      "method": "GET",
+      "rel": "day_unit_rates"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-B/night-unit-rates/",
+      "method": "GET",
+      "rel": "night_unit_rates"
+     }
+    ],
+    "day_unit_rate_exc_vat": 34.4702,
+    "day_unit_rate_inc_vat": 34.4702,
+    "night_unit_rate_exc_vat": 15.3661,
+    "night_unit_rate_inc_vat": 15.3661
+   }
+  },
+  "_C": {
+   "direct_debit_monthly": {
+    "code": "E-2R-OE-FIX-12M-26-11-09-C",
+    "standing_charge_exc_vat": 40.9555,
+    "standing_charge_inc_vat": 40.9555,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-C/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-C/day-unit-rates/",
+      "method": "GET",
+      "rel": "day_unit_rates"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-C/night-unit-rates/",
+      "method": "GET",
+      "rel": "night_unit_rates"
+     }
+    ],
+    "day_unit_rate_exc_vat": 35.6614,
+    "day_unit_rate_inc_vat": 35.6614,
+    "night_unit_rate_exc_vat": 15.0671,
+    "night_unit_rate_inc_vat": 15.0671
+   }
+  },
+  "_D": {
+   "direct_debit_monthly": {
+    "code": "E-2R-OE-FIX-12M-26-11-09-D",
+    "standing_charge_exc_vat": 66.4538,
+    "standing_charge_inc_vat": 66.4538,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-D/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-D/day-unit-rates/",
+      "method": "GET",
+      "rel": "day_unit_rates"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-D/night-unit-rates/",
+      "method": "GET",
+      "rel": "night_unit_rates"
+     }
+    ],
+    "day_unit_rate_exc_vat": 37.4284,
+    "day_unit_rate_inc_vat": 37.4284,
+    "night_unit_rate_exc_vat": 16.3058,
+    "night_unit_rate_inc_vat": 16.3058
+   }
+  },
+  "_E": {
+   "direct_debit_monthly": {
+    "code": "E-2R-OE-FIX-12M-26-11-09-E",
+    "standing_charge_exc_vat": 55.9057,
+    "standing_charge_inc_vat": 55.9057,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-E/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-E/day-unit-rates/",
+      "method": "GET",
+      "rel": "day_unit_rates"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-E/night-unit-rates/",
+      "method": "GET",
+      "rel": "night_unit_rates"
+     }
+    ],
+    "day_unit_rate_exc_vat": 34.8752,
+    "day_unit_rate_inc_vat": 34.8752,
+    "night_unit_rate_exc_vat": 15.4849,
+    "night_unit_rate_inc_vat": 15.4849
+   }
+  },
+  "_F": {
+   "direct_debit_monthly": {
+    "code": "E-2R-OE-FIX-12M-26-11-09-F",
+    "standing_charge_exc_vat": 60.0192,
+    "standing_charge_inc_vat": 60.0192,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-F/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-F/day-unit-rates/",
+      "method": "GET",
+      "rel": "day_unit_rates"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-F/night-unit-rates/",
+      "method": "GET",
+      "rel": "night_unit_rates"
+     }
+    ],
+    "day_unit_rate_exc_vat": 34.6717,
+    "day_unit_rate_inc_vat": 34.6717,
+    "night_unit_rate_exc_vat": 15.0351,
+    "night_unit_rate_inc_vat": 15.0351
+   }
+  },
+  "_G": {
+   "direct_debit_monthly": {
+    "code": "E-2R-OE-FIX-12M-26-11-09-G",
+    "standing_charge_exc_vat": 43.4957,
+    "standing_charge_inc_vat": 43.4957,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-G/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-G/day-unit-rates/",
+      "method": "GET",
+      "rel": "day_unit_rates"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-G/night-unit-rates/",
+      "method": "GET",
+      "rel": "night_unit_rates"
+     }
+    ],
+    "day_unit_rate_exc_vat": 35.8158,
+    "day_unit_rate_inc_vat": 35.8158,
+    "night_unit_rate_exc_vat": 15.3336,
+    "night_unit_rate_inc_vat": 15.3336
+   }
+  },
+  "_H": {
+   "direct_debit_monthly": {
+    "code": "E-2R-OE-FIX-12M-26-11-09-H",
+    "standing_charge_exc_vat": 46.2688,
+    "standing_charge_inc_vat": 46.2688,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-H/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-H/day-unit-rates/",
+      "method": "GET",
+      "rel": "day_unit_rates"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-H/night-unit-rates/",
+      "method": "GET",
+      "rel": "night_unit_rates"
+     }
+    ],
+    "day_unit_rate_exc_vat": 36.1716,
+    "day_unit_rate_inc_vat": 36.1716,
+    "night_unit_rate_exc_vat": 15.0476,
+    "night_unit_rate_inc_vat": 15.0476
+   }
+  },
+  "_J": {
+   "direct_debit_monthly": {
+    "code": "E-2R-OE-FIX-12M-26-11-09-J",
+    "standing_charge_exc_vat": 51.326,
+    "standing_charge_inc_vat": 51.326,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-J/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-J/day-unit-rates/",
+      "method": "GET",
+      "rel": "day_unit_rates"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-J/night-unit-rates/",
+      "method": "GET",
+      "rel": "night_unit_rates"
+     }
+    ],
+    "day_unit_rate_exc_vat": 36.4843,
+    "day_unit_rate_inc_vat": 36.4843,
+    "night_unit_rate_exc_vat": 15.4443,
+    "night_unit_rate_inc_vat": 15.4443
+   }
+  },
+  "_K": {
+   "direct_debit_monthly": {
+    "code": "E-2R-OE-FIX-12M-26-11-09-K",
+    "standing_charge_exc_vat": 53.4346,
+    "standing_charge_inc_vat": 53.4346,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-K/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-K/day-unit-rates/",
+      "method": "GET",
+      "rel": "day_unit_rates"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-K/night-unit-rates/",
+      "method": "GET",
+      "rel": "night_unit_rates"
+     }
+    ],
+    "day_unit_rate_exc_vat": 36.1708,
+    "day_unit_rate_inc_vat": 36.1708,
+    "night_unit_rate_exc_vat": 15.6261,
+    "night_unit_rate_inc_vat": 15.6261
+   }
+  },
+  "_L": {
+   "direct_debit_monthly": {
+    "code": "E-2R-OE-FIX-12M-26-11-09-L",
+    "standing_charge_exc_vat": 54.8411,
+    "standing_charge_inc_vat": 54.8411,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-L/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-L/day-unit-rates/",
+      "method": "GET",
+      "rel": "day_unit_rates"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-L/night-unit-rates/",
+      "method": "GET",
+      "rel": "night_unit_rates"
+     }
+    ],
+    "day_unit_rate_exc_vat": 36.5419,
+    "day_unit_rate_inc_vat": 36.5419,
+    "night_unit_rate_exc_vat": 15.3098,
+    "night_unit_rate_inc_vat": 15.3098
+   }
+  },
+  "_M": {
+   "direct_debit_monthly": {
+    "code": "E-2R-OE-FIX-12M-26-11-09-M",
+    "standing_charge_exc_vat": 60.2113,
+    "standing_charge_inc_vat": 60.2113,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-M/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-M/day-unit-rates/",
+      "method": "GET",
+      "rel": "day_unit_rates"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-M/night-unit-rates/",
+      "method": "GET",
+      "rel": "night_unit_rates"
+     }
+    ],
+    "day_unit_rate_exc_vat": 34.5501,
+    "day_unit_rate_inc_vat": 34.5501,
+    "night_unit_rate_exc_vat": 15.9534,
+    "night_unit_rate_inc_vat": 15.9534
+   }
+  },
+  "_N": {
+   "direct_debit_monthly": {
+    "code": "E-2R-OE-FIX-12M-26-11-09-N",
+    "standing_charge_exc_vat": 61.2096,
+    "standing_charge_inc_vat": 61.2096,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-N/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-N/day-unit-rates/",
+      "method": "GET",
+      "rel": "day_unit_rates"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-N/night-unit-rates/",
+      "method": "GET",
+      "rel": "night_unit_rates"
+     }
+    ],
+    "day_unit_rate_exc_vat": 34.7903,
+    "day_unit_rate_inc_vat": 34.7903,
+    "night_unit_rate_exc_vat": 16.2187,
+    "night_unit_rate_inc_vat": 16.2187
+   }
+  },
+  "_P": {
+   "direct_debit_monthly": {
+    "code": "E-2R-OE-FIX-12M-26-11-09-P",
+    "standing_charge_exc_vat": 54.7082,
+    "standing_charge_inc_vat": 54.7082,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 5000,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-P/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-P/day-unit-rates/",
+      "method": "GET",
+      "rel": "day_unit_rates"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/electricity-tariffs/E-2R-OE-FIX-12M-26-11-09-P/night-unit-rates/",
+      "method": "GET",
+      "rel": "night_unit_rates"
+     }
+    ],
+    "day_unit_rate_exc_vat": 36.0758,
+    "day_unit_rate_inc_vat": 36.0758,
+    "night_unit_rate_exc_vat": 15.9669,
+    "night_unit_rate_inc_vat": 15.9669
+   }
+  }
+ },
+ "four_rate_ev_electricity_tariffs": {},
+ "single_register_gas_tariffs": {
+  "_A": {
+   "direct_debit_monthly": {
+    "code": "G-1R-OE-FIX-12M-26-11-09-A",
+    "standing_charge_exc_vat": 27.0292,
+    "standing_charge_inc_vat": 28.38066,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 4761,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-A/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-A/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 8.8733,
+    "standard_unit_rate_inc_vat": 9.316965
+   }
+  },
+  "_B": {
+   "direct_debit_monthly": {
+    "code": "G-1R-OE-FIX-12M-26-11-09-B",
+    "standing_charge_exc_vat": 27.1004,
+    "standing_charge_inc_vat": 28.45542,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 4761,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-B/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-B/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 8.8684,
+    "standard_unit_rate_inc_vat": 9.31182
+   }
+  },
+  "_C": {
+   "direct_debit_monthly": {
+    "code": "G-1R-OE-FIX-12M-26-11-09-C",
+    "standing_charge_exc_vat": 27.8484,
+    "standing_charge_inc_vat": 29.24082,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 4761,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-C/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-C/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 9.2831,
+    "standard_unit_rate_inc_vat": 9.747255
+   }
+  },
+  "_D": {
+   "direct_debit_monthly": {
+    "code": "G-1R-OE-FIX-12M-26-11-09-D",
+    "standing_charge_exc_vat": 27.7333,
+    "standing_charge_inc_vat": 29.119965,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 4761,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-D/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-D/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 9.1496,
+    "standard_unit_rate_inc_vat": 9.60708
+   }
+  },
+  "_E": {
+   "direct_debit_monthly": {
+    "code": "G-1R-OE-FIX-12M-26-11-09-E",
+    "standing_charge_exc_vat": 27.3799,
+    "standing_charge_inc_vat": 28.748895,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 4761,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-E/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-E/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 8.9573,
+    "standard_unit_rate_inc_vat": 9.405165
+   }
+  },
+  "_F": {
+   "direct_debit_monthly": {
+    "code": "G-1R-OE-FIX-12M-26-11-09-F",
+    "standing_charge_exc_vat": 27.462,
+    "standing_charge_inc_vat": 28.8351,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 4761,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-F/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-F/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 8.9862,
+    "standard_unit_rate_inc_vat": 9.43551
+   }
+  },
+  "_G": {
+   "direct_debit_monthly": {
+    "code": "G-1R-OE-FIX-12M-26-11-09-G",
+    "standing_charge_exc_vat": 27.4785,
+    "standing_charge_inc_vat": 28.852425,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 4761,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-G/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-G/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 8.9291,
+    "standard_unit_rate_inc_vat": 9.375555
+   }
+  },
+  "_H": {
+   "direct_debit_monthly": {
+    "code": "G-1R-OE-FIX-12M-26-11-09-H",
+    "standing_charge_exc_vat": 26.8566,
+    "standing_charge_inc_vat": 28.19943,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 4761,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-H/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-H/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 9.2537,
+    "standard_unit_rate_inc_vat": 9.716385
+   }
+  },
+  "_J": {
+   "direct_debit_monthly": {
+    "code": "G-1R-OE-FIX-12M-26-11-09-J",
+    "standing_charge_exc_vat": 26.9525,
+    "standing_charge_inc_vat": 28.300125,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 4761,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-J/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-J/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 9.126,
+    "standard_unit_rate_inc_vat": 9.5823
+   }
+  },
+  "_K": {
+   "direct_debit_monthly": {
+    "code": "G-1R-OE-FIX-12M-26-11-09-K",
+    "standing_charge_exc_vat": 27.6182,
+    "standing_charge_inc_vat": 28.99911,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 4761,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-K/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-K/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 9.1728,
+    "standard_unit_rate_inc_vat": 9.63144
+   }
+  },
+  "_L": {
+   "direct_debit_monthly": {
+    "code": "G-1R-OE-FIX-12M-26-11-09-L",
+    "standing_charge_exc_vat": 27.0045,
+    "standing_charge_inc_vat": 28.354725,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 4761,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-L/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-L/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 9.2265,
+    "standard_unit_rate_inc_vat": 9.687825
+   }
+  },
+  "_M": {
+   "direct_debit_monthly": {
+    "code": "G-1R-OE-FIX-12M-26-11-09-M",
+    "standing_charge_exc_vat": 27.4401,
+    "standing_charge_inc_vat": 28.812105,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 4761,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-M/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-M/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 9.0341,
+    "standard_unit_rate_inc_vat": 9.485805
+   }
+  },
+  "_N": {
+   "direct_debit_monthly": {
+    "code": "G-1R-OE-FIX-12M-26-11-09-N",
+    "standing_charge_exc_vat": 27.5497,
+    "standing_charge_inc_vat": 28.927185,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 4761,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-N/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-N/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 8.9489,
+    "standard_unit_rate_inc_vat": 9.396345
+   }
+  },
+  "_P": {
+   "direct_debit_monthly": {
+    "code": "G-1R-OE-FIX-12M-26-11-09-P",
+    "standing_charge_exc_vat": 27.5388,
+    "standing_charge_inc_vat": 28.91574,
+    "online_discount_exc_vat": 0,
+    "online_discount_inc_vat": 0,
+    "dual_fuel_discount_exc_vat": 0,
+    "dual_fuel_discount_inc_vat": 0,
+    "exit_fees_exc_vat": 4761,
+    "exit_fees_inc_vat": 5000,
+    "exit_fees_type": "FLAT",
+    "links": [
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-P/standing-charges/",
+      "method": "GET",
+      "rel": "standing_charges"
+     },
+     {
+      "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/gas-tariffs/G-1R-OE-FIX-12M-26-11-09-P/standard-unit-rates/",
+      "method": "GET",
+      "rel": "standard_unit_rates"
+     }
+    ],
+    "standard_unit_rate_exc_vat": 8.9496,
+    "standard_unit_rate_inc_vat": 9.39708
+   }
+  }
+ },
+ "sample_quotes": {
+  "_A": {
+   "direct_debit_monthly": {
+    "electricity_single_rate": {
+     "annual_cost_inc_vat": 92144,
+     "annual_cost_exc_vat": 92144
+    },
+    "electricity_dual_rate": {
+     "annual_cost_inc_vat": 111779,
+     "annual_cost_exc_vat": 111779
+    },
+    "dual_fuel_single_rate": {
+     "annual_cost_inc_vat": 191015,
+     "annual_cost_exc_vat": 186306
+    },
+    "dual_fuel_dual_rate": {
+     "annual_cost_inc_vat": 210649,
+     "annual_cost_exc_vat": 205941
+    }
+   }
+  },
+  "_B": {
+   "direct_debit_monthly": {
+    "electricity_single_rate": {
+     "annual_cost_inc_vat": 88882,
+     "annual_cost_exc_vat": 88882
+    },
+    "electricity_dual_rate": {
+     "annual_cost_inc_vat": 108040,
+     "annual_cost_exc_vat": 108040
+    },
+    "dual_fuel_single_rate": {
+     "annual_cost_inc_vat": 187731,
+     "annual_cost_exc_vat": 183023
+    },
+    "dual_fuel_dual_rate": {
+     "annual_cost_inc_vat": 206888,
+     "annual_cost_exc_vat": 202181
+    }
+   }
+  },
+  "_C": {
+   "direct_debit_monthly": {
+    "electricity_single_rate": {
+     "annual_cost_inc_vat": 87545,
+     "annual_cost_exc_vat": 87545
+    },
+    "electricity_dual_rate": {
+     "annual_cost_inc_vat": 106789,
+     "annual_cost_exc_vat": 106789
+    },
+    "dual_fuel_single_rate": {
+     "annual_cost_inc_vat": 190817,
+     "annual_cost_exc_vat": 185899
+    },
+    "dual_fuel_dual_rate": {
+     "annual_cost_inc_vat": 210061,
+     "annual_cost_exc_vat": 205143
+    }
+   }
+  },
+  "_D": {
+   "direct_debit_monthly": {
+    "electricity_single_rate": {
+     "annual_cost_inc_vat": 101798,
+     "annual_cost_exc_vat": 101798
+    },
+    "electricity_dual_rate": {
+     "annual_cost_inc_vat": 121349,
+     "annual_cost_exc_vat": 121349
+    },
+    "dual_fuel_single_rate": {
+     "annual_cost_inc_vat": 203694,
+     "annual_cost_exc_vat": 198842
+    },
+    "dual_fuel_dual_rate": {
+     "annual_cost_inc_vat": 223245,
+     "annual_cost_exc_vat": 218393
+    }
+   }
+  },
+  "_E": {
+   "direct_debit_monthly": {
+    "electricity_single_rate": {
+     "annual_cost_inc_vat": 91939,
+     "annual_cost_exc_vat": 91939
+    },
+    "electricity_dual_rate": {
+     "annual_cost_inc_vat": 111292,
+     "annual_cost_exc_vat": 111292
+    },
+    "dual_fuel_single_rate": {
+     "annual_cost_inc_vat": 191782,
+     "annual_cost_exc_vat": 187028
+    },
+    "dual_fuel_dual_rate": {
+     "annual_cost_inc_vat": 211134,
+     "annual_cost_exc_vat": 206380
+    }
+   }
+  },
+  "_F": {
+   "direct_debit_monthly": {
+    "electricity_single_rate": {
+     "annual_cost_inc_vat": 93495,
+     "annual_cost_exc_vat": 93495
+    },
+    "electricity_dual_rate": {
+     "annual_cost_inc_vat": 111750,
+     "annual_cost_exc_vat": 111750
+    },
+    "dual_fuel_single_rate": {
+     "annual_cost_inc_vat": 193657,
+     "annual_cost_exc_vat": 188887
+    },
+    "dual_fuel_dual_rate": {
+     "annual_cost_inc_vat": 211912,
+     "annual_cost_exc_vat": 207142
+    }
+   }
+  },
+  "_G": {
+   "direct_debit_monthly": {
+    "electricity_single_rate": {
+     "annual_cost_inc_vat": 91568,
+     "annual_cost_exc_vat": 91568
+    },
+    "electricity_dual_rate": {
+     "annual_cost_inc_vat": 108401,
+     "annual_cost_exc_vat": 108401
+    },
+    "dual_fuel_single_rate": {
+     "annual_cost_inc_vat": 191167,
+     "annual_cost_exc_vat": 186424
+    },
+    "dual_fuel_dual_rate": {
+     "annual_cost_inc_vat": 208000,
+     "annual_cost_exc_vat": 203257
+    }
+   }
+  },
+  "_H": {
+   "direct_debit_monthly": {
+    "electricity_single_rate": {
+     "annual_cost_inc_vat": 90459,
+     "annual_cost_exc_vat": 90459
+    },
+    "electricity_dual_rate": {
+     "annual_cost_inc_vat": 109706,
+     "annual_cost_exc_vat": 109706
+    },
+    "dual_fuel_single_rate": {
+     "annual_cost_inc_vat": 193057,
+     "annual_cost_exc_vat": 188172
+    },
+    "dual_fuel_dual_rate": {
+     "annual_cost_inc_vat": 212305,
+     "annual_cost_exc_vat": 207419
+    }
+   }
+  },
+  "_J": {
+   "direct_debit_monthly": {
+    "electricity_single_rate": {
+     "annual_cost_inc_vat": 93199,
+     "annual_cost_exc_vat": 93199
+    },
+    "electricity_dual_rate": {
+     "annual_cost_inc_vat": 112735,
+     "annual_cost_exc_vat": 112735
+    },
+    "dual_fuel_single_rate": {
+     "annual_cost_inc_vat": 194560,
+     "annual_cost_exc_vat": 189733
+    },
+    "dual_fuel_dual_rate": {
+     "annual_cost_inc_vat": 214097,
+     "annual_cost_exc_vat": 209270
+    }
+   }
+  },
+  "_K": {
+   "direct_debit_monthly": {
+    "electricity_single_rate": {
+     "annual_cost_inc_vat": 94156,
+     "annual_cost_exc_vat": 94156
+    },
+    "electricity_dual_rate": {
+     "annual_cost_inc_vat": 113147,
+     "annual_cost_exc_vat": 113147
+    },
+    "dual_fuel_single_rate": {
+     "annual_cost_inc_vat": 196240,
+     "annual_cost_exc_vat": 191379
+    },
+    "dual_fuel_dual_rate": {
+     "annual_cost_inc_vat": 215230,
+     "annual_cost_exc_vat": 210369
+    }
+   }
+  },
+  "_L": {
+   "direct_debit_monthly": {
+    "electricity_single_rate": {
+     "annual_cost_inc_vat": 95012,
+     "annual_cost_exc_vat": 95012
+    },
+    "electricity_dual_rate": {
+     "annual_cost_inc_vat": 113940,
+     "annual_cost_exc_vat": 113940
+    },
+    "dual_fuel_single_rate": {
+     "annual_cost_inc_vat": 197395,
+     "annual_cost_exc_vat": 192520
+    },
+    "dual_fuel_dual_rate": {
+     "annual_cost_inc_vat": 216324,
+     "annual_cost_exc_vat": 211448
+    }
+   }
+  },
+  "_M": {
+   "direct_debit_monthly": {
+    "electricity_single_rate": {
+     "annual_cost_inc_vat": 93622,
+     "annual_cost_exc_vat": 93622
+    },
+    "electricity_dual_rate": {
+     "annual_cost_inc_vat": 112891,
+     "annual_cost_exc_vat": 112891
+    },
+    "dual_fuel_single_rate": {
+     "annual_cost_inc_vat": 194254,
+     "annual_cost_exc_vat": 189462
+    },
+    "dual_fuel_dual_rate": {
+     "annual_cost_inc_vat": 213523,
+     "annual_cost_exc_vat": 208731
+    }
+   }
+  },
+  "_N": {
+   "direct_debit_monthly": {
+    "electricity_single_rate": {
+     "annual_cost_inc_vat": 95333,
+     "annual_cost_exc_vat": 95333
+    },
+    "electricity_dual_rate": {
+     "annual_cost_inc_vat": 114108,
+     "annual_cost_exc_vat": 114108
+    },
+    "dual_fuel_single_rate": {
+     "annual_cost_inc_vat": 195157,
+     "annual_cost_exc_vat": 190404
+    },
+    "dual_fuel_dual_rate": {
+     "annual_cost_inc_vat": 213932,
+     "annual_cost_exc_vat": 209178
+    }
+   }
+  },
+  "_P": {
+   "direct_debit_monthly": {
+    "electricity_single_rate": {
+     "annual_cost_inc_vat": 94248,
+     "annual_cost_exc_vat": 94248
+    },
+    "electricity_dual_rate": {
+     "annual_cost_inc_vat": 113911,
+     "annual_cost_exc_vat": 113911
+    },
+    "dual_fuel_single_rate": {
+     "annual_cost_inc_vat": 194074,
+     "annual_cost_exc_vat": 189320
+    },
+    "dual_fuel_dual_rate": {
+     "annual_cost_inc_vat": 213737,
+     "annual_cost_exc_vat": 208984
+    }
+   }
+  }
+ },
+ "sample_consumption": {
+  "electricity_single_rate": {
+   "electricity_standard": 2500
+  },
+  "electricity_dual_rate": {
+   "electricity_day": 1972,
+   "electricity_night": 1428
+  },
+  "dual_fuel_single_rate": {
+   "electricity_standard": 2500,
+   "gas_standard": 9500
+  },
+  "dual_fuel_dual_rate": {
+   "electricity_day": 1972,
+   "electricity_night": 1428,
+   "gas_standard": 9500
+  }
+ },
+ "links": [
+  {
+   "href": "https://api.oegb-kraken.energy/v1/products/OE-FIX-12M-26-11-09/",
+   "method": "GET",
+   "rel": "self"
+  }
+ ],
+ "brand": "OCTOPUS_ENERGY"
+}

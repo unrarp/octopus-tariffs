@@ -100,8 +100,9 @@ test('a four-rate EV tariff yields all five endpoints', () => {
   checkLinks(evDetail());
 });
 
-test('checkLinks accepts the live fixture and a different link order', () => {
+test('checkLinks accepts the live fixtures on either API host and a different link order', () => {
   checkLinks(detail());
+  checkLinks(JSON.parse(readFileSync(new URL('./fixtures/api/detail-oe-fix-12m-26-11-09.json', import.meta.url))));
   const d = detail();
   d.single_register_electricity_tariffs._C.direct_debit_monthly.links.reverse();
   checkLinks(d);
@@ -118,6 +119,10 @@ test('checkLinks throws naming the tariff on a rel mismatch or an href mismatch'
   const href = detail();
   href.single_register_electricity_tariffs._A.direct_debit_monthly.links[0].href += 'x';
   assert.throws(() => checkLinks(href), /E-1R-OE-FIX-18M-26-09-11-A/);
+  const host = detail();
+  const link = host.single_register_gas_tariffs._A.direct_debit_monthly.links[0];
+  link.href = link.href.replace('api.octopus.energy', 'api.example.com');
+  assert.throws(() => checkLinks(host), /G-1R-OE-FIX-18M-26-09-11-A/);
 });
 
 test('inTerm for a fixed product is true through the last day of the term, false after', () => {

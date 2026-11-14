@@ -1,6 +1,13 @@
 import { addMonths, ukDay } from './days.js';
 
 const BASE = 'https://api.octopus.energy/v1';
+/** API bases a live link may name for the same endpoint as BASE (seen: api.oegb-kraken.energy from 2026-11-13). */
+const HOSTS = [BASE, 'https://api.oegb-kraken.energy/v1'];
+/** The href on BASE when it is on a known host, else unchanged (so an unknown host still mismatches). */
+const onBase = (href) => {
+  const host = HOSTS.find((h) => href.startsWith(`${h}/`));
+  return host ? BASE + href.slice(host.length) : href;
+};
 /** Tariff map key -> fuel; the one table every module reads. */
 export const MAPS = {
   single_register_electricity_tariffs: 'electricity',
@@ -54,12 +61,12 @@ export function endpointsOf(detail, regions) {
   return all.filter((e) => !seen.has(`${e.tariffCode}/${e.rel}`) && seen.add(`${e.tariffCode}/${e.rel}`));
 }
 
-/** Throws, naming the tariff, unless every tariff's derived rels and hrefs equal its live `links` exactly. */
+/** Throws, naming the tariff, unless every tariff's derived rels and hrefs equal its live `links`, on any of HOSTS. */
 export function checkLinks(detail) {
   const keys = new Set(Object.keys(MAPS).flatMap((m) => Object.keys(detail[m] ?? {})));
   for (const t of tariffsOf(detail, keys)) {
     const derived = relsOf(t.tariff).map((rel) => [rel, endpoint(detail, t, rel).href]);
-    const live = (t.tariff.links ?? []).map((l) => [l.rel, l.href]);
+    const live = (t.tariff.links ?? []).map((l) => [l.rel, onBase(l.href)]);
     const sorted = (a) => JSON.stringify([...a].sort());
     if (sorted(derived) !== sorted(live)) {
       throw new Error(
