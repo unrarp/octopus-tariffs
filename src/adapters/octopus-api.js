@@ -2,6 +2,7 @@ import { RETRY, retry, sleep, spaced } from '../net.js';
 
 const RATE_LIMITED = Symbol('rate limited');
 
+// The routine environment's only allowed API host; see BASE in families.js before changing it.
 const BASE = 'https://api.octopus.energy/v1';
 
 /** GETs one URL as JSON through the shared network policy; a non-2xx response throws (and is retried). */

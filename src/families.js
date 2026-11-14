@@ -1,5 +1,7 @@
 import { addMonths, ukDay } from './days.js';
 
+// Rate fetches use BASE even when links name another host: the routine's environment allows only this API host
+// (README › Routine), so moving BASE needs that allowlist changed too, and only a routine run would catch it.
 const BASE = 'https://api.octopus.energy/v1';
 /** API bases a live link may name for the same endpoint as BASE (seen: api.oegb-kraken.energy from 2026-11-13). */
 const HOSTS = [BASE, 'https://api.oegb-kraken.energy/v1'];
