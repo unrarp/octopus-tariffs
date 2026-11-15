@@ -221,6 +221,56 @@ test('a chip hides its line on every chart and shows it again, the You chip incl
   }
 });
 
+test('the cap and a family off sale start switched off, after the chips on sale; a click switches one on', async ({
+  page,
+}) => {
+  await open(page);
+  const chips = () =>
+    page
+      .locator('#chips .chip')
+      .evaluateAll((cs) => cs.map((c) => `${c.dataset.line}:${c.getAttribute('aria-pressed')}`));
+  const drawn = (line) =>
+    page.evaluate(
+      ([ids, line]) =>
+        ids.map((id) => {
+          const c = __charts[id];
+          return c.isDatasetVisible(c.data.datasets.findIndex((d) => d.lineId === line));
+        }),
+      [CHARTS, line],
+    );
+  expect(await chips()).toEqual(['oe-fix-12m:true', 'flexible:true', 'cap:false', 'oe-fix-6m:false']);
+  expect(await drawn('cap')).toEqual([false, false, false, false, false]);
+  expect(await drawn('oe-fix-6m')).toEqual([false, false, false, false, false]);
+  expect(await drawn('flexible')).toEqual([true, true, true, true, true]);
+  await page.click('#chips .chip[data-line="cap"]');
+  expect(await drawn('cap')).toEqual([true, true, true, true, true]);
+  // with a tariff of mine its chip closes the first group, ahead of the ones that start off
+  await page.selectOption('#mine', 'OE-FIX-12M-26-01-15');
+  expect(await chips()).toEqual(['oe-fix-12m:true', 'flexible:true', 'mine:true', 'cap:true', 'oe-fix-6m:false']);
+  // where a family is off sale it starts off there too; the cap I switched on stays on
+  const loaded = page.waitForRequest((r) => r.url().endsWith('/data/_G/flexible.json'));
+  await page.selectOption('#region', '_G');
+  await loaded;
+  await expect(page.locator('.chip[data-line="oe-fix-12m"]')).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('.chip[data-line="cap"]')).toHaveAttribute('aria-pressed', 'true');
+});
+
+test('a line I switched off stays off where its family starts off, and on again where I switched it on', async ({
+  page,
+}) => {
+  await open(page);
+  const chip = page.locator('.chip[data-line="oe-fix-12m"]');
+  await chip.click(); // on sale here, so it started on: now off by my choice
+  await expect(chip).toHaveAttribute('aria-pressed', 'false');
+  const loaded = page.waitForRequest((r) => r.url().endsWith('/data/_G/flexible.json'));
+  await page.selectOption('#region', '_G'); // off sale in the North West, where it starts off
+  await loaded;
+  await expect(page.locator('.chip[data-line="oe-fix-12m"] small')).toHaveText('not on sale');
+  await expect(chip).toHaveAttribute('aria-pressed', 'false');
+  await chip.click();
+  await expect(chip).toHaveAttribute('aria-pressed', 'true');
+});
+
 test('hovering a chip emphasises its line on every chart: the others fade to 30% and revert on leave', async ({
   page,
 }) => {
@@ -279,10 +329,16 @@ test('#<productCode> opens that version’s tooltip on its first day on sale; #Y
   });
   await expect.poll(async () => (await tip(page)).title).toEqual(['1 Aug 2026']);
   expect((await tip(page)).body).toEqual([
-    'Ofgem price cap · 25.7 p/kWh',
     '12M May 2026 v1 · 29.4 p/kWh',
     'Flexible Octopus December 2025 v2 · 27.8 p/kWh',
   ]);
+  // a version of a family that starts switched off: the link switches its line on
+  await page.evaluate(() => {
+    location.hash = '#OE-FIX-6M-25-10-01';
+  });
+  await expect.poll(async () => (await tip(page)).title).toEqual(['1 Oct 2025']);
+  expect((await tip(page)).body).toHaveLength(1);
+  await expect(page.locator('.chip[data-line="oe-fix-6m"]')).toHaveAttribute('aria-pressed', 'true');
 });
 
 test('hovering a day on one rates panel shows that day’s tooltip on all four; moving out clears them', async ({
@@ -1082,7 +1138,7 @@ test('a fixed tariff of mine draws its since-date rate as a thin line before its
   expect(await daysOf(page, 'electricity-unit', 'Your rate')).toBeNull();
 });
 
-test('the legend keys the price cap changes always, and my tariff with a last chip once picked', async ({ page }) => {
+test('the legend keys the price cap changes always, and my tariff with a chip once picked', async ({ page }) => {
   await open(page);
   await expect(page.locator('#legend-cap')).toBeVisible();
   await expect(page.locator('#legend-cap a.term')).toHaveText('price cap change');
@@ -1090,7 +1146,6 @@ test('the legend keys the price cap changes always, and my tariff with a last ch
   const you = page.locator('#chips .chip[data-line="mine"]');
   await expect(you).toHaveCount(0);
   await page.selectOption('#mine', 'OE-FIX-12M-26-01-15');
-  await expect(page.locator('#chips .chip').last()).toHaveAttribute('data-line', 'mine');
   await expect(you.locator('b')).toHaveText(MINE);
   await expect(you.locator('small')).toHaveText(`about ${gbp(yearNow('OE-FIX-12M-26-01-15'))}/yr`);
   await expect(you).toHaveAttribute('aria-pressed', 'true');

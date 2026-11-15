@@ -12,13 +12,16 @@ serves `docs/`.
 ## What the site shows
 
 - **Rates** (default): stepped lines of electricity and gas unit rates and
-  standing charges per family, with the Ofgem price cap drawn under them.
+  standing charges per family; the Ofgem price cap is a line to switch on.
 - **Annual cost**: estimated £ per year or month at your usage, dual fuel or
   electricity only.
 - **Your tariff** ("I'm on", since a date): a thick "You" line on every chart at
   the rates it charges you over its fixed term.
 - **Chips** are the legend: each toggles its line on every chart, yours
-  included, and hovering one emphasises its line. With a tariff of yours each
+  included, and hovering one emphasises its line. The price cap and any family
+  with nothing on sale today start switched off and sit last; Flexible tracks
+  the cap to within its standing charge, and a family switches back on by
+  itself the day it returns to sale. With a tariff of yours each
   chip reads its £/yr difference from it. A fixed tariff of yours also draws
   the rate it started on as a thin line over the days before its term. Each y
   axis starts at zero.

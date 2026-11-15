@@ -109,7 +109,7 @@ async function main() {
     variable: ['Variable', 'Flexible Octopus: no term, no exit fee; rates move, usually with the price cap.'],
     annual: [
       'Estimated annual cost',
-      "A full year at that day's rates: unit rate × your kWh + standing charge × 365, per fuel, added up. Per month divides by 12. An empty gas field leaves gas out. An estimate, not a bill.",
+      "A full year at that day's rates: unit rate × your kWh + standing charge × 365, per fuel, added up. Per month divides by 12. An empty gas field leaves gas out. An estimate, not a bill. The legend shows it, so its figures differ from Compare tariffs, which runs day by day from your date with a seasonal pattern.",
     ],
     tdcv: [
       'Typical Domestic Consumption Values (TDCV)',
@@ -117,7 +117,7 @@ async function main() {
     ],
     cap: [
       'Price cap',
-      "Ofgem's cap on standard variable tariffs: the most a supplier may charge per kWh and per day, set per region each quarter. A limit on rates, not a tariff or an average bill. Entered by hand from Ofgem's published levels; the grey dashed line stops at the last period entered.",
+      "Ofgem's cap on standard variable tariffs: the most a supplier may charge per kWh and per day, set per region each quarter. A limit on rates, not a tariff or an average bill. Entered by hand from Ofgem's published levels; its grey dashed line, switched on in the legend, stops at the last period entered.",
     ],
     exitfee: [
       'Exit fee',
@@ -203,7 +203,7 @@ async function main() {
     view: 'rates',
     window: '12',
     per: 'year',
-    off: new Set(),
+    chosen: new Map(), // line id → off, for the chips I have clicked: see isOff
     region: null,
     shown: null,
     lines: null,
@@ -259,6 +259,22 @@ async function main() {
     return perMonth() ? total / 12 : total;
   };
   const cost = (line, day) => costOfRows((fuel) => line.byDay[fuel].get(day));
+  /**
+   * The cap and a family with nothing on sale today start switched off: Flexible tracks the cap to within its standing
+   * charge, and a withdrawn product is history, not a choice. The start is derived from today's data and only my own
+   * choices are stored, so a family I have not touched switches back on by itself the day it returns to sale.
+   */
+  const startsOff = (id) => {
+    if (id === 'mine') return false;
+    return (
+      id === 'cap' ||
+      cost(
+        state.lines.find((l) => l.id === id),
+        view.lastDay,
+      ) == null
+    );
+  };
+  const isOff = (id) => state.chosen.get(id) ?? startsOff(id);
   const perLabel = () => (perMonth() ? '/month' : '/yr');
 
   // ---- the x range: the right edge is the end of the data's last day ----
@@ -476,7 +492,7 @@ async function main() {
   // While a chip is hovered its line is drawn a pixel wider and every other line at 30% of its colour.
   const fade = (colour) => colour.replace(/^rgb\((.*)\)$/, 'rgba($1, 0.3)');
   const emphasised = (ds) => {
-    const focus = state.focus && !state.off.has(state.focus) ? state.focus : null;
+    const focus = state.focus && !isOff(state.focus) ? state.focus : null;
     ds.borderColor = focus && ds.lineId !== focus ? fade(ds.baseColour) : ds.baseColour;
     ds.borderWidth = ds.baseWidth + (focus && ds.lineId === focus ? 1 : 0);
     return ds;
@@ -518,7 +534,7 @@ async function main() {
           backgroundColor: css(line.colour),
           borderDash: line.dash ?? [],
           order: line.id === 'cap' ? 1 : 0,
-          hidden: state.off.has(line.id),
+          hidden: isOff(line.id),
         }),
       ),
       ...(mineCode()
@@ -535,7 +551,7 @@ async function main() {
                     backgroundColor: css('--text'),
                     borderWidth: 1,
                     order: -1,
-                    hidden: state.off.has('mine'),
+                    hidden: isOff('mine'),
                   }),
                 ]),
             dataset({
@@ -546,7 +562,7 @@ async function main() {
               backgroundColor: css('--text'),
               borderWidth: 3,
               order: -1,
-              hidden: state.off.has('mine'),
+              hidden: isOff('mine'),
             }),
           ]
         : []),
@@ -1177,11 +1193,10 @@ async function main() {
       el('b', { textContent: name }),
       el('small', { textContent: text, className: cls }),
     );
-    b.setAttribute('aria-pressed', String(!disabled && !state.off.has(id)));
+    b.setAttribute('aria-pressed', String(!disabled && !isOff(id)));
     if (disabled) return b;
     b.addEventListener('click', () => {
-      if (state.off.has(id)) state.off.delete(id);
-      else state.off.add(id);
+      state.chosen.set(id, !isOff(id));
       draw();
     });
     b.addEventListener('pointerenter', (e) => e.pointerType === 'mouse' && emphasise(id));
@@ -1192,17 +1207,22 @@ async function main() {
   };
   const drawChips = () => {
     const code = mineCode();
+    // the lines that start on, then mine, then the ones that start off: a click never moves a chip
+    const lineChips = (off) =>
+      state.lines
+        .filter((line) => startsOff(line.id) === off)
+        .map((line) => {
+          const text = chipText(line);
+          return chip(
+            line.id,
+            el('span', { className: `key${line.dash ? ' dash' : ''}`, style: `--c:${line.colour}` }),
+            line.kind === 'variable' ? `${line.label} (variable)` : line.label,
+            text ?? { text: `not sold in ${regionName(state.shown)}` },
+            text == null,
+          );
+        });
     $('chips').replaceChildren(
-      ...state.lines.map((line) => {
-        const text = chipText(line);
-        return chip(
-          line.id,
-          el('span', { className: `key${line.dash ? ' dash' : ''}`, style: `--c:${line.colour}` }),
-          line.kind === 'variable' ? `${line.label} (variable)` : line.label,
-          text ?? { text: `not sold in ${regionName(state.shown)}` },
-          text == null,
-        );
-      }),
+      ...lineChips(false),
       ...(code
         ? [
             chip('mine', el('span', { className: 'key', style: '--c:var(--text)' }), `You: ${shortName(code)}`, {
@@ -1210,6 +1230,7 @@ async function main() {
             }),
           ]
         : []),
+      ...lineChips(true),
     );
   };
   const drawTitles = () => {
@@ -1385,7 +1406,12 @@ async function main() {
     if (!line) return;
     const first =
       line.file.electricity.days.find((p) => p.version === h) ?? line.file.gas.days.find((p) => p.version === h);
-    if (first) openTooltip(first.day, line.id);
+    if (!first) return;
+    if (isOff(line.id)) {
+      state.chosen.set(line.id, false); // a link to a version switches its line on
+      draw();
+    }
+    openTooltip(first.day, line.id);
   };
   addEventListener('hashchange', fromHash);
 
