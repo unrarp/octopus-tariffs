@@ -122,6 +122,7 @@ function checkCapRow(r, i, regionKeys, failures) {
   for (const fuel of ['electricity', 'gas']) {
     for (const k of ['unit', 'standing']) {
       if (!isNum(r[fuel]?.[k])) failures.push(`${at}: ${fuel}.${k} is not a number`);
+      else if (r[fuel][k] <= 0) failures.push(`${at}: ${fuel}.${k} ${r[fuel][k]} is not above zero`);
     }
   }
   if (!isNum(r.typicalBill)) failures.push(`${at}: typicalBill is not a number`);
@@ -180,8 +181,46 @@ function checkSeries(file, label, fuels, codes, first, last, failures) {
   }
 }
 
+/** The day the Energy Price Guarantee ended: site/lib/compare.js's MIN_START, restated so this file stays free of site code. */
+const GUARANTEE_END = '2023-07-01';
+
+/** A built series' days for a fuel; none when the file is malformed, which checkSeries reports. */
+const daysOf = (file, fuel) => (Array.isArray(file?.[fuel]?.days) ? file[fuel].days : []);
+
+/**
+ * Warnings where a built cap series starts a period far from the variable tariff's rate that day. Since the Energy
+ * Price Guarantee ended (July 2023) the variable tariff has charged the cap's unit rate and a little under its standing
+ * charge, so a wider gap is most likely a mistyped cap.json row. A warning, not a failure: Octopus may one day price
+ * away from the cap, and that must not stop the daily routine.
+ */
+export function capDrift(cap, variable, label) {
+  const out = [];
+  for (const fuel of ['electricity', 'gas']) {
+    const theirs = new Map(daysOf(variable, fuel).map((d) => [d.day, d]));
+    let prev = null;
+    for (const d of daysOf(cap, fuel)) {
+      const starts = d.unit !== prev?.unit || d.standingCharge !== prev?.standingCharge;
+      prev = d;
+      const v = theirs.get(d.day);
+      if (!starts || d.day < GUARANTEE_END || !v) continue;
+      for (const [k, limit] of [
+        ['unit', 0.02],
+        ['standingCharge', 0.25],
+      ]) {
+        if (d[k] == null || v[k] == null) continue;
+        const gap = Math.abs(d[k] - v[k]) / v[k];
+        if (gap > limit)
+          out.push(
+            `${label}: ${fuel} ${k} ${d[k]} from ${d.day} is ${Math.round(gap * 100)}% from the variable tariff (${v[k]})`,
+          );
+      }
+    }
+  }
+  return out;
+}
+
 /** Failures for the build output under docsRoot when docs/data/families.json exists; `capFrom` is the first cap period's start, or null. */
-function checkBuild(docsRoot, config, capFrom, failures) {
+function checkBuild(docsRoot, config, capFrom, failures, warnings) {
   const path = join(docsRoot, 'data', 'families.json');
   if (!existsSync(path)) return;
   const built = JSON.parse(readFileSync(path, 'utf8'));
@@ -203,6 +242,7 @@ function checkBuild(docsRoot, config, capFrom, failures) {
   targets.push({ id: 'cap', fuels: ['electricity', 'gas'], versions: [], first: capFrom });
   for (const region of Object.keys(config.regions)) {
     if (!(region in built.regions)) failures.push(`docs/data/families.json: region ${region} is missing`);
+    const files = {};
     for (const family of targets) {
       const label = `docs/data/${region}/${family.id}.json`;
       let file;
@@ -213,7 +253,11 @@ function checkBuild(docsRoot, config, capFrom, failures) {
         continue;
       }
       checkSeries(file, label, family.fuels, new Set(family.versions.map((v) => v.code)), family.first, last, failures);
+      files[family.id] = file;
     }
+    const variable = (config.families ?? []).find((f) => f.kind === 'variable');
+    if (files.cap && files[variable?.id])
+      warnings.push(...capDrift(files.cap, files[variable.id], `docs/data/${region}/cap.json`));
   }
 }
 
@@ -295,7 +339,7 @@ export function validate({ root, dataRoot = join(root, 'data'), docsRoot = join(
       if (!sold.has(`${f.id}|${region}`)) warnings.push(`family ${f.id} has no stored tariff in region ${region}`);
     }
   }
-  checkBuild(docsRoot, config, capFrom, failures);
+  checkBuild(docsRoot, config, capFrom, failures, warnings);
   return { failures, warnings, capThrough };
 }
 

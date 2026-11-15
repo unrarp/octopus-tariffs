@@ -3,7 +3,7 @@ import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSyn
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { test } from 'node:test';
-import { KNOWN_SERIES, validate } from '../src/validate.js';
+import { capDrift, KNOWN_SERIES, validate } from '../src/validate.js';
 
 const FAMILY = (id, match) => ({ id, label: id, kind: 'fixed', match, series: 'stepped', fuels: ['electricity'] });
 const CONFIG = {
@@ -301,6 +301,50 @@ test('cap.json: a missing or non-array file fails', () => {
 test('cap.json: a region not in families.json fails', () => {
   const r = capRun((rows) => rows.map((x, i) => (i === 0 ? { ...x, region: '_Z' } : x)));
   assert.ok(has(r.failures, 'region "_Z" is not in families.json'), r.failures.join('\n'));
+});
+
+test('cap.json: a rate of zero or below fails', () => {
+  const r = capRun((rows) =>
+    rows.map((x, i) => (i === 0 ? { ...x, electricity: { ...x.electricity, unit: -21.53 } } : x)),
+  );
+  assert.ok(has(r.failures, 'electricity.unit -21.53 is not above zero'), r.failures.join('\n'));
+});
+
+test('capDrift warns where a cap period starts far from the variable tariff, from July 2023 on', () => {
+  const days = (rows) => rows.map(([day, unit, standingCharge]) => ({ day, unit, standingCharge }));
+  const variable = {
+    electricity: {
+      days: days([
+        ['2023-01-01', 34, 46],
+        ['2024-07-01', 22.59, 49.12],
+        ['2024-07-02', 22.59, 49.12],
+        ['2024-10-01', 25.01, 49.98],
+      ]),
+    },
+  };
+  const cap = (unit, standing) => ({
+    electricity: {
+      days: days([
+        ['2023-01-01', 67, 46],
+        ['2024-07-01', unit, standing],
+        ['2024-07-02', unit, standing],
+        ['2024-10-01', 25.01, 52.04],
+      ]),
+    },
+  });
+  assert.deepEqual(capDrift(cap(22.59, 51.19), variable, 'x'), []); // the Guarantee-era gap before July 2023 is not checked
+  assert.deepEqual(capDrift(cap(-22.61, 243.01), variable, 'x'), [
+    'x: electricity unit -22.61 from 2024-07-01 is 200% from the variable tariff (22.59)',
+    'x: electricity standingCharge 243.01 from 2024-07-01 is 395% from the variable tariff (49.12)',
+  ]);
+  // gas, and a standing charge alone past its wider limit
+  const gas = (standing) => ({ gas: { days: days([['2024-07-01', 5.4, standing]]) } });
+  assert.deepEqual(capDrift(gas(31.59), gas(29.9), 'x'), []);
+  assert.deepEqual(capDrift(gas(41.9), gas(29.9), 'x'), [
+    'x: gas standingCharge 41.9 from 2024-07-01 is 40% from the variable tariff (29.9)',
+  ]);
+  // a malformed series is checkSeries's failure to report: no drift, no throw
+  assert.deepEqual(capDrift({ electricity: { days: {} } }, { electricity: { days: {} } }, 'x'), []);
 });
 
 test('cap.json: wrong types and missing fields fail', () => {

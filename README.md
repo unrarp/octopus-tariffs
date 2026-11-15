@@ -68,7 +68,9 @@ products + rates + families.json + cap.json + src/vat.js
   publishes no machine-readable feed. Each quarter, when Ofgem announces the
   next cap, add one row per region (`from`, `to`, `region`, `electricity` and
   `gas` `unit`/`standing` exc VAT, `typicalBill`, `source`). Until a period is
-  entered the cap line stops at the last one and validation warns.
+  entered the cap line stops at the last one and validation warns. Validation
+  also fails a rate of zero or below, and warns when a period starts far from
+  Flexible's rate that day, the sign of a mistyped row.
 - **Comparisons start 2023-07-01.** The Energy Price Guarantee is not modelled,
   so earlier dates are not offered.
 - **Rate limit.** The API sits behind CloudFront, which answers HTTP 429 after

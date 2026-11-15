@@ -352,13 +352,19 @@ test('the day of generatedAt is the UK day', async () => {
 
 const validateOut = (docsRoot) => validate({ root: FIXTURE, docsRoot });
 
-test('the fixture and its build validate: only the cap and 6M region warnings', () => {
+test('the fixture and its build validate: only the cap, 6M region and cap-drift warnings', () => {
   const r = validateOut(out);
   assert.deepEqual(r.failures, []);
-  assert.deepEqual(r.warnings, [
-    'cap.json: region _G has no cap after 2026-09-30 (others run to 2026-12-31)',
-    'family oe-fix-6m has no stored tariff in region _G',
-  ]);
+  const drift = (w) => /^docs\/data\/_[CG]\/cap\.json: .* from the variable tariff/.test(w);
+  assert.deepEqual(
+    r.warnings.filter((w) => !drift(w)),
+    [
+      'cap.json: region _G has no cap after 2026-09-30 (others run to 2026-12-31)',
+      'family oe-fix-6m has no stored tariff in region _G',
+    ],
+  );
+  // the fixture's Flexible is priced apart from its cap, so the built cap periods warn in both regions
+  for (const region of ['_C', '_G']) assert.ok(r.warnings.some((w) => drift(w) && w.includes(`/${region}/`)));
 });
 
 /** Validates a copy of the build whose files `edit` has changed. */

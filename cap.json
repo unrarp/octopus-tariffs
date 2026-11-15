@@ -1564,8 +1564,8 @@
     "to": "2024-09-30",
     "region": "_G",
     "electricity": {
-      "unit": -21.53,
-      "standing": 231.44
+      "unit": 21.51,
+      "standing": 48.75
     },
     "gas": {
       "unit": 5.14,
