@@ -11,7 +11,13 @@ import { annualCost } from '../src/site/lib/cost.js';
 const ROOT = fileURLToPath(new URL('./fixtures/build', import.meta.url));
 const BUILT = new Date('2026-10-21T06:00:00.000Z'); // the fixture's collection time, the build's generatedAt
 const NOW = Date.parse('2026-10-21T12:00:00.000Z'); // the viewer's clock: the build's day
-const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json' };
+const TYPES = {
+  '.html': 'text/html',
+  '.js': 'text/javascript',
+  '.css': 'text/css',
+  '.json': 'application/json',
+  '.woff2': 'font/woff2',
+};
 const PREFIX = '/octopus-tariffs/';
 const IPINFO = 'https://ipinfo.io/json';
 const GSP = 'https://api.octopus.energy/v1/industry/grid-supply-points/**';
@@ -96,6 +102,7 @@ for (const [name, viewport] of [
       await expect(page.locator('#footer')).toHaveText(
         'Data: Octopus Energy public API · London · direct debit · prices inc VAT · updated 21 Oct 2026.',
       );
+      if (viewport.width < 720) await page.click('#you-summary'); // a phone folds the inputs behind their summary
       await page.selectOption('#mine', 'OE-FIX-12M-26-01-15'); // my tariff adds its lines last
       const withMine = await page.evaluate(() => __charts['electricity-unit'].data.datasets.map((d) => d.label));
       expect(withMine).toEqual([...lines, 'Your rate', MINE]);
@@ -110,6 +117,119 @@ for (const [name, viewport] of [
     });
   });
 }
+
+test.describe('phone 390x844: the compact layout', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test('the inputs fold to a one-line summary that opens them', async ({ page }) => {
+    await open(page);
+    const summary = page.locator('#you-summary');
+    await expect(summary).toHaveText(/^London · [\d,]+ \/ [\d,]+ kWh · FlexibleChange$/);
+    await expect(summary).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.locator('#you')).toBeHidden();
+    await summary.click();
+    await expect(summary).toHaveAttribute('aria-expanded', 'true');
+    await expect(summary).toContainText('Done');
+    await expect(page.locator('#you')).toBeVisible();
+    await page.selectOption('#mine', 'OE-FIX-12M-26-01-15');
+    await expect(summary).toContainText(`kWh · ${MINE.replace('You: ', '')}`);
+    await page.fill('#kwh-gas', '');
+    await expect(summary).toContainText('kWh, no gas · ');
+    await summary.click();
+    await expect(page.locator('#you')).toBeHidden();
+  });
+
+  test('legend entries that start off fold behind a count; the first chart starts in the top 60% of the screen', async ({
+    page,
+  }) => {
+    await open(page);
+    const more = page.locator('#chips-more');
+    await expect(more).toHaveText('2 more switched off');
+    await expect(page.locator('.chip[data-line="cap"]')).toBeHidden();
+    await expect(page.locator('.chip[data-line="oe-fix-6m"]')).toBeHidden();
+    const top = await page.evaluate(() => document.querySelector('#rates .chart').getBoundingClientRect().top);
+    expect(top).toBeLessThan(844 * 0.6);
+    // one I switch off myself stays in sight, greyed
+    await page.click('.chip[data-line="flexible"]');
+    await expect(page.locator('.chip[data-line="flexible"]')).toBeVisible();
+    await more.click();
+    await expect(more).toHaveText('fewer');
+    await expect(page.locator('.chip[data-line="cap"]')).toBeVisible();
+    await page.click('.chip[data-line="cap"]'); // switched on: it stays when the rest fold away
+    await more.click();
+    await expect(more).toHaveText('1 more switched off');
+    await expect(page.locator('.chip[data-line="cap"]')).toBeVisible();
+    await expect(page.locator('.chip[data-line="oe-fix-6m"]')).toBeHidden();
+    expect(await noOverflow(page)).toBe(true);
+  });
+});
+
+test('at desktop width the inputs and every legend entry show, with no summary or count', async ({ page }) => {
+  await open(page);
+  await expect(page.locator('#you-summary')).toBeHidden();
+  await expect(page.locator('#you')).toBeVisible();
+  await expect(page.locator('#chips-more')).toBeHidden();
+  await expect(page.locator('.chip[data-line="cap"]')).toBeVisible();
+});
+
+test('the page and its charts are set in the vendored typefaces', async ({ page }) => {
+  await open(page);
+  await page.evaluate(() => document.fonts.ready);
+  const loaded = await page.evaluate(() =>
+    [...document.fonts].filter((f) => f.status === 'loaded').map((f) => f.family),
+  );
+  expect(loaded.map((f) => f.replaceAll('"', '')).sort()).toEqual(['Newsreader', 'Public Sans']);
+  const family = (sel) => page.evaluate((s) => getComputedStyle(document.querySelector(s)).fontFamily, sel);
+  expect(await family('body')).toMatch(/^"?Public Sans/);
+  expect(await family('h1')).toMatch(/^"?Newsreader/);
+  expect(await page.evaluate(() => Chart.defaults.font.family)).toMatch(/^"Public Sans"/);
+});
+
+test('the charts are not drawn until the text face has loaded, so their labels are measured in it', async ({
+  page,
+}) => {
+  await page.route('**/vendor/fonts/public-sans.woff2', async (r) => {
+    await new Promise((done) => setTimeout(done, 1200));
+    await r.continue();
+  });
+  // the face's status at the moment the page reports ready (goto itself waits for the font, so asking later proves nothing)
+  await page.addInitScript(() => {
+    new MutationObserver(() => {
+      if (!document.body?.dataset.ready) return;
+      window.__faceAtReady ??= [...document.fonts].find((f) => f.family.includes('Public Sans')).status;
+    }).observe(document, { attributes: true, subtree: true, attributeFilter: ['data-ready'] });
+  });
+  await open(page);
+  expect(await page.evaluate(() => window.__faceAtReady)).toBe('loaded');
+});
+
+test('the theme button flips light and dark, repaints the charts, and is remembered until it matches the OS again', async ({
+  page,
+}) => {
+  await open(page); // the test browser's OS scheme is light
+  const btn = page.locator('#theme');
+  const paint = () =>
+    page.evaluate(() => ({
+      page: getComputedStyle(document.body).backgroundColor,
+      line: __charts['electricity-unit'].data.datasets.find((d) => d.lineId === 'flexible').borderColor,
+      stored: localStorage.getItem('octopus-tariffs:theme'),
+    }));
+  await expect(btn).toHaveAttribute('aria-label', 'Switch to dark theme');
+  const light = await paint();
+  expect(light.stored).toBeNull();
+  await btn.click();
+  await expect(btn).toHaveAttribute('aria-label', 'Switch to light theme');
+  const dark = await paint();
+  expect(dark.page).not.toBe(light.page);
+  expect(dark.line).not.toBe(light.line);
+  expect(dark.stored).toBe('dark');
+  await page.reload();
+  await page.waitForSelector('body[data-ready]', { state: 'attached' });
+  expect(await paint()).toEqual(dark);
+  await expect(btn).toHaveAttribute('aria-label', 'Switch to light theme');
+  await btn.click(); // back to what the OS asks for: nothing left to remember
+  expect(await paint()).toEqual(light);
+});
 
 test('the view control swaps the rates grid and the annual-cost chart; Per year | Per month only in Annual cost', async ({
   page,
@@ -348,6 +468,7 @@ test('hovering a day on one rates panel shows that day’s tooltip on all four; 
   await frames(page);
   const at = await page.evaluate(() => {
     const c = __charts['gas-unit'];
+    c.canvas.scrollIntoView({ block: 'center' }); // the second row of panels starts below the fold
     const box = c.canvas.getBoundingClientRect();
     return {
       x: box.left + c.scales.x.getPixelForValue(Date.parse('2026-08-01T12:00:00Z')),
@@ -953,6 +1074,7 @@ for (const [name, viewport] of [
     test.use({ viewport });
     test('the date inputs show the whole date', async ({ page }) => {
       await open(page);
+      if (viewport.width < 720) await page.click('#you-summary'); // a phone folds the inputs behind their summary
       await page.selectOption('#mine', 'OE-FIX-12M-26-01-15');
       await page.click('#cmode button[data-v="switch"]'); // the switch date shows only in "if I switch"
       expect(await noOverflow(page)).toBe(true);

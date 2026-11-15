@@ -1,5 +1,19 @@
+/* Two vendored typefaces (SIL Open Font License, latin subset): Public Sans for text and charts, Newsreader for the
+   headings. */
+@font-face {
+  font-family: "Public Sans";
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("./vendor/fonts/public-sans.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Newsreader";
+  font-weight: 600;
+  font-display: swap;
+  src: url("./vendor/fonts/newsreader-600.woff2") format("woff2");
+}
 /* Chrome and ink follow the dataviz reference tokens; every colour is a light-dark(light, dark) pair picked by the OS
-   scheme. app.js reads the ones the canvas paints through css(), so the charts follow the scheme too. */
+   scheme, or by the theme button, which sets color-scheme on the root. app.js reads the ones the canvas paints through css(), so the charts follow the scheme too. */
 :root {
   color-scheme: light dark;
   --page: light-dark(#f9f9f7, #0d0d0d);
@@ -32,10 +46,16 @@ body {
   background: var(--page);
   color: var(--text);
   font:
-    14px / 1.45 system-ui,
-    -apple-system,
-    "Segoe UI",
+    14px / 1.45 "Public Sans",
+    system-ui,
     sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+h1,
+h2 {
+  font-family: "Newsreader", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 a {
   color: var(--link);
@@ -50,9 +70,9 @@ button {
   cursor: pointer;
 }
 .wrap {
-  max-width: 1200px;
+  max-width: 1120px;
   margin: 0 auto;
-  padding: 20px 16px 40px;
+  padding: 32px 16px 40px;
 }
 .title-row {
   display: flex;
@@ -60,16 +80,24 @@ button {
   gap: 10px;
 }
 h1 {
-  font-size: 22px;
+  font-size: 34px;
+  line-height: 1.1;
   margin: 0;
 }
+.standfirst {
+  font-size: 17px;
+  line-height: 1.4;
+  color: var(--text-2);
+  margin: 8px 0 0;
+  max-width: 44em;
+}
 .head {
-  margin-bottom: 16px;
+  margin-bottom: 26px;
 }
 .btn {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: 2px;
   padding: 3px 10px;
   font-size: 12px;
   line-height: 1.5;
@@ -78,26 +106,34 @@ h1 {
 .btn:hover {
   color: var(--text);
 }
-.info {
-  margin-left: auto;
+.icon {
+  display: grid;
+  place-items: center;
   width: 30px;
   height: 30px;
   padding: 0;
-  border-radius: 50%;
   flex: none;
+}
+#theme {
+  margin-left: auto; /* the two buttons sit at the row's end */
+}
+.info {
   font:
     italic 600 14px / 1 Georgia,
     "Times New Roman",
     serif;
 }
 
-/* The You row: one bordered row at the top. */
+/* The You row: region, usage and tariff between two rules. A phone folds it behind .you-summary (see the media query). */
 .you {
-  padding: 12px 14px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--surface);
-  margin-bottom: 16px;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 26px;
+}
+.you-summary,
+.chips-more {
+  display: none;
 }
 .you-row,
 .compare-row {
@@ -122,8 +158,8 @@ h1 {
 .field input {
   padding: 5px 8px;
   border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--page);
+  border-radius: 2px;
+  background: none;
   color: var(--text);
   min-width: 0;
 }
@@ -138,31 +174,31 @@ h1 {
   color: var(--muted);
 }
 
-/* Controls in one row above the chips; segmented buttons, the pressed one in ink. */
+/* Controls in one row above the chips; each set is a row of words, the pressed one bold and underlined in ink. */
 .controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 12px;
-  margin-bottom: 10px;
+  gap: 8px 36px;
+  margin-bottom: 14px;
 }
 .seg {
   display: inline-flex;
+  gap: 16px;
   margin: 0;
   padding: 0;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--surface);
+  border: 0;
 }
 .seg button {
   border: 0;
-  background: transparent;
-  padding: 5px 11px;
+  border-bottom: 2px solid transparent;
+  background: none;
+  padding: 2px 0;
   color: var(--text-2);
 }
 .seg button[aria-pressed="true"] {
-  background: var(--text);
-  color: var(--surface);
+  color: var(--text);
+  font-weight: 700;
+  border-bottom-color: var(--text);
 }
 
 /* The chips are the legend: a line key in the family colour, the name, then its estimate at the viewer's usage. */
@@ -170,13 +206,13 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px 14px;
-  margin-bottom: 10px;
+  gap: 6px 24px;
+  margin-bottom: 22px;
 }
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px 24px;
   min-width: 0;
 }
 .legend .chips {
@@ -188,10 +224,9 @@ h1 {
   flex-wrap: wrap;
   gap: 2px 8px;
   max-width: 100%;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 4px 12px 4px 10px;
-  background: var(--surface);
+  border: 0;
+  padding: 2px 0;
+  background: none;
   color: var(--text);
   text-align: left;
 }
@@ -235,8 +270,8 @@ h1 {
 .chart {
   position: relative;
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 8px;
+  border-radius: 3px;
+  padding: 12px 14px;
   background: var(--surface);
   min-width: 0;
 }
@@ -249,21 +284,21 @@ h1 {
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  gap: 28px;
 }
 .panel-chart {
-  height: 260px;
+  height: 290px;
 }
 .panel-chart h3 {
   position: absolute;
-  top: 8px;
-  left: 12px;
-  right: 12px;
+  top: 12px;
+  left: 14px;
+  right: 14px;
   margin: 0;
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 600;
-  color: var(--text-2);
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 700;
+  color: var(--text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -274,7 +309,7 @@ h1 {
   text-align: center;
   color: var(--text-2);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 3px;
   background: var(--surface);
   margin: 0;
 }
@@ -285,7 +320,9 @@ a.term {
   text-underline-offset: 3px;
 }
 .footer {
-  margin-top: 24px;
+  margin-top: 44px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
   font-size: 13px;
   color: var(--muted);
 }
@@ -295,14 +332,12 @@ a.term {
 
 /* The comparison: picked chips, the add select and the date in one row; the running-cost chart, then a total per pick. */
 .compare {
-  margin-top: 22px;
-  padding: 14px 16px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--surface);
+  margin-top: 56px;
+  padding-top: 14px;
+  border-top: 3px solid var(--text);
 }
 .compare h2 {
-  font-size: 16px;
+  font-size: 24px;
   margin: 0 0 10px;
 }
 .compare-picked {
@@ -314,8 +349,8 @@ a.term {
 .compare-row select {
   padding: 5px 8px;
   border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--page);
+  border-radius: 2px;
+  background: none;
   color: var(--text);
   max-width: 100%;
   min-width: 0;
@@ -325,11 +360,12 @@ a.term {
   margin-left: 2px;
 }
 .lead {
-  font-size: 16px;
+  font-size: 15px;
+  color: var(--text-2);
   margin: 14px 0 8px;
 }
 .compare-chart {
-  height: 300px;
+  height: 380px;
   margin: 10px 0;
 }
 .totals {
@@ -373,7 +409,7 @@ a.term {
   margin: auto;
   padding: 0;
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 3px;
   background: var(--surface);
   color: var(--text);
   overflow: auto;
@@ -396,7 +432,7 @@ a.term {
   padding: 18px 0 10px;
 }
 .help h2 {
-  font-size: 16px;
+  font-size: 20px;
   margin: 0;
 }
 .help dl {
@@ -414,7 +450,7 @@ a.term {
   padding: 6px 10px;
   margin: 2px -10px 0;
   border-left: 3px solid transparent;
-  border-radius: 6px;
+  border-radius: 2px;
   scroll-margin-top: 60px;
 }
 .help dl > div.current {
@@ -424,10 +460,59 @@ a.term {
 
 @media (max-width: 719px) {
   .wrap {
-    padding: 12px 10px 32px;
+    padding: 16px 12px 32px;
   }
   h1 {
-    font-size: 19px;
+    font-size: 26px;
+  }
+  .standfirst {
+    display: none;
+  }
+  .head {
+    margin-bottom: 12px;
+  }
+  /* the inputs fold to one line that says what they hold; the legend entries that start off fold behind a count */
+  .you-summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 0;
+    border: 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: none;
+    text-align: left;
+    margin-bottom: 14px;
+  }
+  .you-summary .act {
+    color: var(--link);
+    text-decoration: underline;
+    flex: none;
+  }
+  .you:not(.open) {
+    display: none;
+  }
+  .you.open {
+    border-top: 0;
+    padding-top: 0;
+    margin-bottom: 14px;
+  }
+  .legend:not(.all) .chip.starts-off[aria-pressed="false"] {
+    display: none;
+  }
+  .chips-more {
+    display: inline;
+    border: 0;
+    padding: 2px 0;
+    background: none;
+    color: var(--link);
+    font-size: 13px;
+    text-decoration: underline;
+  }
+  .legend {
+    gap: 4px 14px;
+    margin-bottom: 14px;
   }
   .you-row,
   .compare-row {
@@ -450,9 +535,13 @@ a.term {
   }
   .grid {
     grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
   }
   .panel-chart {
-    height: 180px;
+    height: 220px;
+  }
+  .compare {
+    margin-top: 36px;
   }
   .annual-chart {
     height: 280px;

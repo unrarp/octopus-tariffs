@@ -227,9 +227,11 @@ test('the per-family CSV has the documented header, empty cells for null, and a 
   assert.equal(lines.at(-1), `2026-10-21,${F3},28,41.4,${F3},9.765,30.66`);
 });
 
-test('.nojekyll is written and the vendored chart library is copied to a non-default out', () => {
+test('.nojekyll is written and the vendored chart library and typefaces are copied to a non-default out', () => {
   assert.ok(existsSync(join(out, '.nojekyll')));
   assert.ok(existsSync(join(out, 'vendor', 'chart.umd.js')));
+  for (const f of ['public-sans.woff2', 'newsreader-600.woff2'])
+    assert.ok(existsSync(join(out, 'vendor', 'fonts', f)), f);
 });
 
 test('building twice gives identical output', async () => {

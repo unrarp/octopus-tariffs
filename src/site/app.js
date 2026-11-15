@@ -23,6 +23,9 @@ const WINDOWS = ['6', '12', '24', 'all']; // months back from the right edge, sm
 const REGION_KEY = 'octopus-tariffs:region';
 const USAGE_KEY = 'octopus-tariffs:usage';
 const MINE_KEY = 'octopus-tariffs:mine';
+const THEME_KEY = 'octopus-tariffs:theme'; // 'light' or 'dark' while it differs from the OS scheme; index.html applies it
+const FONT = getComputedStyle(document.body).fontFamily; // app.css's text face: the canvas cannot inherit it
+Chart.defaults.font.family = FONT;
 const PANELS = [
   { id: 'electricity-unit', fuel: 'electricity', field: 'unit', unit: 'p/kWh' },
   { id: 'electricity-standing', fuel: 'electricity', field: 'standingCharge', unit: 'p/day' },
@@ -63,6 +66,11 @@ const remember = (key, value) => {
     localStorage.setItem(key, value);
   } catch {}
 };
+const forget = (key) => {
+  try {
+    localStorage.removeItem(key);
+  } catch {}
+};
 
 // Days are UTC calendar dates on the axis; the build already dated every rate by its UK day.
 const ms = (day) => Date.parse(`${day}T00:00:00Z`);
@@ -81,7 +89,14 @@ const pence = (v) => v.toFixed(v < 10 ? 2 : 1);
 
 async function main() {
   document.body.append(ink);
+  // Chart.js caches label widths per font string, so the charts wait for the text face (two seconds at most) and never
+  // measure in the fallback.
+  const face = Promise.race([
+    document.fonts.load(`12px ${FONT}`).catch(() => {}),
+    new Promise((r) => setTimeout(r, 2000)),
+  ]);
   const meta = await get('./data/families.json');
+  await face;
   if (meta.families.length > PALETTE.length)
     throw new Error(
       `families.json lists ${meta.families.length} families; PALETTE has ${PALETTE.length} validated colours`,
@@ -187,6 +202,39 @@ async function main() {
   const kwh = stored ? { electricity: stored.electricity, gas: stored.gas } : { ...tdcv };
   $('kwh-electricity').value = kwh.electricity ?? '';
   $('kwh-gas').value = kwh.gas ?? '';
+  // A phone shows the summary in place of the inputs (app.css); the button opens and closes them.
+  $('you-summary').addEventListener('click', () => {
+    const open = $('you').classList.toggle('open');
+    $('you-summary').setAttribute('aria-expanded', String(open));
+    $('you-summary-act').textContent = open ? 'Done' : 'Change';
+  });
+  $('chips-more').addEventListener('click', () => {
+    document.querySelector('.legend').classList.toggle('all');
+    drawChips();
+  });
+
+  // ---- theme: the OS scheme unless the button picked the other one; a pick that matches the OS is forgotten ----
+  const osDark = matchMedia('(prefers-color-scheme: dark)');
+  const root = document.documentElement;
+  const isDark = () => (root.style.colorScheme ? root.style.colorScheme === 'dark' : osDark.matches);
+  const drawTheme = () => {
+    const label = `Switch to ${isDark() ? 'light' : 'dark'} theme`;
+    $('theme').title = label;
+    $('theme').setAttribute('aria-label', label);
+  };
+  $('theme').addEventListener('click', () => {
+    const next = isDark() ? 'light' : 'dark';
+    if ((next === 'dark') === osDark.matches) {
+      root.style.colorScheme = '';
+      forget(THEME_KEY);
+    } else {
+      root.style.colorScheme = next;
+      remember(THEME_KEY, next);
+    }
+    drawTheme();
+    draw();
+  });
+  drawTheme();
   const fuels = () => (kwh.gas == null ? ['electricity'] : ['electricity', 'gas']);
 
   // region: the one selected; shown: the one whose lines are loaded (they differ while a fetch is in flight or failed)
@@ -335,7 +383,7 @@ async function main() {
         ctx.stroke();
         if (chart.$compareLabel) {
           ctx.fillStyle = css('--text-2');
-          ctx.font = '11px system-ui, sans-serif';
+          ctx.font = `11px ${FONT}`;
           ctx.textBaseline = 'bottom'; // in the top padding, above the plot, so it never sits on a line
           const w = ctx.measureText('compare from').width;
           ctx.fillText('compare from', fx + 4 + w > a.right ? fx - 4 - w : fx + 4, a.top - 2);
@@ -594,7 +642,7 @@ async function main() {
       ctx.lineWidth = 1;
       ctx.strokeStyle = css('--text-2');
       ctx.fillStyle = css('--text-2');
-      ctx.font = '11px system-ui, sans-serif';
+      ctx.font = `11px ${FONT}`;
       ctx.textBaseline = 'bottom'; // in the top padding, above the plot, as "compare from" is
       ctx.setLineDash([4, 4]);
       const vertical = (day, label) => {
@@ -1213,13 +1261,15 @@ async function main() {
         .filter((line) => startsOff(line.id) === off)
         .map((line) => {
           const text = chipText(line);
-          return chip(
+          const b = chip(
             line.id,
             el('span', { className: `key${line.dash ? ' dash' : ''}`, style: `--c:${line.colour}` }),
             line.kind === 'variable' ? `${line.label} (variable)` : line.label,
             text ?? { text: `not sold in ${regionName(state.shown)}` },
             text == null,
           );
+          b.classList.toggle('starts-off', off);
+          return b;
         });
     $('chips').replaceChildren(
       ...lineChips(false),
@@ -1232,6 +1282,12 @@ async function main() {
         : []),
       ...lineChips(true),
     );
+    // a phone folds the chips that start off and are still off behind this count (app.css)
+    const all = document.querySelector('.legend').classList.contains('all');
+    const folded = $('chips').querySelectorAll('.starts-off[aria-pressed="false"]').length;
+    $('chips-more').hidden = !folded;
+    $('chips-more').textContent = all ? 'fewer' : `${folded} more switched off`;
+    $('chips-more').setAttribute('aria-expanded', String(all));
   };
   const drawTitles = () => {
     const noGas = kwh.gas == null;
@@ -1245,6 +1301,13 @@ async function main() {
         ...(p.fuel === 'gas' && noGas ? [' · no gas supply'] : []),
       );
     }
+  };
+  /** The phone's one-line summary of the inputs: region, usage, my tariff. */
+  const drawSummary = () => {
+    const n = (v) => v.toLocaleString('en-GB');
+    const usage = kwh.gas == null ? `${n(kwh.electricity)} kWh, no gas` : `${n(kwh.electricity)} / ${n(kwh.gas)} kWh`;
+    $('you-summary-text').textContent =
+      `${regionName(state.shown)} · ${usage} · ${mineCode() ? shortName(mineCode()) : 'Flexible'}`;
   };
   function draw() {
     if (!state.lines) return;
@@ -1267,6 +1330,7 @@ async function main() {
     a.update('none');
     drawChips();
     drawTitles();
+    drawSummary();
     drawMine();
     drawCompare();
     drawFooter();
@@ -1471,7 +1535,10 @@ async function main() {
       history.replaceState(null, '', location.pathname + location.hash);
     await load(select.value);
   });
-  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+  osDark.addEventListener('change', () => {
+    drawTheme();
+    draw();
+  });
   await load(pick);
   fromHash();
   document.body.dataset.ready = 'true'; // tests wait for it

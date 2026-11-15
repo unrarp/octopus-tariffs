@@ -4,18 +4,31 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Octopus Energy tariffs over time</title>
-<link rel="stylesheet" href="./app.css?v=549da37f">
+<link rel="preload" href="./vendor/fonts/public-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./vendor/fonts/newsreader-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./app.css?v=0069444d">
+<!-- A theme picked with the button applies before first paint; app.js owns the button and the stored value. -->
+<script>
+try {
+  const t = localStorage.getItem('octopus-tariffs:theme');
+  if (t === 'light' || t === 'dark') document.documentElement.style.colorScheme = t;
+} catch {}
+</script>
 </head>
 <body>
 <main class="wrap">
   <header class="head">
     <div class="title-row">
       <h1>Octopus Energy tariffs over time</h1>
-      <button id="info" class="btn info" type="button" title="How to read this page" aria-label="How to read this page">i</button>
+      <button id="theme" class="btn icon" type="button"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/></svg></button>
+      <button id="info" class="btn icon info" type="button" title="How to read this page" aria-label="How to read this page">i</button>
     </div>
+    <p class="standfirst">What each Octopus tariff has charged, day by day, against the one you are on.</p>
   </header>
 
-  <section class="you" aria-label="Your region, usage and tariff">
+  <!-- On a phone the inputs fold behind this one-line summary of them. -->
+  <button id="you-summary" class="you-summary" type="button" aria-expanded="false" aria-controls="you"><span id="you-summary-text"></span><span id="you-summary-act" class="act">Change</span></button>
+  <section id="you" class="you" aria-label="Your region, usage and tariff">
     <div class="you-row">
       <label class="field">Region <select id="region"></select></label>
       <label class="field">Electricity <input id="kwh-electricity" type="number" min="0" step="100" inputmode="numeric"> kWh/yr</label>
@@ -42,6 +55,7 @@
   <div class="legend">
     <div id="chips" class="chips"></div>
     <span id="legend-cap" class="legend-item"><span class="sw marker"></span><span id="cap-term"></span></span>
+    <button id="chips-more" class="chips-more" type="button" aria-expanded="false" hidden></button>
   </div>
 
   <div id="chart-area">
@@ -84,6 +98,6 @@
   </div>
 </dialog>
 <script src="./vendor/chart.umd.js?v=ecc3cd1e"></script>
-<script type="module" src="./app.js?v=58762770"></script>
+<script type="module" src="./app.js?v=06ef8181"></script>
 </body>
 </html>

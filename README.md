@@ -27,6 +27,11 @@ serves `docs/`.
   axis starts at zero.
   Tooltips name the version on sale that day, with units, and hovering a day on
   one rates panel shows that day on all four.
+- **Layout**: light or dark follows the OS until the theme button picks the
+  other, remembered in the browser. A phone folds the inputs behind a one-line
+  summary and the legend entries that start off behind a count. Text is set in
+  Public Sans and headings in Newsreader, both vendored under
+  `docs/vendor/fonts/` with their Open Font License.
 - **Compare tariffs**: a running-cost chart of the tariffs you pick (to start
   with: yours, Flexible and each fixed family's version on sale today), from a
   date: solid to today at the rates each would have charged, then dashed for

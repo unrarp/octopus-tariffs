@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, posix, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { readCsv } from './csv.js';
@@ -138,10 +138,9 @@ function buildSite({ site, out }) {
   copy('app.css');
   const libDir = join(site, 'lib');
   for (const n of existsSync(libDir) ? readdirSync(libDir).filter((x) => x.endsWith('.js')) : []) copy(`lib/${n}`);
-  if (resolve(out) !== resolve(REPO, 'docs') && existsSync(join(REPO, 'docs', 'vendor', 'chart.umd.js'))) {
-    mkdirSync(join(out, 'vendor'), { recursive: true });
-    copyFileSync(join(REPO, 'docs', 'vendor', 'chart.umd.js'), join(out, 'vendor', 'chart.umd.js'));
-  }
+  // vendor/ (the chart library and the typefaces) is kept by hand under docs/; any other out gets a copy
+  if (resolve(out) !== resolve(REPO, 'docs') && existsSync(join(REPO, 'docs', 'vendor')))
+    cpSync(join(REPO, 'docs', 'vendor'), join(out, 'vendor'), { recursive: true });
   const hashes = new Map();
   for (const f of STAMPED) {
     if (!existsSync(join(site, f))) continue;
