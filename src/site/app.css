@@ -354,10 +354,12 @@ a.term {
 .totals .unranked {
   color: var(--muted);
 }
-.totals .delta.down {
+.totals .delta.down,
+.chip .delta.down {
   color: var(--good);
 }
-.totals .delta.up {
+.totals .delta.up,
+.chip .delta.up {
   color: var(--bad);
 }
 .totals .you-tag {

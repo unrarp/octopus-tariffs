@@ -3,17 +3,20 @@ import { annualCost } from './lib/cost.js?v=c82eec7e';
 
 // The family line colours, slot n going to the n-th family in families.json (categorical: fixed order, never cycled, so
 // a family keeps its colour when another is added after it). Each slot is [light, dark]: the dataviz reference palette's
-// blue, green, violet, orange in its light and dark steps. Validated with the dataviz skill's validate_palette.js on
-// 2026-10-21 against the chart surfaces in app.css: `"#2a78d6,#008300,#6250d6,#eb6834" --mode light --surface "#fcfcfb"`
-// and `"#3987e5,#008300,#9085e9,#d95926" --mode dark --surface "#1a1a19"`: every check PASS in both, no WARN (worst
-// adjacent CVD ΔE 26.5 light / 26.0 dark, normal-vision 29.0 / 27.0, all >= 3:1 on the surface). The reference's default
-// first four (blue, orange, aqua, yellow) WARN on light contrast. Changing a colour, the order or the count: re-run both
-// commands and keep only an order that passes both. The cap is never a categorical hue: grey and dashed (--cap in app.css).
+// blue, green, violet, orange, aqua in its light and dark steps. Validated with the dataviz skill's validate_palette.js on
+// 2026-11-15 against the chart surfaces in app.css: `"#2a78d6,#008300,#6250d6,#eb6834,#1baf7a" --mode light --surface
+// "#fcfcfb"` and `"#3987e5,#008300,#9085e9,#d95926,#199e70" --mode dark --surface "#1a1a19"`: every check PASS in both
+// (worst adjacent CVD ΔE 9.2 light / 9.4 dark, normal-vision 27.6 / 26.5). Slot 5, aqua, WARNs on light contrast (2.74:1
+// on the surface; its legend chip is the relief) and sits near slot 2's green in dark (normal-vision ΔE 11.9, not an
+// adjacent pair). As a fifth, magenta and yellow FAIL the normal-vision floor against orange. Changing a colour, the
+// order or the count: re-run both commands and keep only an order that passes both. The cap is never a categorical hue:
+// grey and dashed (--cap in app.css).
 const PALETTE = [
   ['#2a78d6', '#3987e5'],
   ['#008300', '#008300'],
   ['#6250d6', '#9085e9'],
   ['#eb6834', '#d95926'],
+  ['#1baf7a', '#199e70'],
 ];
 const DAY = 86_400_000;
 const WINDOWS = ['6', '12', '24', 'all']; // months back from the right edge, smallest first
@@ -207,7 +210,9 @@ async function main() {
     mine: storedMine,
     picked: [],
     from: null,
-    cmode: 'paid', // the comparison chart: £ paid, vs yours, or if I switch
+    // the comparison chart: £ paid, vs yours, or if I switch. It opens on vs yours: at a year's scale the running
+    // totals of two tariffs sit on one another, and the difference is the question.
+    cmode: 'vs',
     switchOn: null, // the day "if I switch" switches: in [cutoff, compareEnd()), the cutoff on region load
     focus: null, // the line whose chip is hovered: drawn over the others, faded
   };
@@ -398,7 +403,7 @@ async function main() {
    *  for a family day with no version. */
   const tipName = (ds, i) => {
     if (ds.lineId === 'cap') return 'Ofgem price cap';
-    if (ds.lineId === 'mine') return `You · ${shortName(mineCode())}`;
+    if (ds.lineId === 'mine') return ds.ref ? 'Your rate' : `You · ${shortName(mineCode())}`;
     const line = state.lines.find((l) => l.id === ds.lineId);
     const code = line.byDay.electricity.get(view.days[i])?.version ?? line.byDay.gas.get(view.days[i])?.version;
     return code ? shortName(code) : null; // the version name carries the family: "12M October 2026 v6"
@@ -497,7 +502,11 @@ async function main() {
     hidden: false,
     ...props,
   });
-  /** One dataset per line, then the line of my tariff on top when I have picked one; each chip hides its line. */
+  /**
+   * One dataset per line, then the line of my tariff on top when I have picked one; each chip hides its line. A fixed
+   * tariff of mine also draws the rate it started on as a thin line over the days before its term, so the charts
+   * show when the other lines were below the rate I locked.
+   */
   const datasetsFor = (value, mineValue) =>
     [
       ...state.lines.map((line) =>
@@ -514,6 +523,21 @@ async function main() {
       ),
       ...(mineCode()
         ? [
+            ...(termEnd() == null
+              ? []
+              : [
+                  dataset({
+                    label: 'Your rate',
+                    lineId: 'mine',
+                    ref: true,
+                    data: series((day) => (day < mineSince() ? mineValue(mineSince()) : null)),
+                    borderColor: css('--text'),
+                    backgroundColor: css('--text'),
+                    borderWidth: 1,
+                    order: -1,
+                    hidden: state.off.has('mine'),
+                  }),
+                ]),
             dataset({
               label: `You: ${shortName(mineCode())}`,
               lineId: 'mine',
@@ -682,10 +706,14 @@ async function main() {
   const mineEnded = () => termEnd() != null && termEnd() <= cutoff();
   /** The comparison over a span is anchored on my tariff, else on the Flexible version on sale now. */
   const anchor = () => mineCode() ?? flexCode();
-  /** My tariff and Flexible; when that is one tariff, the newest launched version as the second. */
+  /**
+   * My tariff, Flexible, then the version of each fixed family on sale today: what I have against what I could have.
+   * When that is one tariff, the newest launched version as the second.
+   */
   const resetComparison = () => {
     const a = anchor();
-    const picks = [...new Set([a, flexCode()].filter(Boolean))];
+    const onSale = state.lines.map((l) => (l.kind === 'fixed' ? l.byDay.electricity.get(cutoff())?.version : null));
+    const picks = [...new Set([a, flexCode(), ...onSale].filter(Boolean))];
     if (picks.length < 2) {
       const newest = meta.families
         .flatMap(offered)
@@ -887,7 +915,10 @@ async function main() {
         const b = el(
           'button',
           { type: 'button', className: 'chip', dataset: { key }, ariaLabel: `Remove ${shortName(key)}` },
-          el('span', { className: `key${key === 'cap' ? ' dash' : ''}`, style: `--c:${colourOf(key)}` }),
+          el('span', {
+            className: `key${key === 'cap' ? ' dash' : ''}`,
+            style: `--c:${key === mineCode() ? 'var(--text)' : colourOf(key)}`,
+          }),
           shortName(key),
           el('span', { className: 'x', textContent: '×', ariaHidden: 'true' }),
         );
@@ -966,8 +997,10 @@ async function main() {
         : { min: 0, suggestedMin: undefined, suggestedMax: undefined },
     );
     c.update('none');
-    // the totals: so far (to the cutoff) and in a year (to the chart's end), each signed against mine in vs yours
+    // the totals: so far (to the cutoff) and the next 12 months (from it to the chart's end, the span a chip's £/yr
+    // covers), each signed against mine in vs yours
     const amount = (v) => (v == null ? '–' : pounds(v)); // null: the roll-on or projection has no rate today
+    const next = (run) => (run.at(-1) == null || run[cut] == null ? null : run.at(-1) - run[cut]);
     const figure = (v, b) => {
       const d = signed(v, b);
       if (!d) return b == null ? '–' : '£0';
@@ -979,8 +1012,8 @@ async function main() {
         const figures = r.unpriced.length
           ? [el('span', { className: 'unranked', textContent: unpricedText(r) })]
           : vs && key !== you
-            ? ['so far ', figure(r.run[cut], base[cut]), ' · in a year ', figure(r.run.at(-1), base.at(-1))]
-            : [`so far ${amount(r.run[cut])} · in a year ${amount(r.run.at(-1))}`];
+            ? ['so far ', figure(r.run[cut], base[cut]), ' · next 12 months ', figure(next(r.run), next(base))]
+            : [`so far ${amount(r.run[cut])} · next 12 months ${amount(next(r.run))}`];
         return totalsRow(key, key === mineCode(), figures);
       }),
     );
@@ -1108,15 +1141,26 @@ async function main() {
   };
 
   // ---- drawing: every control and input calls draw(); everything is recomputed from the current state ----
+  /**
+   * A line's estimate today as a chip's {text, cls}: its difference from my tariff's while mine runs ("+£155/yr", in
+   * the delta colours), else "about £n/yr". Mine is priced from the rows its You line draws today, so a variable
+   * tariff of mine, charged the family's current rates whichever version I joined on, never differs from its family.
+   */
+  const estimate = (c) => {
+    const mine = mineCode() ? costOfRows((fuel) => mineRow(fuel, view.lastDay)) : null; // null once my term has ended
+    if (mine == null) return { text: `about ${pounds(c)}${perLabel()}` };
+    const d = signed(c, mine);
+    return d ? { text: `${d}${perLabel()}`, cls: `delta ${c < mine ? 'down' : 'up'}` } : { text: 'same as yours' };
+  };
   const chipText = (line) => {
     if (line.id === 'cap') {
       const c = cost(line, view.lastDay);
-      return c == null ? 'next period not yet entered' : `about ${pounds(c)}${perLabel()}`;
+      return c == null ? { text: 'next period not yet entered' } : estimate(c);
     }
     const sold = ['electricity', 'gas'].some((f) => line.file[f].days.some((p) => p.unit != null));
     if (!sold) return null;
     const c = cost(line, view.lastDay);
-    return c == null ? 'not on sale' : `about ${pounds(c)}${perLabel()}`;
+    return c == null ? { text: 'not on sale' } : estimate(c);
   };
   /** The text of my tariff's chip: today's estimate, or the day its fixed term ended. */
   const mineText = () => {
@@ -1125,13 +1169,13 @@ async function main() {
     return a == null ? '' : `about ${pounds(perMonth() ? a / 12 : a)}${perLabel()}`;
   };
   /** A chip toggles its line on every chart; hovering it with a mouse, or focusing it from the keyboard, emphasises it. */
-  const chip = (id, key, name, text, disabled = false) => {
+  const chip = (id, key, name, { text, cls = '' }, disabled = false) => {
     const b = el(
       'button',
       { type: 'button', className: 'chip', disabled, dataset: { line: id } },
       key,
       el('b', { textContent: name }),
-      el('small', { textContent: text }),
+      el('small', { textContent: text, className: cls }),
     );
     b.setAttribute('aria-pressed', String(!disabled && !state.off.has(id)));
     if (disabled) return b;
@@ -1155,18 +1199,15 @@ async function main() {
           line.id,
           el('span', { className: `key${line.dash ? ' dash' : ''}`, style: `--c:${line.colour}` }),
           line.kind === 'variable' ? `${line.label} (variable)` : line.label,
-          text ?? `not sold in ${regionName(state.shown)}`,
+          text ?? { text: `not sold in ${regionName(state.shown)}` },
           text == null,
         );
       }),
       ...(code
         ? [
-            chip(
-              'mine',
-              el('span', { className: 'key', style: '--c:var(--text)' }),
-              `You: ${shortName(code)}`,
-              mineText(),
-            ),
+            chip('mine', el('span', { className: 'key', style: '--c:var(--text)' }), `You: ${shortName(code)}`, {
+              text: mineText(),
+            }),
           ]
         : []),
     );

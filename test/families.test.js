@@ -12,6 +12,14 @@ test('familyOf returns the first matching family, else null', () => {
   assert.equal(familyOf('OE-FIX-18M-26-09-11', config.families).id, 'oe-fix-18m');
   assert.equal(familyOf('VAR-22-11-01', config.families).id, 'flexible');
   assert.equal(familyOf('AGILE-24-10-01', config.families), null);
+  // a variant sold beside the standard fix is its own family or none: in the standard one it replaced its line
+  // (seen: 12M Low Standing Charge hid the 12M Fixed of July and August 2026)
+  assert.equal(familyOf('OE-FIX-12M-26-08-10', config.families).id, 'oe-fix-12m');
+  assert.equal(familyOf('OE-FIX-12M-V2-26-06-30', config.families).id, 'oe-fix-12m');
+  assert.equal(familyOf('OE-FIX-12M-LOWSC-26-08-10', config.families).id, 'oe-fix-12m-lowsc');
+  assert.equal(familyOf('OE-FIX-18M-LOWSC-26-08-25', config.families), null);
+  assert.equal(familyOf('OE-FIX-12M-26-06-06-TOU-MHHS', config.families), null);
+  assert.equal(familyOf('OE-FIX-12M-26-02-26-BESPOKE-MHHS', config.families), null);
   const two = [
     { id: 'a', match: '^X' },
     { id: 'b', match: '^X' },

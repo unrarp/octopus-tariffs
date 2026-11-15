@@ -1,6 +1,6 @@
 day,electricity_version,electricity_unit_rate,electricity_standing_charge,gas_version,gas_unit_rate,gas_standing_charge
-2026-08-25,,,,,,
-2026-08-26,,,,,,
+2026-08-25,OE-FIX-18M-26-08-25,25.0904,51.1599,OE-FIX-18M-26-08-25,7.3686,28.4949
+2026-08-26,OE-FIX-18M-26-08-25,25.0904,51.1599,OE-FIX-18M-26-08-25,7.3686,28.4949
 2026-08-27,,,,,,
 2026-08-28,,,,,,
 2026-08-29,,,,,,

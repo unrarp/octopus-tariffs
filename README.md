@@ -18,17 +18,21 @@ serves `docs/`.
 - **Your tariff** ("I'm on", since a date): a thick "You" line on every chart at
   the rates it charges you over its fixed term.
 - **Chips** are the legend: each toggles its line on every chart, yours
-  included, and hovering one emphasises its line. Each y axis starts at zero.
+  included, and hovering one emphasises its line. With a tariff of yours each
+  chip reads its £/yr difference from it. A fixed tariff of yours also draws
+  the rate it started on as a thin line over the days before its term. Each y
+  axis starts at zero.
   Tooltips name the version on sale that day, with units, and hovering a day on
   one rates panel shows that day on all four.
-- **Compare tariffs**: a running-cost chart of the tariffs you pick, from a
+- **Compare tariffs**: a running-cost chart of the tariffs you pick (to start
+  with: yours, Flexible and each fixed family's version on sale today), from a
   date: solid to today at the rates each would have charged, then dashed for
   the next 12 months as if today's rates stayed the same. A fixed tariff rolls
-  on to Flexible at its term end. "£ paid" draws each running total; "vs yours"
-  draws the difference from your tariff (else Flexible); "if I switch" starts
+  on to Flexible at its term end. "vs yours", the opening view, draws the difference
+  from your tariff (else Flexible); "£ paid" draws each running total; "if I switch" starts
   each line at your exit fee on a switch date and adds what that tariff would
   cost against staying put, so it pays back where it crosses £0. Under the
-  chart, each pick's total so far and in a year, or its payback day.
+  chart, each pick's total so far and over the next 12 months, or its payback day.
 - Definitions live in the (i) dialog, linked from each term; there are no
   inline hints.
 - A region select (remembered, else geolocated, else London) and a window
@@ -77,7 +81,14 @@ products + rates + families.json + cap.json + src/vat.js
 ## Adding a tariff family
 
 1. Add an entry to `families.json` (`id`, `label`, `kind`, `match`, `series`,
-   `fuels`) and put its `match` pattern in `log.match`, verbatim.
+   `fuels`) and put its `match` pattern in `log.match`, verbatim. A code may
+   match one family only, and a variant sold beside the standard product
+   (Low Standing Charge, half-hourly) needs its own family or none: inside the
+   standard family it replaces that family's line while both are on sale. A
+   new family also needs a colour slot in `PALETTE` (`src/site/app.js`). The
+   broad `^OE-FIX-12M-` and `^OE-FIX-18M-` entries stay in `log.match` so such
+   variants are still collected and can become families later with their
+   history.
 2. Run `npm run collect`; it backfills the new family's whole history. Then
    `npm run build && npm run check`, and commit `families.json`, `data/` and
    `docs/` together.
